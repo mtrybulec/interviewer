@@ -4,11 +4,14 @@ useInterviewer <- function() {
     
     jsFile <- file.path(.packageName, "main.js")
     cssFile <- file.path(.packageName, "main.css")
-    
-    shiny::singleton(
-        shiny::tags$head(
-            shiny::tags$script(src = jsFile),
-            shiny::tags$link(href = cssFile, rel = "stylesheet")
-        )
+
+    list(
+        useShinyjs(),
+        shiny::singleton(
+            shiny::tags$head(
+                shiny::tags$script(src = jsFile),
+                shiny::tags$link(href = cssFile, rel = "stylesheet")
+            )
+        )    
     )    
 }

@@ -8,8 +8,7 @@
 
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, displayList = FALSE, required = TRUE, inline = FALSE, 
-                          selectizePlaceholder = NULL, selectizePlugins = list("remove_button"), 
-                          width = NULL) {
+                          selectizePlaceholder = NULL, selectizePlugins = list("remove_button"), width = NULL) {
     
     questionId <- .questionId(id)
     
