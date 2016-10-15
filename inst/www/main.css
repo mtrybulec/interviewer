@@ -1,0 +1,9 @@
+.interviewer-question-status {
+    color: darkred;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+#interviewer-buttons {
+    margin-bottom: 20px;
+}
