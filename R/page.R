@@ -45,7 +45,7 @@ page <- function(id, ...) {
                         
                         output[[questionStatusId]] <- shiny::renderUI({
                             if (context$pageIndex %in% context$visitedPageIndexes) {
-                                if (is.null(input[[questionId]]) || is.na(input[[questionId]])) {
+                                if (!.isAnswered(input[[questionId]])) {
                                     if ((!is.null(question$required)) && question$required) {
                                         shiny::HTML(paste("<div class=\"interviewer-question-status\">", "Response required.", "</div>", sep = ""))
                                     }

@@ -8,14 +8,22 @@
 
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, displayList = FALSE, required = TRUE, inline = FALSE, 
-                          selectizePlaceholder = "Click to select responses", selectizePlugins = list("remove_button"), 
+                          selectizePlaceholder = NULL, selectizePlugins = list("remove_button"), 
                           width = NULL) {
     
     questionId <- .questionId(id)
     
-    responseLabels <- as.character(responses$ids) 
-    names(responseLabels) <- responses$labels
+    choices <- as.character(responses$ids) 
+    names(choices) <- responses$labels
 
+    if (displayList && is.null(selectizePlaceholder)) {
+        if (multiple) {
+            selectizePlaceholder <- "Click to select responses"
+        } else {
+            selectizePlaceholder <- "Click to select a response"
+        }  
+    } 
+    
     ui <- function(context) {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
@@ -24,12 +32,16 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
             shiny::checkboxGroupInput(
                 inputId = questionId, 
                 label = label, 
-                choices = responseLabels,
+                choices = choices,
                 selected = isolate(input[[questionId]])
             )
         } else if (displayList) {
+            if (!multiple) {
+                choices <- c(selectizePlaceholder = .emptyResponseValue, choices)
+            }
+
             shiny::selectizeInput(
-                choices = responseLabels,
+                choices = choices,
                 inputId = questionId, 
                 label = label,
                 multiple = multiple,
@@ -49,7 +61,7 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
             }
             
             shiny::radioButtons(
-                choices = responseLabels,
+                choices = choices,
                 inline = inline,
                 inputId = questionId, 
                 label = label, 

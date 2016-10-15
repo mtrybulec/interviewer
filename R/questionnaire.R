@@ -40,7 +40,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
         
         for (question in context$pages[[context$pageIndex]]$questions) {
             if ((!is.null(question$required)) && question$required) {
-                if (is.null(input[[question$id]]) || is.na(input[[question$id]])) {
+                if (!.isAnswered(input[[question$id]])) {
                     nonresponseFound <- question$id
                     break;    
                 }

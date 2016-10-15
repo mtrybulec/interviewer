@@ -58,6 +58,23 @@ function(input, output, session) {
                      displayList = TRUE
                  ),
                  
+                 question.list(
+                     id = "ComboBoxPlaceholder",
+                     label = "Combo-box, custom message (set via the selectizePlaceholder parameter)",
+                     responses = responses,
+                     displayList = TRUE,
+                     selectizePlaceholder = "I need a response!"
+                 ),
+                 
+                 question.list(
+                     id = "ComboBoxOptional",
+                     label = "Combo-box, no response required",
+                     responses = responses,
+                     displayList = TRUE,
+                     selectizePlaceholder = "This question is optional",
+                     required = FALSE
+                 ),
+                 
                  p(paste(
                      "Note how the combo-box below is displayed on top of the survey buttons. ",
                      "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
