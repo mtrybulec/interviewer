@@ -71,7 +71,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
             names <- sub(paste0("^", .questionPrefix), "", names)
             colnames(data) <- names
 
-            data <- data[, c(context$questionOrder)]
+            data <- data[, intersect(context$questionOrder, names)]
             
             onExit(data)
         }
