@@ -3,7 +3,7 @@ library(shiny)
 library(shinyjs)
 
 function(input, output, session) {
-    
+
     output$questionnaireOutput <- 
         questionnaire(
             surveyId = "interviewer-demo-complete",
@@ -123,6 +123,24 @@ function(input, output, session) {
                      label = "Anything you want to add?",
                      cols = 80,
                      rows = 3
+                 ),
+                 
+                 p("The question below has responses ordered randomly (except for the last response)."),
+                 
+                 question.list(
+                     id = "Random",
+                     label = "Which continents have you ever been to?",
+                     responses = {
+                         responses <- data.frame(
+                             ids = c("af", "as", "an", "au", "eu", "na", "sa"),
+                             labels = c("Africa", "Asia", "Antarctica", "Australia", "Europe", "North America", "South America")
+                         )
+                         
+                         rand <- sample(nrow(responses))
+                         
+                         rbind(responses[rand, ], data.frame(ids = "dk", labels = "Don't know..."))
+                     },
+                     displayList = TRUE
                  )
             ),
             

@@ -6,7 +6,7 @@ useInterviewer <- function() {
     cssFile <- file.path(.packageName, "main.css")
 
     list(
-        useShinyjs(),
+        shinyjs::useShinyjs(),
         shiny::singleton(
             shiny::tags$head(
                 shiny::tags$script(src = jsFile),
