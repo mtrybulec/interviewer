@@ -33,7 +33,7 @@ function(input, output, session) {
                         ids = c("<=20", "21-30", "31-40", ">40"),
                         labels = c("20 or younger", "21 to 30", "31 to 40", "older than 40")
                     ),
-                    use.selectInput = TRUE
+                    displayList = TRUE
                 )
             ),
             
@@ -54,7 +54,7 @@ function(input, output, session) {
                         ids = c("sph", "t", "lt", "dt"),
                         labels = c("smartphone", "tablet", "laptop", "desktop")
                     ),
-                    use.selectInput = TRUE,
+                    displayList = TRUE,
                     multi.choice = TRUE
                 )
             ),
@@ -116,7 +116,7 @@ function(input, output, session) {
                      label = "What's your nickname?"
                  ),
 
-                 HTML("<p>Now, before you answer the next question,<br />please take a moment to think..."),
+                 HTML("<p>Now, before you answer the next question,<br />please take a moment to think...</p>"),
 
                  question.text(
                      id = "Comment",

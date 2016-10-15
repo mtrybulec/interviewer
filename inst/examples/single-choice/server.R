@@ -29,14 +29,14 @@ function(input, output, session) {
 
                 question.list(
                     id = "RadioButtonsInline",
-                    label = "Radio-buttons, inline:",
+                    label = "Radio-buttons, inline (inline parameter set to TRUE):",
                     responses = responses,
                     inline = TRUE
                 ),
                 
                 question.list(
                     id = "RadioButtonsNarrow",
-                    label = "Radio-buttons, inline and narrow (200px):",
+                    label = "Radio-buttons, inline and narrow (width parameter set to '200px'):",
                     responses = responses,
                     inline = TRUE,
                     width = "200px"
@@ -46,9 +46,9 @@ function(input, output, session) {
             page(id = "comboBoxes",
                  question.list(
                      id = "ComboBoxStandard",
-                     label = "Combo-box, standard",
+                     label = "Combo-box, standard (displayList parameter set to TRUE)",
                      responses = responses,
-                     use.selectInput = TRUE
+                     displayList = TRUE
                  ),
                  
                  p(paste(
@@ -58,9 +58,9 @@ function(input, output, session) {
                                   
                  question.list(
                      id = "ComboBoxNarrow",
-                     label = "Combo-box, inline and narrow (200px):",
+                     label = "Combo-box, inline and narrow (width parameter set to '200px'):",
                      responses = responses,
-                     use.selectInput = TRUE,
+                     displayList = TRUE,
                      width = "200px"
                  )
             ),
