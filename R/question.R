@@ -7,7 +7,7 @@
 }
 
 #' @export
-question.list <- function(id, label, responses, multi.choice = FALSE, displayList = FALSE, required = TRUE, inline = FALSE, 
+question.list <- function(id, label, responses, multiple = FALSE, displayList = FALSE, required = TRUE, inline = FALSE, 
                           selectizePlaceholder = "Click to select responses", selectizePlugins = list("remove_button"), 
                           width = NULL) {
     
@@ -20,7 +20,7 @@ question.list <- function(id, label, responses, multi.choice = FALSE, displayLis
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
 
-        if (multi.choice && !displayList) {
+        if (multiple && !displayList) {
             shiny::checkboxGroupInput(
                 inputId = questionId, 
                 label = label, 
@@ -32,7 +32,7 @@ question.list <- function(id, label, responses, multi.choice = FALSE, displayLis
                 choices = responseLabels,
                 inputId = questionId, 
                 label = label,
-                multiple = multi.choice,
+                multiple = multiple,
                 options = list(
                     placeholder = selectizePlaceholder, 
                     plugins = selectizePlugins

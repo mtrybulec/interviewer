@@ -55,7 +55,7 @@ function(input, output, session) {
                         labels = c("smartphone", "tablet", "laptop", "desktop")
                     ),
                     displayList = TRUE,
-                    multi.choice = TRUE
+                    multiple = TRUE
                 )
             ),
 
@@ -63,7 +63,7 @@ function(input, output, session) {
                  question.list(
                     id = "Pets",
                     label = "What pets do you have?",
-                    multi.choice = TRUE,
+                    multiple = TRUE,
                     responses = data.frame(
                         ids = c("c", "d", "s"),
                         labels = c("cat", "dog", "spider")
