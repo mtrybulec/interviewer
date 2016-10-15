@@ -6,10 +6,13 @@ function(input, output, session) {
     
     output$questionnaireOutput <- 
         questionnaire(
-            surveyId = "survey-1",
-            userId = "user-1",
-            label = "Survey #1",
-            welcome = "Welcome!",
+            surveyId = "interviewer-demo-complete",
+            userId = "demo",
+            label = "Interviewer DEMO",
+            welcome = list(
+                p("Welcome!"),
+                p("This demo shows a relatively complete set of interviewer questions and options.")
+            ),
             goodbye = "Done!",
             
             page(id = "1",

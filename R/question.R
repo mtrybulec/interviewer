@@ -7,7 +7,10 @@
 }
 
 #' @export
-question.list <- function(id, label, responses, multi.choice = FALSE, use.selectInput = FALSE, required = TRUE) {
+question.list <- function(id, label, responses, multi.choice = FALSE, use.selectInput = FALSE, required = TRUE, inline = FALSE, 
+                          selectizePlaceholder = "Click to select responses", selectizePlugins = list("remove_button"), 
+                          width = NULL) {
+    
     questionId <- .questionId(id)
     
     responseLabels <- as.character(responses$ids) 
@@ -25,19 +28,26 @@ question.list <- function(id, label, responses, multi.choice = FALSE, use.select
                 selected = isolate(input[[questionId]])
             )
         } else if (use.selectInput) {
-            shiny::selectInput(
+            shiny::selectizeInput(
+                choices = responseLabels,
                 inputId = questionId, 
                 label = label,
-                choices = responseLabels,
                 multiple = multi.choice,
-                selected = isolate(input[[questionId]])
+                options = list(
+                    placeholder = selectizePlaceholder, 
+                    plugins = selectizePlugins
+                ),
+                selected = isolate(input[[questionId]]),
+                width = width
             )
         } else {
             shiny::radioButtons(
+                choices = responseLabels,
+                inline = inline,
                 inputId = questionId, 
                 label = label, 
-                choices = responseLabels,
-                selected = isolate(input[[questionId]])
+                selected = isolate(input[[questionId]]),
+                width = width
             )
         }
     }
