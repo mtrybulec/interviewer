@@ -35,6 +35,13 @@ function(input, output, session) {
                 ),
                 
                 question.list(
+                    id = "RadioButtonsOptional",
+                    label = "Radio-buttons, no response required (a second click on a selected radio-button deselects it)",
+                    responses = responses,
+                    required = FALSE
+                ),
+                
+                question.list(
                     id = "RadioButtonsNarrow",
                     label = "Radio-buttons, inline and narrow (width parameter set to '200px'):",
                     responses = responses,

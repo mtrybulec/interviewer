@@ -3,8 +3,8 @@ library(shiny)
 library(shinyjs)
 
 fluidPage(
-    useShinyjs(), # ToDo: can this be pulled into userInterviewer()?
     useInterviewer(),
+    useShinyjs(), # ToDo: can this be pulled into userInterviewer()?
     fluidPage(
         uiOutput(outputId = "questionnaireOutput")
     )

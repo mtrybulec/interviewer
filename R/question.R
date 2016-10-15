@@ -41,12 +41,19 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
                 width = width
             )
         } else {
+            selected <- isolate(input[[questionId]])
+
+            if (is.null(selected)) {
+                # Don't pre-select responses; see also main.js code that handles radio-button unchecking.
+                selected <- character(0)
+            }
+            
             shiny::radioButtons(
                 choices = responseLabels,
                 inline = inline,
                 inputId = questionId, 
                 label = label, 
-                selected = isolate(input[[questionId]]),
+                selected = selected,
                 width = width
             )
         }
