@@ -62,17 +62,17 @@ question.list <- function(id, label, responses, multiple = FALSE, use.select = F
         warning("inline ignored - use.select takes precedence.")
     }
     
-    domain <- shiny::getDefaultReactiveDomain()
-    input <- domain$input
-    
     questionId <- .questionId(id)
     
     choices <- as.character(responses$ids) 
     names(choices) <- responses$labels
 
-    selected <- isolate(input[[questionId]])
-    
     ui <- function(context) {
+        domain <- shiny::getDefaultReactiveDomain()
+        input <- domain$input
+
+        selected <- isolate(input[[questionId]])
+
         if (multiple && !use.select) {
             shiny::checkboxGroupInput(
                 choices = choices,
@@ -132,20 +132,33 @@ question.list <- function(id, label, responses, multiple = FALSE, use.select = F
 }
 
 #' @export
-question.numeric <- function(id, label, min, max, use.slider = FALSE, required = TRUE) {
+question.numeric <- function(id, label, min, max, step = NA, width = NULL, use.slider = FALSE, required = TRUE) {
     questionId <- .questionId(id)
-
+    
     ui <- function(context) {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
+        
+        value <- isolate({
+            result <- input[[questionId]]
+            
+            if (is.null(result) && use.slider) {
+                result <- min
+            }
+            
+            result
+        })
 
         if (use.slider) {
             shiny::sliderInput(
+                dragRange = FALSE, # set so that the mouse cursor doesn't change to a resize arrow
                 inputId = questionId, 
                 label = label,
                 min = min,
                 max = max,
-                value = isolate(input[[questionId]])
+                step = step,
+                value = value,
+                width = width
             )
         } else {
             shiny::numericInput(
@@ -153,7 +166,9 @@ question.numeric <- function(id, label, min, max, use.slider = FALSE, required =
                 label = label,
                 min = min,
                 max = max,
-                value = isolate(input[[questionId]])
+                step = step,
+                value = value,
+                width = width
             )
         }
     }
