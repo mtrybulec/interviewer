@@ -1,6 +1,5 @@
 library(interviewer)
 library(shiny)
-library(shinyjs)
 
 function(input, output, session) {
 
