@@ -6,6 +6,46 @@
     )
 }
 
+#' Define a question that displays a list of possible responses.
+#' 
+#' \code{question.list} retuns a question definition that displays responses
+#' as radio-buttons, check-boxes, or comb-boxes. Can be used for single-
+#' and multiple-choice questions.
+#' 
+#' @param id (character) the unique identifier of the question; it will be used
+#'     as the column name in the data.frame returning the questionnaire data
+#'     and when prefixed with 'question' - as the \code{inputId} 
+#'     for the \code{input} slot.
+#' @param label (character) the text displayed as the header of the question.
+#' @param responses (data.frame) a listing of the identifiers and labels
+#'     of all responses; use \code{ids} and \code{labels} as column names;
+#'     each row represents a single response.
+#' @param multiple (logical) if \code{FALSE}, defines a single-choice question;
+#'     if \code{TRUE}, dfines a multiple-choice question.
+#' @param displayList (logical) if \code{FALSE}, displays radio-buttons
+#'     for single-choice questions and check-boxes for multiple-choice
+#'     questions; if \code{TRUE}, displays a combo-box with all responses available
+#'     through the drop-down list.
+#' @param required (logical) if \code{FALSE}, the respondent is free to not chose
+#'     a response; if \code{TRUE}, the respondent must select a response before 
+#'     moving on to subsequent pages of the questionnaire.
+#' @param inline (logical) if \code{FALSE}, radio-buttons and check-boxes will be 
+#'     displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
+#'     If \code{displayList == TRUE}, this parameter will be ignored.
+#' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
+#' @param selectizePlaceholder (character) the text that will be displayed
+#'     in the combo-box when there are no responses selected yet; defaults to
+#'     \code{"Click to select a response"} for single-choice questions and
+#'     \code{"Click to select responses"} for multiple-choice questions.
+#'     If \code{displayList == FALSE}, this parameter will be ignored.
+#' @param selectizeOptions (list) a list of selectize options as documented
+#'     in \code{\link[shiny]{selectInput}}. If defined, it overrides \code{selectizePlaceholder}.
+#'
+#' @family question definitions
+#' @seealso
+#'     \code{\link[shiny]{checkboxGroupInput}}, 
+#'     \code{\link[shiny]{radioButtons}},
+#'     \code{\link[shiny]{selectInput}}.
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, displayList = FALSE, required = TRUE, inline = FALSE,
                           width = NULL, selectizePlaceholder = NULL, selectizeOptions = NULL) {
