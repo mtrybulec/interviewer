@@ -133,6 +133,15 @@ question.list <- function(id, label, responses, multiple = FALSE, use.select = F
 
 #' @export
 question.numeric <- function(id, label, min, max, step = NA, width = NULL, use.slider = FALSE, required = TRUE) {
+    if (use.slider && !required) {
+        warning("required ignored - use.slider forces a selection of a value.")
+    }
+    if (min >= max) {
+        warning("min >= max.")
+    } else if (!missing(step) && (step > max - min)) {
+        warning("step > max - min.")
+    }
+    
     questionId <- .questionId(id)
     
     ui <- function(context) {
