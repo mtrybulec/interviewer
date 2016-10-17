@@ -7,8 +7,8 @@
 }
 
 #' @export
-question.list <- function(id, label, responses, multiple = FALSE, displayList = FALSE, required = TRUE, inline = FALSE, 
-                          selectizePlaceholder = NULL, selectizePlugins = list("remove_button"), width = NULL) {
+question.list <- function(id, label, responses, multiple = FALSE, displayList = FALSE, required = TRUE, inline = FALSE,
+                          width = NULL, selectizePlaceholder = NULL, selectizeOptions = NULL) {
     domain <- shiny::getDefaultReactiveDomain()
     input <- domain$input
     
@@ -17,14 +17,6 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
     choices <- as.character(responses$ids) 
     names(choices) <- responses$labels
 
-    if (displayList && is.null(selectizePlaceholder)) {
-        if (multiple) {
-            selectizePlaceholder <- "Click to select responses"
-        } else {
-            selectizePlaceholder <- "Click to select a response"
-        }  
-    } 
-    
     selected <- isolate(input[[questionId]])
     
     ui <- function(context) {
@@ -38,6 +30,21 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
                 width = width
             )
         } else if (displayList) {
+            if (is.null(selectizeOptions)) {
+                if (is.null(selectizePlaceholder)) {
+                    if (multiple) {
+                        selectizePlaceholder <- "Click to select responses"
+                    } else {
+                        selectizePlaceholder <- "Click to select a response"
+                    }  
+                } 
+
+                selectizeOptions <- list(
+                    placeholder = selectizePlaceholder, 
+                    plugins = list("remove_button")
+                )
+            } 
+            
             if (!multiple) {
                 choices <- c(selectizePlaceholder = .emptyResponseValue, choices)
             }
@@ -47,10 +54,7 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
                 inputId = questionId, 
                 label = label,
                 multiple = multiple,
-                options = list(
-                    placeholder = selectizePlaceholder, 
-                    plugins = selectizePlugins
-                ),
+                options = selectizeOptions,
                 selected = selected,
                 width = width
             )
