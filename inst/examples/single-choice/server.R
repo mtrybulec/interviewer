@@ -28,7 +28,7 @@ function(input, output, session) {
 
                 question.list(
                     id = "RadioButtonsInline",
-                    label = "Radio-buttons, inline (inline parameter set to TRUE):",
+                    label = "Radio-buttons, inline (inline parameter set to TRUE)",
                     responses = responses,
                     inline = TRUE
                 ),
@@ -42,7 +42,7 @@ function(input, output, session) {
                 
                 question.list(
                     id = "RadioButtonsNarrow",
-                    label = "Radio-buttons, inline and narrow (width parameter set to '200px'):",
+                    label = "Radio-buttons, inline and narrow (width parameter set to '200px')",
                     responses = responses,
                     inline = TRUE,
                     width = "200px"
@@ -70,7 +70,7 @@ function(input, output, session) {
                      label = "Combo-box, no response required",
                      responses = responses,
                      use.select = TRUE,
-                     selectizePlaceholder = "This question is optional",
+                     selectizePlaceholder = "This question is optional (required parameter set to FALSE)",
                      required = FALSE
                  ),
                  
@@ -81,7 +81,7 @@ function(input, output, session) {
                                   
                  question.list(
                      id = "ComboBoxNarrow",
-                     label = "Combo-box, narrow (width parameter set to '200px'):",
+                     label = "Combo-box, narrow (width parameter set to '200px')",
                      responses = responses,
                      use.select = TRUE,
                      width = "200px"
