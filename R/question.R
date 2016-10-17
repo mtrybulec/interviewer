@@ -9,7 +9,7 @@
 #' Define a question that displays a list of possible responses.
 #' 
 #' \code{question.list} retuns a question definition that displays responses
-#' as radio-buttons, check-boxes, or comb-boxes. Can be used for single-
+#' as radio-buttons, check-boxes, or combo-boxes. Can be used for single-
 #' and multiple-choice questions.
 #' 
 #' @param id (character) the unique identifier of the question; it will be used
@@ -22,13 +22,13 @@
 #'     each row represents a single response.
 #' @param multiple (logical) if \code{FALSE}, defines a single-choice question;
 #'     if \code{TRUE}, dfines a multiple-choice question.
+#' @param required (logical) if \code{FALSE}, the respondent is free to not choose
+#'     a response; if \code{TRUE}, the respondent must select a response before 
+#'     moving on to subsequent pages of the questionnaire.
 #' @param use.select (logical) if \code{FALSE}, displays radio-buttons
 #'     for single-choice questions and check-boxes for multiple-choice
 #'     questions; if \code{TRUE}, displays a combo-box with all responses available
 #'     through the drop-down list.
-#' @param required (logical) if \code{FALSE}, the respondent is free to not chose
-#'     a response; if \code{TRUE}, the respondent must select a response before 
-#'     moving on to subsequent pages of the questionnaire.
 #' @param inline (logical) if \code{FALSE}, radio-buttons and check-boxes will be 
 #'     displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
 #'     If \code{use.select == TRUE}, this parameter will be ignored.
@@ -47,7 +47,7 @@
 #'     \code{\link[shiny]{radioButtons}},
 #'     \code{\link[shiny]{selectInput}}.
 #' @export
-question.list <- function(id, label, responses, multiple = FALSE, use.select = FALSE, required = TRUE, inline = FALSE,
+question.list <- function(id, label, responses, multiple = FALSE, required = TRUE, use.select = FALSE, inline = FALSE,
                           width = NULL, selectizePlaceholder = NULL, selectizeOptions = NULL) {
     if (!use.select && !is.null(selectizePlaceholder)) {
         warning("selectizePlaceholder ignored - use.select is FALSE.")
@@ -131,8 +131,34 @@ question.list <- function(id, label, responses, multiple = FALSE, use.select = F
     .question(id, ui, required)
 }
 
+#' Define a question that allows the selection of numeric values.
+#' 
+#' \code{question.numeric} retuns a question definition that uses
+#' an input line with a spinner or a slider control for entry of numeric values.
+#' 
+#' @param id (character) the unique identifier of the question; it will be used
+#'     as the column name in the data.frame returning the questionnaire data
+#'     and when prefixed with 'question' - as the \code{inputId} 
+#'     for the \code{input} slot.
+#' @param label (character) the text displayed as the header of the question.
+#' @param min (numeric) minimum allowed value.
+#' @param max (numeric) maximum allowed value.
+#' @param step (numeric) interval to use when stepping between \code{min} and \code{max}.
+#' @param required (logical) if \code{FALSE}, the respondent is free to not choose
+#'     a response; if \code{TRUE}, the respondent must select a response before 
+#'     moving on to subsequent pages of the questionnaire.
+#'     If \code{use.slider == TRUE}, this parameter will be ignored.
+#' @param use.slider (logical) if \code{FALSE}, displays an input line 
+#'     with a spinner to increase/decrease the value; if \code{TRUE},
+#'     displays a slider control.
+#' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
+#'     
+#' @family question definitions
+#' @seealso
+#'     \code{\link[shiny]{numericInput}},
+#'     \code{\link[shiny]{sliderInput}}.
 #' @export
-question.numeric <- function(id, label, min, max, step = NA, width = NULL, use.slider = FALSE, required = TRUE) {
+question.numeric <- function(id, label, min, max, step = NA, required = TRUE, use.slider = FALSE, width = NULL) {
     if (use.slider && !required) {
         warning("required ignored - use.slider forces a selection of a value.")
     }

@@ -4,8 +4,8 @@
 \alias{question.list}
 \title{Define a question that displays a list of possible responses.}
 \usage{
-question.list(id, label, responses, multiple = FALSE, use.select = FALSE,
-  required = TRUE, inline = FALSE, width = NULL,
+question.list(id, label, responses, multiple = FALSE, required = TRUE,
+  use.select = FALSE, inline = FALSE, width = NULL,
   selectizePlaceholder = NULL, selectizeOptions = NULL)
 }
 \arguments{
@@ -23,14 +23,14 @@ each row represents a single response.}
 \item{multiple}{(logical) if \code{FALSE}, defines a single-choice question;
 if \code{TRUE}, dfines a multiple-choice question.}
 
+\item{required}{(logical) if \code{FALSE}, the respondent is free to not choose
+a response; if \code{TRUE}, the respondent must select a response before 
+moving on to subsequent pages of the questionnaire.}
+
 \item{use.select}{(logical) if \code{FALSE}, displays radio-buttons
 for single-choice questions and check-boxes for multiple-choice
 questions; if \code{TRUE}, displays a combo-box with all responses available
 through the drop-down list.}
-
-\item{required}{(logical) if \code{FALSE}, the respondent is free to not chose
-a response; if \code{TRUE}, the respondent must select a response before 
-moving on to subsequent pages of the questionnaire.}
 
 \item{inline}{(logical) if \code{FALSE}, radio-buttons and check-boxes will be 
 displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
@@ -49,12 +49,14 @@ in \code{\link[shiny]{selectInput}}. If defined, it overrides \code{selectizePla
 }
 \description{
 \code{question.list} retuns a question definition that displays responses
-as radio-buttons, check-boxes, or comb-boxes. Can be used for single-
+as radio-buttons, check-boxes, or combo-boxes. Can be used for single-
 and multiple-choice questions.
 }
 \seealso{
 \code{\link[shiny]{checkboxGroupInput}}, 
     \code{\link[shiny]{radioButtons}},
     \code{\link[shiny]{selectInput}}.
+
+Other question.definitions: \code{\link{question.numeric}}
 }
 
