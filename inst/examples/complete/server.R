@@ -11,7 +11,7 @@ function(input, output, session) {
             label = "Interviewer DEMO",
             welcome = list(
                 p("Welcome!"),
-                p("This demo shows a relatively complete set of interviewer questions and options.")
+                HTML("<p>This demo shows a relatively complete set of <strong>interviewer</strong> questions and options.</p>")
             ),
             goodbye = "Done!",
             
@@ -22,8 +22,7 @@ function(input, output, session) {
                     responses = data.frame(
                         ids = c("m", "f"),
                         labels = c("male", "female")
-                    ),
-                    required = FALSE
+                    )
                 ),
 
                 question.list(
@@ -44,7 +43,8 @@ function(input, output, session) {
                     responses = data.frame(
                         ids = c("s", "m", "o"),
                         labels = c("single", "married", "other")
-                    )
+                    ),
+                    required = FALSE
                 ),
                 
                 question.list(
@@ -55,7 +55,8 @@ function(input, output, session) {
                         labels = c("smartphone", "tablet", "laptop", "desktop")
                     ),
                     displayList = TRUE,
-                    multiple = TRUE
+                    multiple = TRUE,
+                    required = FALSE
                 )
             ),
 
@@ -140,7 +141,7 @@ function(input, output, session) {
                          
                          rbind(responses[rand, ], data.frame(ids = "dk", labels = "Don't know..."))
                      },
-                     displayList = TRUE
+                     multiple = TRUE
                  )
             ),
             

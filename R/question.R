@@ -9,6 +9,8 @@
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, displayList = FALSE, required = TRUE, inline = FALSE, 
                           selectizePlaceholder = NULL, selectizePlugins = list("remove_button"), width = NULL) {
+    domain <- shiny::getDefaultReactiveDomain()
+    input <- domain$input
     
     questionId <- .questionId(id)
     
@@ -23,16 +25,17 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
         }  
     } 
     
+    selected <- isolate(input[[questionId]])
+    
     ui <- function(context) {
-        domain <- shiny::getDefaultReactiveDomain()
-        input <- domain$input
-
         if (multiple && !displayList) {
             shiny::checkboxGroupInput(
+                choices = choices,
+                inline = inline,
                 inputId = questionId, 
                 label = label, 
-                choices = choices,
-                selected = isolate(input[[questionId]])
+                selected = selected,
+                width = width
             )
         } else if (displayList) {
             if (!multiple) {
@@ -48,12 +51,10 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
                     placeholder = selectizePlaceholder, 
                     plugins = selectizePlugins
                 ),
-                selected = isolate(input[[questionId]]),
+                selected = selected,
                 width = width
             )
         } else {
-            selected <- isolate(input[[questionId]])
-
             if (is.null(selected)) {
                 # Don't pre-select responses; see also main.js code that handles radio-button unchecking.
                 selected <- character(0)

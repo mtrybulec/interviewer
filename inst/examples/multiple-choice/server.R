@@ -11,40 +11,44 @@ function(input, output, session) {
     
     output$questionnaireOutput <- 
         questionnaire(
-            surveyId = "interviewer-demo-single-choice",
+            surveyId = "interviewer-demo-multiple-choice",
             userId = "demo",
-            label = "Single-choice DEMO",
+            label = "Multiple-choice DEMO",
             welcome = list(
                 p("Welcome!"),
-                HTML("<p>This demo shows how <strong>single-choice</strong> questions can be defined in <strong>interviewer</strong>.</p>")
+                HTML("<p>This demo shows how <strong>multiple-choice</strong> questions can be defined in <strong>interviewer</strong>.</p>")
             ),
             goodbye = "Done!",
             
-            page(id = "radioButtons",
+            page(id = "checkBoxes",
                 question.list(
-                    id = "RadioButtonsStandard",
-                    label = "Radio-buttons, standard",
-                    responses = responses
+                    id = "CheckBoxesStandard",
+                    label = "Check-boxes, standard (multiple parameter set to TRUE)",
+                    responses = responses,
+                    multiple = TRUE
                 ),
 
                 question.list(
-                    id = "RadioButtonsInline",
-                    label = "Radio-buttons, inline (inline parameter set to TRUE):",
+                    id = "CheckBoxesInline",
+                    label = "Check-boxes, inline (inline parameter set to TRUE):",
                     responses = responses,
+                    multiple = TRUE,
                     inline = TRUE
                 ),
                 
                 question.list(
-                    id = "RadioButtonsOptional",
-                    label = "Radio-buttons, no response required (required parameter set to FALSE; a second click on a selected radio-button deselects it)",
+                    id = "CheckBoxesOptional",
+                    label = "Check-boxes, no response required (required parameter set to FALSE)",
                     responses = responses,
+                    multiple = TRUE,
                     required = FALSE
                 ),
                 
                 question.list(
-                    id = "RadioButtonsNarrow",
-                    label = "Radio-buttons, inline and narrow (width parameter set to '200px'):",
+                    id = "CheckBoxesNarrow",
+                    label = "Check-boxes, inline and narrow (width parameter set to '200px'):",
                     responses = responses,
+                    multiple = TRUE,
                     inline = TRUE,
                     width = "200px"
                 )
@@ -55,6 +59,7 @@ function(input, output, session) {
                      id = "ComboBoxStandard",
                      label = "Combo-box, standard (displayList parameter set to TRUE)",
                      responses = responses,
+                     multiple = TRUE,
                      displayList = TRUE
                  ),
                  
@@ -63,6 +68,7 @@ function(input, output, session) {
                      label = "Combo-box, custom message (set via the selectizePlaceholder parameter)",
                      responses = responses,
                      displayList = TRUE,
+                     multiple = TRUE,
                      selectizePlaceholder = "I need a response!"
                  ),
                  
@@ -71,6 +77,7 @@ function(input, output, session) {
                      label = "Combo-box, no response required",
                      responses = responses,
                      displayList = TRUE,
+                     multiple = TRUE,
                      selectizePlaceholder = "This question is optional",
                      required = FALSE
                  ),
@@ -85,6 +92,7 @@ function(input, output, session) {
                      label = "Combo-box, narrow (width parameter set to '200px'):",
                      responses = responses,
                      displayList = TRUE,
+                     multiple = TRUE,
                      width = "200px"
                  )
             ),
