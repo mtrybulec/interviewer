@@ -52,16 +52,16 @@ function(input, output, session) {
             page(id = "comboBoxes",
                  question.list(
                      id = "ComboBoxStandard",
-                     label = "Combo-box, standard (displayList parameter set to TRUE)",
+                     label = "Combo-box, standard (use.select parameter set to TRUE)",
                      responses = responses,
-                     displayList = TRUE
+                     use.select = TRUE
                  ),
                  
                  question.list(
                      id = "ComboBoxPlaceholder",
                      label = "Combo-box, custom message (set via the selectizePlaceholder parameter)",
                      responses = responses,
-                     displayList = TRUE,
+                     use.select = TRUE,
                      selectizePlaceholder = "I need a response!"
                  ),
                  
@@ -69,7 +69,7 @@ function(input, output, session) {
                      id = "ComboBoxOptional",
                      label = "Combo-box, no response required",
                      responses = responses,
-                     displayList = TRUE,
+                     use.select = TRUE,
                      selectizePlaceholder = "This question is optional",
                      required = FALSE
                  ),
@@ -83,7 +83,7 @@ function(input, output, session) {
                      id = "ComboBoxNarrow",
                      label = "Combo-box, narrow (width parameter set to '200px'):",
                      responses = responses,
-                     displayList = TRUE,
+                     use.select = TRUE,
                      width = "200px"
                  )
             ),

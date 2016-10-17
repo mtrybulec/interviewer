@@ -31,7 +31,7 @@ function(input, output, session) {
                         ids = c("<=20", "21-30", "31-40", ">40"),
                         labels = c("20 or younger", "21 to 30", "31 to 40", "older than 40")
                     ),
-                    displayList = TRUE
+                    use.select = TRUE
                 )
             ),
             
@@ -53,7 +53,7 @@ function(input, output, session) {
                         ids = c("sph", "t", "lt", "dt"),
                         labels = c("smartphone", "tablet", "laptop", "desktop")
                     ),
-                    displayList = TRUE,
+                    use.select = TRUE,
                     multiple = TRUE,
                     required = FALSE
                 )

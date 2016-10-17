@@ -22,7 +22,7 @@
 #'     each row represents a single response.
 #' @param multiple (logical) if \code{FALSE}, defines a single-choice question;
 #'     if \code{TRUE}, dfines a multiple-choice question.
-#' @param displayList (logical) if \code{FALSE}, displays radio-buttons
+#' @param use.select (logical) if \code{FALSE}, displays radio-buttons
 #'     for single-choice questions and check-boxes for multiple-choice
 #'     questions; if \code{TRUE}, displays a combo-box with all responses available
 #'     through the drop-down list.
@@ -31,13 +31,13 @@
 #'     moving on to subsequent pages of the questionnaire.
 #' @param inline (logical) if \code{FALSE}, radio-buttons and check-boxes will be 
 #'     displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
-#'     If \code{displayList == TRUE}, this parameter will be ignored.
+#'     If \code{use.select == TRUE}, this parameter will be ignored.
 #' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
 #' @param selectizePlaceholder (character) the text that will be displayed
 #'     in the combo-box when there are no responses selected yet; defaults to
 #'     \code{"Click to select a response"} for single-choice questions and
 #'     \code{"Click to select responses"} for multiple-choice questions.
-#'     If \code{displayList == FALSE}, this parameter will be ignored.
+#'     If \code{use.select == FALSE}, this parameter will be ignored.
 #' @param selectizeOptions (list) a list of selectize options as documented
 #'     in \code{\link[shiny]{selectInput}}. If defined, it overrides \code{selectizePlaceholder}.
 #'
@@ -47,19 +47,19 @@
 #'     \code{\link[shiny]{radioButtons}},
 #'     \code{\link[shiny]{selectInput}}.
 #' @export
-question.list <- function(id, label, responses, multiple = FALSE, displayList = FALSE, required = TRUE, inline = FALSE,
+question.list <- function(id, label, responses, multiple = FALSE, use.select = FALSE, required = TRUE, inline = FALSE,
                           width = NULL, selectizePlaceholder = NULL, selectizeOptions = NULL) {
-    if (!displayList && !is.null(selectizePlaceholder)) {
-        warning("selectizePlaceholder ignored - displayList is FALSE.")
+    if (!use.select && !is.null(selectizePlaceholder)) {
+        warning("selectizePlaceholder ignored - use.select is FALSE.")
     }
-    if (!displayList && !is.null(selectizeOptions)) {
-        warning("selectizeOptions ignored - displayList is FALSE.")
+    if (!use.select && !is.null(selectizeOptions)) {
+        warning("selectizeOptions ignored - use.select is FALSE.")
     }
     if (!is.null(selectizePlaceholder) && !is.null(selectizeOptions)) {
         warning("selectizePlaceholder ignored - selectizeOptions takes precedence.")
     }
-    if (inline && displayList) {
-        warning("inline ignored - displayList takes precedence.")
+    if (inline && use.select) {
+        warning("inline ignored - use.select takes precedence.")
     }
     
     domain <- shiny::getDefaultReactiveDomain()
@@ -73,7 +73,7 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
     selected <- isolate(input[[questionId]])
     
     ui <- function(context) {
-        if (multiple && !displayList) {
+        if (multiple && !use.select) {
             shiny::checkboxGroupInput(
                 choices = choices,
                 inline = inline,
@@ -82,7 +82,7 @@ question.list <- function(id, label, responses, multiple = FALSE, displayList = 
                 selected = selected,
                 width = width
             )
-        } else if (displayList) {
+        } else if (use.select) {
             if (is.null(selectizeOptions)) {
                 if (is.null(selectizePlaceholder)) {
                     if (multiple) {
