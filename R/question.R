@@ -9,6 +9,19 @@
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, displayList = FALSE, required = TRUE, inline = FALSE,
                           width = NULL, selectizePlaceholder = NULL, selectizeOptions = NULL) {
+    if (!displayList && !is.null(selectizePlaceholder)) {
+        warning("selectizePlaceholder ignored - displayList is FALSE.")
+    }
+    if (!displayList && !is.null(selectizeOptions)) {
+        warning("selectizeOptions ignored - displayList is FALSE.")
+    }
+    if (!is.null(selectizePlaceholder) && !is.null(selectizeOptions)) {
+        warning("selectizePlaceholder ignored - selectizeOptions takes precedence.")
+    }
+    if (inline && displayList) {
+        warning("inline ignored - displayList takes precedence.")
+    }
+    
     domain <- shiny::getDefaultReactiveDomain()
     input <- domain$input
     
