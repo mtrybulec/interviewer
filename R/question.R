@@ -71,7 +71,7 @@ question.list <- function(id, label, responses, multiple = FALSE, use.select = F
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
 
-        selected <- isolate(input[[questionId]])
+        selected <- shiny::isolate(input[[questionId]])
 
         if (multiple && !use.select) {
             shiny::checkboxGroupInput(
@@ -139,7 +139,7 @@ question.numeric <- function(id, label, min, max, step = NA, width = NULL, use.s
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
         
-        value <- isolate({
+        value <- shiny::isolate({
             result <- input[[questionId]]
             
             if (is.null(result) && use.slider) {
@@ -192,7 +192,7 @@ question.text <- function(id, label, cols = 80, rows = 1, required = TRUE) {
                 class = "form-control",
                 rows = rows, 
                 cols = cols,
-                isolate(input[[questionId]]))
+                shiny::isolate(input[[questionId]]))
         )
     }
 
