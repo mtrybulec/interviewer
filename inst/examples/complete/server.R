@@ -34,7 +34,7 @@ function(input, output, session) {
                     use.select = TRUE
                 )
             ),
-            
+
             interviewer::page(id = "2",
                 interviewer::question.list(
                     id = "MaritalStatus",
@@ -45,7 +45,7 @@ function(input, output, session) {
                     ),
                     required = FALSE
                 ),
-                
+
                 interviewer::question.list(
                     id = "Owns",
                     label = "Select, from the list, all items that you own:",
@@ -102,12 +102,39 @@ function(input, output, session) {
                                                 value = shiny::isolate(input[[questionId]]))
                         }
                          
-                        shiny::fluidRow(
-                            shiny::column(4, lapply(1:6, function(month) priceInput(month))),
-                            shiny::column(4, lapply(7:12, function(month) priceInput(month))),
-                            shiny::column(4, shiny::plotOutput(outputId = "questionPricePlot"))
+                        list(
+                            shiny::tags$label("Enter the product's price for each month of last year:"),
+                            shiny::p(),
+                            shiny::fluidRow(
+                                shiny::column(3, lapply(1:6, function(month) priceInput(month))),
+                                shiny::column(3, lapply(7:12, function(month) priceInput(month))),
+                                shiny::column(6,
+                                    shiny::fluidRow(
+                                        shiny::column(6, shiny::plotOutput(outputId = "questionPricePlot")),
+                                        shiny::column(6, shiny::plotOutput(outputId = "questionPriceBoxplot"))
+                                    )
+                                )
+                            )
                         )
-                    } 
+                    },
+                    validate = function(context) {
+                        result <- ""
+                        prices <- getPrices(convert.na = FALSE)
+
+                        if (is.null(checkedPrices) || !identical(checkedPrices, prices)) {
+                            stats <- boxplot.stats(prices$value)
+                            checkedPrices <<- prices
+
+                            if ((stats$n > 6) && (length(stats$out) > 0)) {
+                                result <- paste0(
+                                    "Please double-check the data; it seems some entries are inconsistent with the rest.<br />",
+                                    "Possibly suspect values: ", paste(stats$out, collapse = ", "), ".<br />",
+                                    "Click Next where you are happy with the data.")
+                            }
+                        }
+                        
+                        result
+                    }
                 )
             ),
             
@@ -168,22 +195,38 @@ function(input, output, session) {
             }
         )
 
-    output$questionPricePlot <- shiny::renderPlot({
-        ifNotNA <- function(currentValue, nonNullValue) {
-            if (is.na(currentValue)) {
-                nonNullValue
-            } else {
-                currentValue
-            }
+    checkedPrices <- NULL
+    
+    getPrices <- function(convert.na) {
+        prices <- data.frame(value = integer(0))
+        
+        for (month in 1:12) {
+            prices[month, "value"] <- input[[paste0("questionPrice", month)]]
         }
         
-        prices <- data.frame(value = integer(0))
+        prices
+    }
+    
+    output$questionPricePlot <- shiny::renderPlot({
+        prices <- getPrices(convert.na = FALSE)
 
-        for (month in 1:12) {
-            prices[month, "value"] <- ifNotNA(input[[paste0("questionPrice", month)]], 0)    
+        if (length(which(!is.na(prices$value))) > 0) {
+            par(mar = c(2, 0, 3, 0))    
+            plot(prices$value, 
+                 type = "b",
+                 xlab = "",
+                 ylab = "")
         }
+    })
 
-        plot(prices$value, type = "l")
+    output$questionPriceBoxplot <- shiny::renderPlot({
+        prices <- getPrices(convert.na = FALSE)
+        stats <- boxplot.stats(prices$value)
+        
+        if (stats$n > 0) {
+            par(mar = c(2, 0, 3, 0))    
+            boxplot(prices$value)    
+        }
     })
 
 }

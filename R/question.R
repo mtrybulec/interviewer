@@ -208,10 +208,10 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
             )
         }
     }
-    
+
     question <- .question(id, ui, required)
 
-    question$validate <- function() {
+    question$validate <- function(context) {
         result <- .validateIsAnswered(question)
 
         if (result == .validResult) {
@@ -313,8 +313,8 @@ question.text <- function(id, label, required = TRUE, use.textArea = FALSE, widt
     }
 
     question <- .question(id, ui, required)
-    
-    question$validate <- function() {
+
+    question$validate <- function(context) {
         result <- .validateIsAnswered(question)
         
         if ((result == .validResult) && !is.null(regex)) {
@@ -334,6 +334,6 @@ question.text <- function(id, label, required = TRUE, use.textArea = FALSE, widt
         
         result
     }
-    
+
     question
 }

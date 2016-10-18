@@ -1,4 +1,5 @@
 .interviewer-question-status {
+    clear: both;
     color: darkred;
     margin-top: -5px;
     margin-bottom: 10px;

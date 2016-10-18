@@ -42,7 +42,7 @@ page <- function(id, ...) {
                         
                         output[[questionStatusId]] <- shiny::renderUI({
                             if (context$pageIndex %in% context$visitedPageIndexes) {
-                                validationResult <- .validateResult(question)
+                                validationResult <- .validateResult(context, question)
 
                                 if (validationResult != .validResult) {
                                     shiny::HTML(paste("<div class=\"interviewer-question-status\">", validationResult, "</div>", sep = ""))

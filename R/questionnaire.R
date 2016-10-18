@@ -39,7 +39,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
         validationFailed <- NULL
         
         for (question in context$pages[[context$pageIndex]]$questions) {
-            validationResult <- .validateResult(question)
+            validationResult <- .validateResult(context, question)
     
             if (validationResult != .validResult) {
                 validationFailed <- question$id
