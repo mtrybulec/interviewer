@@ -6,6 +6,28 @@
     )
 }
 
+.validateResult <- function(question) {
+    result <- ""
+    
+    if ("validate" %in% names(question)) {
+        result <- question$validate()
+        
+        if (is.null(result)) {
+            result <- ""
+        }
+    } else if ((!is.null(question$required)) && question$required) {
+        domain <- shiny::getDefaultReactiveDomain()
+        input <- domain$input
+        questionId <- .questionId(question$id)
+        
+        if (!.isAnswered(input[[questionId]])) {
+            result <- "Response required."
+        }
+    }
+    
+    result
+}
+
 #' Define a question that displays a list of possible responses.
 #' 
 #' \code{question.list} retuns a question definition that displays responses

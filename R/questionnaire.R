@@ -36,18 +36,18 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
     shiny::observeEvent(input[[buttonNextID]], {
         context$visitedPageIndexes <- unique(c(context$visitedPageIndexes, context$pageIndex))
         
-        nonresponseFound <- NULL
+        validationFailed <- NULL
         
         for (question in context$pages[[context$pageIndex]]$questions) {
-            if ((!is.null(question$required)) && question$required) {
-                if (!.isAnswered(input[[question$id]])) {
-                    nonresponseFound <- question$id
-                    break;    
-                }
+            validationResult <- .validateResult(question)
+    
+            if (nchar(validationResult) > 0) {
+                validationFailed <- question$id
+                break;    
             }
         }
         
-        if (is.null(nonresponseFound)) {
+        if (is.null(validationFailed)) {
             if (context$pageIndex >= length(context$pages)) {
                 context$data <- shiny::reactiveValuesToList(input)
                 context$done <- TRUE
@@ -57,7 +57,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
                 shinyjs::runjs("window.scrollTo(0, 0);")
             }
         } else {
-            shinyjs::runjs(sprintf("interviewerJumpTo('%s');", nonresponseFound))
+            shinyjs::runjs(sprintf("interviewerJumpTo('%s');", validationFailed))
         }
     })
 

@@ -13,7 +13,7 @@ page <- function(id, ...) {
             lapply(questions, function(question) {
                 if (is.list(question) && all(c("id", "ui") %in% names(question))) {
                     result <- list(
-                        id = .questionId(question$id),
+                        id = question$id,
                         required = question$required
                     )
                 } else {
@@ -45,10 +45,10 @@ page <- function(id, ...) {
                         
                         output[[questionStatusId]] <- shiny::renderUI({
                             if (context$pageIndex %in% context$visitedPageIndexes) {
-                                if (!.isAnswered(input[[questionId]])) {
-                                    if ((!is.null(question$required)) && question$required) {
-                                        shiny::HTML(paste("<div class=\"interviewer-question-status\">", "Response required.", "</div>", sep = ""))
-                                    }
+                                validationResult <- .validateResult(question)
+
+                                if (nchar(validationResult) > 0) {
+                                    shiny::HTML(paste("<div class=\"interviewer-question-status\">", validationResult, "</div>", sep = ""))
                                 }
                             }
                         })
