@@ -4,4 +4,4 @@
 #'
 #' @docType package
 #' @name interviewer
-NULL
+"_PACKAGE"

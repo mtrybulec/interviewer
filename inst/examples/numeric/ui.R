@@ -1,7 +1,7 @@
 library(interviewer)
 library(shiny)
 
-fluidPage(
-    useInterviewer(),
-    uiOutput(outputId = "questionnaireOutput")
+shiny::fluidPage(
+    interviewer::useInterviewer(),
+    shiny::uiOutput(outputId = "questionnaireOutput")
 )

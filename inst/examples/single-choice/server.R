@@ -9,38 +9,38 @@ function(input, output, session) {
     )
     
     output$questionnaireOutput <- 
-        questionnaire(
+        interviewer::questionnaire(
             surveyId = "interviewer-demo-single-choice",
             userId = "demo",
             label = "Single-choice DEMO",
             welcome = list(
-                p("Welcome!"),
-                HTML("<p>This demo shows how <strong>single-choice</strong> questions can be defined in <strong>interviewer</strong>.</p>")
+                shiny::p("Welcome!"),
+                shiny::HTML("<p>This demo shows how <strong>single-choice</strong> questions can be defined in <strong>interviewer</strong>.</p>")
             ),
             goodbye = "Done!",
             
-            page(id = "radioButtons",
-                question.list(
+            interviewer::page(id = "radioButtons",
+                interviewer::question.list(
                     id = "RadioButtonsStandard",
                     label = "Radio-buttons, standard",
                     responses = responses
                 ),
 
-                question.list(
+                interviewer::question.list(
                     id = "RadioButtonsInline",
                     label = "Radio-buttons, inline (inline parameter set to TRUE)",
                     responses = responses,
                     inline = TRUE
                 ),
                 
-                question.list(
+                interviewer::question.list(
                     id = "RadioButtonsOptional",
                     label = "Radio-buttons, no response required (required parameter set to FALSE; a second click on a selected radio-button deselects it)",
                     responses = responses,
                     required = FALSE
                 ),
                 
-                question.list(
+                interviewer::question.list(
                     id = "RadioButtonsNarrow",
                     label = "Radio-buttons, inline and narrow (width parameter set to '200px')",
                     responses = responses,
@@ -49,43 +49,43 @@ function(input, output, session) {
                 )
             ),
             
-            page(id = "comboBoxes",
-                 question.list(
-                     id = "ComboBoxStandard",
-                     label = "Combo-box, standard (use.select parameter set to TRUE)",
-                     responses = responses,
-                     use.select = TRUE
-                 ),
+            interviewer::page(id = "comboBoxes",
+                interviewer::question.list(
+                    id = "ComboBoxStandard",
+                    label = "Combo-box, standard (use.select parameter set to TRUE)",
+                    responses = responses,
+                    use.select = TRUE
+                ),
                  
-                 question.list(
-                     id = "ComboBoxPlaceholder",
-                     label = "Combo-box, custom message (set via the selectizePlaceholder parameter)",
-                     responses = responses,
-                     use.select = TRUE,
-                     selectizePlaceholder = "I need a response!"
-                 ),
+                interviewer::question.list(
+                    id = "ComboBoxPlaceholder",
+                    label = "Combo-box, custom message (set via the selectizePlaceholder parameter)",
+                    responses = responses,
+                    use.select = TRUE,
+                    selectizePlaceholder = "I need a response!"
+                ),
                  
-                 question.list(
-                     id = "ComboBoxOptional",
-                     label = "Combo-box, no response required",
-                     responses = responses,
-                     use.select = TRUE,
-                     selectizePlaceholder = "This question is optional (required parameter set to FALSE)",
-                     required = FALSE
-                 ),
+                interviewer::question.list(
+                    id = "ComboBoxOptional",
+                    label = "Combo-box, no response required",
+                    responses = responses,
+                    use.select = TRUE,
+                    selectizePlaceholder = "This question is optional (required parameter set to FALSE)",
+                    required = FALSE
+                ),
                  
-                 p(paste(
-                     "Note how the combo-box below is displayed on top of the survey buttons. ",
-                     "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
-                 )),
+                shiny::p(paste(
+                    "Note how the combo-box below is displayed on top of the survey buttons. ",
+                    "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
+                )),
                                   
-                 question.list(
-                     id = "ComboBoxNarrow",
-                     label = "Combo-box, narrow (width parameter set to '200px')",
-                     responses = responses,
-                     use.select = TRUE,
-                     width = "200px"
-                 )
+                interviewer::question.list(
+                    id = "ComboBoxNarrow",
+                    label = "Combo-box, narrow (width parameter set to '200px')",
+                    responses = responses,
+                    use.select = TRUE,
+                    width = "200px"
+                )
             ),
             
             onExit = function(data) {

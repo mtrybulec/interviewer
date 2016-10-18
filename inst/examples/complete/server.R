@@ -4,18 +4,18 @@ library(shiny)
 function(input, output, session) {
 
     output$questionnaireOutput <- 
-        questionnaire(
+        interviewer::questionnaire(
             surveyId = "interviewer-demo-complete",
             userId = "demo",
             label = "Interviewer DEMO",
             welcome = list(
-                p("Welcome!"),
-                HTML("<p>This demo shows a relatively complete set of <strong>interviewer</strong> questions and options.</p>")
+                shiny::p("Welcome!"),
+                shiny::HTML("<p>This demo shows a relatively complete set of <strong>interviewer</strong> questions and options.</p>")
             ),
             goodbye = "Done!",
             
-            page(id = "1",
-                question.list(
+            interviewer::page(id = "1",
+                interviewer::question.list(
                     id = "Sex",
                     label = "Please enter your sex:",
                     responses = data.frame(
@@ -24,7 +24,7 @@ function(input, output, session) {
                     )
                 ),
 
-                question.list(
+                interviewer::question.list(
                     id = "Age",
                     label = "Please enter your age:",
                     responses = data.frame(
@@ -35,8 +35,8 @@ function(input, output, session) {
                 )
             ),
             
-            page(id = "2",
-                question.list(
+            interviewer::page(id = "2",
+                interviewer::question.list(
                     id = "MaritalStatus",
                     label = "What is your marital status?",
                     responses = data.frame(
@@ -46,7 +46,7 @@ function(input, output, session) {
                     required = FALSE
                 ),
                 
-                question.list(
+                interviewer::question.list(
                     id = "Owns",
                     label = "Select, from the list, all items that you own:",
                     responses = data.frame(
@@ -59,8 +59,8 @@ function(input, output, session) {
                 )
             ),
 
-            page(id = "3",
-                 question.list(
+            interviewer::page(id = "3",
+                interviewer::question.list(
                     id = "Pets",
                     label = "What pets do you have?",
                     multiple = TRUE,
@@ -70,7 +70,7 @@ function(input, output, session) {
                     )
                 ),
 
-                question.numeric(
+                interviewer::question.numeric(
                     id = "Cars",
                     label = "How many cars do you have?",
                     min = 0,
@@ -78,7 +78,7 @@ function(input, output, session) {
                     use.slider = TRUE
                 ),
 
-                question.numeric(
+                interviewer::question.numeric(
                     id = "Kids",
                     label = "How many kids do you have?",
                     min = 0,
@@ -87,72 +87,72 @@ function(input, output, session) {
             ),
 
             # Page with a custom question:
-            page(id = "C",
-                 list(
-                     id = "chart",
-                     dataIds = paste0("Price", c(1:12)),
-                     ui = function(context) {
-                         priceInput <- function(month) {
-                             questionId <- paste0("questionPrice", month)
-                             numericInput(inputId = questionId, 
-                                          label = month.abb[month], 
-                                          min = 1, 
-                                          max = 1000, 
-                                          value = isolate(input[[questionId]]))
-                         }
+            interviewer::page(id = "C",
+                list(
+                    id = "chart",
+                    dataIds = paste0("Price", c(1:12)),
+                    ui = function(context) {
+                        priceInput <- function(month) {
+                            questionId <- paste0("questionPrice", month)
+                            shiny::numericInput(inputId = questionId, 
+                                                label = month.abb[month], 
+                                                min = 1, 
+                                                max = 1000, 
+                                                value = shiny::isolate(input[[questionId]]))
+                        }
                          
-                         fluidRow(
-                             column(4, lapply(1:6, function(month) priceInput(month))),
-                             column(4, lapply(7:12, function(month) priceInput(month))),
-                             column(4, plotOutput(outputId = "questionPricePlot"))
-                         )
-                     } 
-                 )
+                        shiny::fluidRow(
+                            shiny::column(4, lapply(1:6, function(month) priceInput(month))),
+                            shiny::column(4, lapply(7:12, function(month) priceInput(month))),
+                            shiny::column(4, shiny::plotOutput(outputId = "questionPricePlot"))
+                        )
+                    } 
+                )
             ),
             
-            page(id = "4",
-                 question.text(
-                     id = "Nick",
-                     label = "What's your nickname?"
-                 ),
+            interviewer::page(id = "4",
+                interviewer::question.text(
+                    id = "Nick",
+                    label = "What's your nickname?"
+                ),
 
-                 HTML("<p>Now, before you answer the next question,<br />please take a moment to think...</p>"),
+                shiny::HTML("<p>Now, before you answer the next question,<br />please take a moment to think...</p>"),
 
-                 question.text(
-                     id = "Comment",
-                     label = "Anything you want to add?",
-                     cols = 80,
-                     rows = 3
-                 ),
+                interviewer::question.text(
+                    id = "Comment",
+                    label = "Anything you want to add?",
+                    cols = 80,
+                    rows = 3
+                ),
                  
-                 p("The question below has responses ordered randomly (except for the last response)."),
+                shiny::p("The question below has responses ordered randomly (except for the last response)."),
                  
-                 question.list(
-                     id = "Random",
-                     label = "Which continents have you ever been to?",
-                     responses = {
-                         responses <- data.frame(
-                             ids = c("af", "as", "an", "au", "eu", "na", "sa"),
-                             labels = c("Africa", "Asia", "Antarctica", "Australia", "Europe", "North America", "South America")
-                         )
+                interviewer::question.list(
+                    id = "Random",
+                    label = "Which continents have you ever been to?",
+                    responses = {
+                        responses <- data.frame(
+                            ids = c("af", "as", "an", "au", "eu", "na", "sa"),
+                            labels = c("Africa", "Asia", "Antarctica", "Australia", "Europe", "North America", "South America")
+                        )
                          
-                         rand <- sample(nrow(responses))
+                        rand <- sample(nrow(responses))
                          
-                         rbind(responses[rand, ], data.frame(ids = "dk", labels = "Don't know..."))
-                     },
-                     multiple = TRUE
-                 )
+                        rbind(responses[rand, ], data.frame(ids = "dk", labels = "Don't know..."))
+                    },
+                    multiple = TRUE
+                )
             ),
             
-            page(id = "5",
-                 question.list(
-                     id = "Like",
-                     label = "Did you like the questionnaire?",
-                     responses = data.frame(
-                         ids = c("y", "n"),
-                         labels = c("Yes", "No")
-                     )
-                 )
+            interviewer::page(id = "5",
+                interviewer::question.list(
+                    id = "Like",
+                    label = "Did you like the questionnaire?",
+                    responses = data.frame(
+                        ids = c("y", "n"),
+                        labels = c("Yes", "No")
+                    )
+                )
             ),
             
             onExit = function(data) {
@@ -161,7 +161,7 @@ function(input, output, session) {
             }
         )
 
-    output$questionPricePlot <- renderPlot({
+    output$questionPricePlot <- shiny::renderPlot({
         ifNotNA <- function(currentValue, nonNullValue) {
             if (is.na(currentValue)) {
                 nonNullValue
