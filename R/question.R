@@ -32,13 +32,13 @@
 #'     through the drop-down list.
 #' @param inline (logical) if \code{FALSE}, radio-buttons and check-boxes will be 
 #'     displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
-#'     If \code{use.select == TRUE}, this parameter will be ignored.
+#'     If \code{use.select == TRUE}, this argument will be ignored.
 #' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
 #' @param selectizePlaceholder (character) the text that will be displayed
 #'     in the combo-box when there are no responses selected yet; defaults to
 #'     \code{"Click to select a response"} for single-choice questions and
 #'     \code{"Click to select responses"} for multiple-choice questions.
-#'     If \code{use.select == FALSE}, this parameter will be ignored.
+#'     If \code{use.select == FALSE}, this argument will be ignored.
 #' @param selectizeOptions (list) a list of selectize options as documented
 #'     in \code{\link[shiny]{selectInput}}. If defined, it overrides \code{selectizePlaceholder}.
 #'
@@ -148,7 +148,7 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
 #' @param required (logical) if \code{FALSE}, the respondent is free to not choose
 #'     a response; if \code{TRUE}, the respondent must select a response before 
 #'     moving on to subsequent pages of the questionnaire.
-#'     If \code{use.slider == TRUE}, this parameter will be ignored.
+#'     If \code{use.slider == TRUE}, this argument will be ignored.
 #' @param use.slider (logical) if \code{FALSE}, displays an input line 
 #'     with a spinner to increase/decrease the value; if \code{TRUE},
 #'     displays a slider control.

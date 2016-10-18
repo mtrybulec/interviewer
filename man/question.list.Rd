@@ -34,7 +34,7 @@ through the drop-down list.}
 
 \item{inline}{(logical) if \code{FALSE}, radio-buttons and check-boxes will be 
 displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
-If \code{use.select == TRUE}, this parameter will be ignored.}
+If \code{use.select == TRUE}, this argument will be ignored.}
 
 \item{width}{(character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.}
 
@@ -42,7 +42,7 @@ If \code{use.select == TRUE}, this parameter will be ignored.}
 in the combo-box when there are no responses selected yet; defaults to
 \code{"Click to select a response"} for single-choice questions and
 \code{"Click to select responses"} for multiple-choice questions.
-If \code{use.select == FALSE}, this parameter will be ignored.}
+If \code{use.select == FALSE}, this argument will be ignored.}
 
 \item{selectizeOptions}{(list) a list of selectize options as documented
 in \code{\link[shiny]{selectInput}}. If defined, it overrides \code{selectizePlaceholder}.}

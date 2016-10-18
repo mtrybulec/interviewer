@@ -22,14 +22,14 @@ function(input, output, session) {
             interviewer::page(id = "checkBoxes",
                 interviewer::question.list(
                     id = "CheckBoxesStandard",
-                    label = "Check-boxes, standard (multiple parameter set to TRUE)",
+                    label = "Check-boxes, standard (multiple set to TRUE)",
                     responses = responses,
                     multiple = TRUE
                 ),
 
                 interviewer::question.list(
                     id = "CheckBoxesInline",
-                    label = "Check-boxes, inline (inline parameter set to TRUE)",
+                    label = "Check-boxes, inline (inline set to TRUE)",
                     responses = responses,
                     multiple = TRUE,
                     inline = TRUE
@@ -37,7 +37,7 @@ function(input, output, session) {
                 
                 interviewer::question.list(
                     id = "CheckBoxesOptional",
-                    label = "Check-boxes, no response required (required parameter set to FALSE)",
+                    label = "Check-boxes, no response required (required set to FALSE)",
                     responses = responses,
                     multiple = TRUE,
                     required = FALSE
@@ -45,7 +45,7 @@ function(input, output, session) {
                 
                 interviewer::question.list(
                     id = "CheckBoxesNarrow",
-                    label = "Check-boxes, inline and narrow (width parameter set to '200px')",
+                    label = "Check-boxes, inline and narrow (width set to '200px')",
                     responses = responses,
                     multiple = TRUE,
                     inline = TRUE,
@@ -56,7 +56,7 @@ function(input, output, session) {
             interviewer::page(id = "comboBoxes",
                 interviewer::question.list(
                     id = "ComboBoxStandard",
-                    label = "Combo-box, standard (use.select parameter set to TRUE)",
+                    label = "Combo-box, standard (use.select set to TRUE)",
                     responses = responses,
                     multiple = TRUE,
                     use.select = TRUE
@@ -64,7 +64,7 @@ function(input, output, session) {
                  
                 interviewer::question.list(
                     id = "ComboBoxPlaceholder",
-                    label = "Combo-box, custom message (set via the selectizePlaceholder parameter)",
+                    label = "Combo-box, custom message (selectizePlaceholder set to 'I need a response!')",
                     responses = responses,
                     use.select = TRUE,
                     multiple = TRUE,
@@ -73,7 +73,7 @@ function(input, output, session) {
                  
                 question.list(
                     id = "ComboBoxOptional",
-                    label = "Combo-box, no response required (required parameter set to FALSE)",
+                    label = "Combo-box, no response required (required set to FALSE)",
                     responses = responses,
                     use.select = TRUE,
                     multiple = TRUE,
@@ -88,7 +88,7 @@ function(input, output, session) {
                                   
                 interviewer::question.list(
                     id = "ComboBoxNarrow",
-                    label = "Combo-box, narrow (width parameter set to '200px')",
+                    label = "Combo-box, narrow (width set to '200px')",
                     responses = responses,
                     use.select = TRUE,
                     multiple = TRUE,

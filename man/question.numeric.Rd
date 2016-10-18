@@ -24,7 +24,7 @@ for the \code{input} slot.}
 \item{required}{(logical) if \code{FALSE}, the respondent is free to not choose
 a response; if \code{TRUE}, the respondent must select a response before 
 moving on to subsequent pages of the questionnaire.
-If \code{use.slider == TRUE}, this parameter will be ignored.}
+If \code{use.slider == TRUE}, this argument will be ignored.}
 
 \item{use.slider}{(logical) if \code{FALSE}, displays an input line 
 with a spinner to increase/decrease the value; if \code{TRUE},

@@ -8,7 +8,7 @@ runExample(example)
 }
 \arguments{
 \item{example}{(character) the directory name of one of the sub-directories in the pacakge's
-\code{inst/examples/} directory. Call \code{runExample()} with no parameters to get a list
+\code{inst/examples/} directory. Call \code{runExample()} with no arguments to get a list
 of valid examples.}
 }
 \description{

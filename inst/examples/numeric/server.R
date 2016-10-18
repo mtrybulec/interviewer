@@ -24,7 +24,7 @@ function(input, output, session) {
 
                 interviewer::question.numeric(
                     id = "NumericOptional",
-                    label = "Numeric, no response required (required parameter set to FALSE)",
+                    label = "Numeric, no response required (required set to FALSE)",
                     min = 0,
                     max = 20,
                     required = FALSE
@@ -42,7 +42,7 @@ function(input, output, session) {
                 
                 interviewer::question.numeric(
                     id = "NumericNarrow",
-                    label = "Numeric, narrow (width parameter set to '200px')",
+                    label = "Numeric, narrow (width set to '200px')",
                     min = 0,
                     max = 20,
                     width = "200px"
@@ -69,7 +69,7 @@ function(input, output, session) {
                  
                 interviewer::question.numeric(
                     id = "SliderNarrow",
-                    label = "Slider, narrow (width parameter set to '200px'):",
+                    label = "Slider, narrow (width set to '200px'):",
                     min = 0,
                     max = 20,
                     width = "200px",

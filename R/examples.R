@@ -3,7 +3,7 @@
 #' \code{runExample} runs one of the examples distributed wiht the \code{interviewer} package.
 #' 
 #' @param example (character) the directory name of one of the sub-directories in the pacakge's
-#'     \code{inst/examples/} directory. Call \code{runExample()} with no parameters to get a list
+#'     \code{inst/examples/} directory. Call \code{runExample()} with no arguments to get a list
 #'     of valid examples.
 #'     
 #' @export
