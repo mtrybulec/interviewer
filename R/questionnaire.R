@@ -98,7 +98,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
             nextButtonDiv <- shinyjs::hidden(nextButtonDiv)
         }
 
-        shiny::tags$div(id = "interviewer-buttons",
+        shiny::div(id = "interviewer-buttons",
             initButtonDiv,
             backButtonDiv,
             nextButtonDiv
@@ -107,24 +107,24 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
   
     shiny::renderUI({
         if (context$done) {
-            pageContent <- shiny::tags$p(goodbye)
+            pageContent <- shiny::p(goodbye)
         } else {
             if (!context$started) {
-                pageContent <- shiny::tags$p(welcome)
+                pageContent <- shiny::p(welcome)
             } else {
                 pageContent <- context$page$ui(context)
             }
             
             pageContent <- list(
                 pageContent,
-                shiny::tags$hr(),
+                shiny::hr(),
                 shiny::uiOutput(outputId = buttonsID)
             )
         }
         
         list(
-            shiny::tags$h2(label),
-            shiny::tags$hr(),
+            shiny::h2(label),
+            shiny::hr(),
             pageContent
         )
     })

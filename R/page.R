@@ -20,7 +20,7 @@ page <- function(id, ...) {
                 result    
             }),
         ui = function(context) {
-            shiny::tags$div(
+            shiny::div(
                 id = id,
                 class = "page",
                 lapply(questions, function(question) {

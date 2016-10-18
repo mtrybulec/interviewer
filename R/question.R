@@ -242,7 +242,7 @@ question.text <- function(id, label, cols = 80, rows = 1, required = TRUE) {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
 
-        shiny::tags$div(class = "form-group shiny-input-container",
+        shiny::div(class = "form-group shiny-input-container",
             shiny::tags$label("for" = questionId, label),
             shiny::tags$textarea(
                 id = questionId, 
