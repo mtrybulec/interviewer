@@ -234,7 +234,7 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 }
 
 #' @export
-question.text <- function(id, label, cols = 80, rows = 1, required = TRUE) {
+question.text <- function(id, label, required = TRUE, width = NULL, height = NULL, cols = 80, rows = 1, placeholder = NULL) {
     questionId <- .questionId(id)
     
     ui <- function(context) {
@@ -242,11 +242,14 @@ question.text <- function(id, label, cols = 80, rows = 1, required = TRUE) {
         input <- domain$input
 
         shiny::textAreaInput(
+            cols = cols,
+            height = height,
             inputId = questionId,
             label = label,
+            placeholder = placeholder,
+            rows = rows,
             value = shiny::isolate(input[[questionId]]),
-            cols = cols,
-            rows = rows
+            width = width
         )
     }
 
