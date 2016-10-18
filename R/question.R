@@ -233,7 +233,7 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 
 #' @export
 question.text <- function(id, label, required = TRUE, width = NULL, height = NULL, cols = NULL, rows = NULL, placeholder = NULL,
-                          use.textArea = FALSE, regex = NULL) {
+                          use.textArea = FALSE, regex = NULL, regexHint = NULL) {
     if (!use.textArea) {
         if (!is.null(height)) {
             warning("height ignored - use.textArea is FALSE.")    
@@ -254,6 +254,10 @@ question.text <- function(id, label, required = TRUE, width = NULL, height = NUL
         if (!is.null(height) && !is.null(rows)) {
             warning("rows ignored - height takes precedence.")
         }
+    }
+    
+    if (!is.null(regexHint) && is.null(regex)) {
+        warning("regexHint ignored - regex not defined.")
     }
     
     questionId <- .questionId(id)
@@ -298,7 +302,11 @@ question.text <- function(id, label, required = TRUE, width = NULL, height = NUL
             value <- input[[questionId]]
             
             if (.isAnswered(value) && !grepl(regex, value)) {
-                result <- sprintf("Value does not match the given pattern (%s).", regex)
+                if (is.null(regexHint)) {
+                    regexHint <- regex
+                }
+
+                result <- sprintf("Value does not match the given pattern (%s).", regexHint)
             }
         }
         

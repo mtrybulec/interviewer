@@ -67,7 +67,8 @@ function(input, output, session) {
                     responses = data.frame(
                         ids = c("c", "d", "s"),
                         labels = c("cat", "dog", "spider")
-                    )
+                    ),
+                    required = FALSE
                 ),
 
                 interviewer::question.numeric(
@@ -118,8 +119,9 @@ function(input, output, session) {
 
                 interviewer::question.text(
                     id = "Phone",
-                    label = "What is your phone number? [xxx xxx-xxx]",
-                    regex = "\\d{3} \\d{3}-\\d{3}"
+                    label = "What is your phone number? [ddd ddd-ddd]",
+                    regex = "\\d{3} \\d{3}-\\d{3}",
+                    regexHint = "ddd ddd-ddd"
                 ),
                 
                 shiny::HTML("<p>Now, before you answer the next question,<br />please take a moment to think...</p>"),
