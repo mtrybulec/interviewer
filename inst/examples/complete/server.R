@@ -120,7 +120,7 @@ function(input, output, session) {
                 interviewer::question.text(
                     id = "Phone",
                     label = "What is your phone number? [ddd ddd-ddd]",
-                    regex = "\\d{3} \\d{3}-\\d{3}",
+                    regex = "^\\d{3} \\d{3}-\\d{3}$",
                     regexHint = "ddd ddd-ddd"
                 ),
                 
