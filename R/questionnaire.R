@@ -41,7 +41,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
         for (question in context$pages[[context$pageIndex]]$questions) {
             validationResult <- .validateResult(question)
     
-            if (nchar(validationResult) > 0) {
+            if (validationResult != .validResult) {
                 validationFailed <- question$id
                 break;    
             }

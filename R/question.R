@@ -1,31 +1,10 @@
-.question <- function(id, ui, required) {
+.question <- function(id, ui, required, validate = NULL) {
     list(
         id = id,
         ui = ui,
-        required = required
+        required = required,
+        validate = validate
     )
-}
-
-.validateResult <- function(question) {
-    result <- ""
-    
-    if ("validate" %in% names(question)) {
-        result <- question$validate()
-        
-        if (is.null(result)) {
-            result <- ""
-        }
-    } else if ((!is.null(question$required)) && question$required) {
-        domain <- shiny::getDefaultReactiveDomain()
-        input <- domain$input
-        questionId <- .questionId(question$id)
-        
-        if (!.isAnswered(input[[questionId]])) {
-            result <- "Response required."
-        }
-    }
-    
-    result
 }
 
 #' Define a question that displays a list of possible responses.
@@ -229,8 +208,29 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
             )
         }
     }
+    
+    question <- .question(id, ui, required)
 
-    .question(id, ui, required)
+    question$validate <- function() {
+        result <- .validateIsAnswered(question)
+
+        if (result == .validResult) {
+            domain <- shiny::getDefaultReactiveDomain()
+            input <- domain$input
+
+            value <- input[[questionId]]
+
+            if (.isAnswered(value)) {
+                if (value < min || value > max) {
+                    result <- sprintf("Value out of bounds (%g..%g).", min, max)
+                }
+            }
+        }
+        
+        result
+    }
+
+    question
 }
 
 # http://stackoverflow.com/questions/14452465/how-to-create-textarea-as-input-in-a-shiny-webapp-in-r

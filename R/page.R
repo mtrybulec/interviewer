@@ -12,10 +12,7 @@ page <- function(id, ...) {
         questions = 
             lapply(questions, function(question) {
                 if (is.list(question) && all(c("id", "ui") %in% names(question))) {
-                    result <- list(
-                        id = question$id,
-                        required = question$required
-                    )
+                    result <- question
                 } else {
                     result <- NULL
                 }
@@ -47,7 +44,7 @@ page <- function(id, ...) {
                             if (context$pageIndex %in% context$visitedPageIndexes) {
                                 validationResult <- .validateResult(question)
 
-                                if (nchar(validationResult) > 0) {
+                                if (validationResult != .validResult) {
                                     shiny::HTML(paste("<div class=\"interviewer-question-status\">", validationResult, "</div>", sep = ""))
                                 }
                             }
