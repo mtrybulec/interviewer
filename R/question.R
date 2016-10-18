@@ -232,8 +232,30 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 }
 
 #' @export
-question.text <- function(id, label, required = TRUE, width = NULL, height = NULL, cols = 80, rows = 1, placeholder = NULL,
+question.text <- function(id, label, required = TRUE, width = NULL, height = NULL, cols = NULL, rows = NULL, placeholder = NULL,
                           use.textArea = FALSE, regex = NULL) {
+    if (!use.textArea) {
+        if (!is.null(height)) {
+            warning("height ignored - use.textArea is FALSE.")    
+        }
+        if (!is.null(cols)) {
+            warning("cols ignored - use.textArea is FALSE.")    
+        }
+        if (!is.null(rows)) {
+            warning("rows ignored - use.textArea is FALSE.")    
+        }
+        if (!is.null(placeholder)) {
+            warning("placeholder ignored - use.textArea is FALSE.")    
+        }
+    } else {
+        if (!is.null(width) && !is.null(cols)) {
+            warning("cols ignored - width takes precedence.")
+        }
+        if (!is.null(height) && !is.null(rows)) {
+            warning("rows ignored - height takes precedence.")
+        }
+    }
+    
     questionId <- .questionId(id)
     
     ui <- function(context) {

@@ -127,8 +127,6 @@ function(input, output, session) {
                 interviewer::question.text(
                     id = "Comment",
                     label = "Anything you want to add?",
-                    cols = 80,
-                    rows = 3,
                     use.textArea = TRUE
                 ),
                  
