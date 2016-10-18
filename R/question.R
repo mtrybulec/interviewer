@@ -231,18 +231,47 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
     question
 }
 
+#' Define a question that allows text entry.
+#' 
+#' \code{question.text} retuns a question definition that uses
+#' an input line or text area for entry of text values.
+#' 
+#' @param id (character) the unique identifier of the question; it will be used
+#'     as the column name in the data.frame returning the questionnaire data
+#'     and when prefixed with 'question' - as the \code{inputId} 
+#'     for the \code{input} slot.
+#' @param label (character) the text displayed as the header of the question.
+#' @param required (logical) if \code{FALSE}, the respondent is free to not choose
+#'     a response; if \code{TRUE}, the respondent must select a response before 
+#'     moving on to subsequent pages of the questionnaire.
+#' @param use.textArea (logical) if \code{FALSE}, displays a single-row edit line;
+#'     if \code{TRUE}, displays a larger text area.
+#' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
+#' @param height (character) the height of the input, e.g. \code{'400px'} or \code{'100\%'}.
+#'     If \code{use.textArea == FALSE}, this argument is ignored.
+#' @param rows (character) the height of the input in text rows.
+#'     If \code{use.textArea == FALSE}, this argument is ignored.
+#'     If \code{height} is set, this argument is ignored.
+#' @param placeholder (character) the text that will be displayed
+#'     in the edit line when no text is entered yet.
+#' @param regex (character) a regular expression that can be used to validate the entered value.
+#' @param regexHint (character) a human-readable description of the regular expression
+#'     to be displayed when the entered value doesn't match the \code{regex}.
+#'     If \code{regex} is not set, this argument is ignored.
+#'     
+#' @family question definitions
+#' @seealso
+#'     \code{\link[shiny]{textAreaInput}},
+#'     \code{\link[shiny]{textInput}}.
 #' @export
-question.text <- function(id, label, required = TRUE, width = NULL, height = NULL, rows = NULL, placeholder = NULL,
-                          use.textArea = FALSE, regex = NULL, regexHint = NULL) {
+question.text <- function(id, label, required = TRUE, use.textArea = FALSE, width = NULL, height = NULL, rows = NULL, 
+                          placeholder = NULL, regex = NULL, regexHint = NULL) {
     if (!use.textArea) {
         if (!is.null(height)) {
             warning("height ignored - use.textArea is FALSE.")    
         }
         if (!is.null(rows)) {
             warning("rows ignored - use.textArea is FALSE.")    
-        }
-        if (!is.null(placeholder)) {
-            warning("placeholder ignored - use.textArea is FALSE.")    
         }
     } else {
         if (!is.null(height) && !is.null(rows)) {

@@ -57,6 +57,7 @@ and multiple-choice questions.
     \code{\link[shiny]{radioButtons}},
     \code{\link[shiny]{selectInput}}.
 
-Other question.definitions: \code{\link{question.numeric}}
+Other question.definitions: \code{\link{question.numeric}},
+  \code{\link{question.text}}
 }
 

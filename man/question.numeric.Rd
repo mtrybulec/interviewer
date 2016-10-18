@@ -40,6 +40,7 @@ an input line with a spinner or a slider control for entry of numeric values.
 \code{\link[shiny]{numericInput}},
     \code{\link[shiny]{sliderInput}}.
 
-Other question.definitions: \code{\link{question.list}}
+Other question.definitions: \code{\link{question.list}},
+  \code{\link{question.text}}
 }
 
