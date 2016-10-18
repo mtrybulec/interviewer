@@ -116,6 +116,12 @@ function(input, output, session) {
                     label = "What's your nickname?"
                 ),
 
+                interviewer::question.text(
+                    id = "Phone",
+                    label = "What is your phone number? [xxx xxx-xxx]",
+                    regex = "\\d{3} \\d{3}-\\d{3}"
+                ),
+                
                 shiny::HTML("<p>Now, before you answer the next question,<br />please take a moment to think...</p>"),
 
                 interviewer::question.text(

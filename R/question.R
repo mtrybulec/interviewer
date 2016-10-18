@@ -220,10 +220,8 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 
             value <- input[[questionId]]
 
-            if (.isAnswered(value)) {
-                if (value < min || value > max) {
-                    result <- sprintf("Value out of bounds (%g..%g).", min, max)
-                }
+            if (.isAnswered(value) && (value < min || value > max)) {
+                result <- sprintf("Value out of bounds (%g..%g).", min, max)
             }
         }
         
@@ -235,7 +233,7 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 
 #' @export
 question.text <- function(id, label, required = TRUE, width = NULL, height = NULL, cols = 80, rows = 1, placeholder = NULL,
-                          use.textArea = FALSE) {
+                          use.textArea = FALSE, regex = NULL) {
     questionId <- .questionId(id)
     
     ui <- function(context) {
@@ -266,5 +264,24 @@ question.text <- function(id, label, required = TRUE, width = NULL, height = NUL
         }
     }
 
-    .question(id, ui, required)
+    question <- .question(id, ui, required)
+    
+    question$validate <- function() {
+        result <- .validateIsAnswered(question)
+        
+        if ((result == .validResult) && !is.null(regex)) {
+            domain <- shiny::getDefaultReactiveDomain()
+            input <- domain$input
+            
+            value <- input[[questionId]]
+            
+            if (.isAnswered(value) && !grepl(regex, value)) {
+                result <- sprintf("Value does not match the given pattern (%s).", regex)
+            }
+        }
+        
+        result
+    }
+    
+    question
 }
