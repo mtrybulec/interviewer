@@ -233,7 +233,6 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
     question
 }
 
-# http://stackoverflow.com/questions/14452465/how-to-create-textarea-as-input-in-a-shiny-webapp-in-r
 #' @export
 question.text <- function(id, label, cols = 80, rows = 1, required = TRUE) {
     questionId <- .questionId(id)
@@ -242,14 +241,12 @@ question.text <- function(id, label, cols = 80, rows = 1, required = TRUE) {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
 
-        shiny::div(class = "form-group shiny-input-container",
-            shiny::tags$label("for" = questionId, label),
-            shiny::tags$textarea(
-                id = questionId, 
-                class = "form-control",
-                rows = rows, 
-                cols = cols,
-                shiny::isolate(input[[questionId]]))
+        shiny::textAreaInput(
+            inputId = questionId,
+            label = label,
+            value = shiny::isolate(input[[questionId]]),
+            cols = cols,
+            rows = rows
         )
     }
 
