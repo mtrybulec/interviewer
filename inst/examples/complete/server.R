@@ -122,7 +122,8 @@ function(input, output, session) {
                     id = "Comment",
                     label = "Anything you want to add?",
                     cols = 80,
-                    rows = 3
+                    rows = 3,
+                    use.textArea = TRUE
                 ),
                  
                 shiny::p("The question below has responses ordered randomly (except for the last response)."),
