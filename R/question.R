@@ -7,6 +7,10 @@
     )
 }
 
+.isQuestion <- function(question) {
+    is.list(question) && all(c("id", "ui") %in% names(question))
+}
+
 #' Define a question that displays a list of possible responses.
 #' 
 #' \code{question.list} retuns a question definition that displays responses

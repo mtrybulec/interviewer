@@ -11,7 +11,7 @@ page <- function(id, ...) {
         id = id,
         questions = 
             lapply(questions, function(question) {
-                if (is.list(question) && all(c("id", "ui") %in% names(question))) {
+                if (.isQuestion(question)) {
                     result <- question
                 } else {
                     result <- NULL
@@ -24,7 +24,7 @@ page <- function(id, ...) {
                 id = id,
                 class = "page",
                 lapply(questions, function(question) {
-                    if (is.list(question) && all(c("id", "ui") %in% names(question))) {
+                    if (.isQuestion(question)) {
                         if ("dataIds" %in% names(question)) {
                             dataIds <- setdiff(question$dataIds, context$questionOrder)
                             context$questionOrder <- c(context$questionOrder, dataIds)
@@ -41,12 +41,10 @@ page <- function(id, ...) {
                         )
                         
                         output[[questionStatusId]] <- shiny::renderUI({
-                            if (context$pageIndex %in% context$visitedPageIndexes) {
-                                validationResult <- .validateResult(context, question)
+                            validationResult <- context$validationResults[[question$id]]
 
-                                if (validationResult != .validResult) {
-                                    shiny::HTML(paste("<div class=\"interviewer-question-status\">", validationResult, "</div>", sep = ""))
-                                }
+                            if (!is.null(validationResult) && (validationResult != .validResult)) {
+                                shiny::div(class = "interviewer-question-status", shiny::HTML(validationResult))
                             }
                         })
                     } else {

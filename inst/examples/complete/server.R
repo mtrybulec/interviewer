@@ -105,13 +105,15 @@ function(input, output, session) {
                         list(
                             shiny::tags$label("Enter the product's price for each month of last year:"),
                             shiny::p(),
-                            shiny::fluidRow(
-                                shiny::column(3, lapply(1:6, function(month) priceInput(month))),
-                                shiny::column(3, lapply(7:12, function(month) priceInput(month))),
-                                shiny::column(6,
-                                    shiny::fluidRow(
-                                        shiny::column(6, shiny::plotOutput(outputId = "questionPricePlot")),
-                                        shiny::column(6, shiny::plotOutput(outputId = "questionPriceBoxplot"))
+                            shiny::div(
+                                shiny::fluidRow(
+                                    shiny::column(3, lapply(1:6, function(month) priceInput(month))),
+                                    shiny::column(3, lapply(7:12, function(month) priceInput(month))),
+                                    shiny::column(6,
+                                        shiny::fluidRow(
+                                            shiny::column(6, shiny::plotOutput(outputId = "questionPricePlot")),
+                                            shiny::column(6, shiny::plotOutput(outputId = "questionPriceBoxplot"))
+                                        )
                                     )
                                 )
                             )
@@ -198,10 +200,18 @@ function(input, output, session) {
     checkedPrices <- NULL
     
     getPrices <- function(convert.na) {
+        ifNULLThenNA <- function(value) {
+            if (is.null(value)) {
+                value <- NA
+            }
+            
+            value
+        }
+        
         prices <- data.frame(value = integer(0))
         
         for (month in 1:12) {
-            prices[month, "value"] <- input[[paste0("questionPrice", month)]]
+            prices[month, "value"] <- ifNULLThenNA(input[[paste0("questionPrice", month)]])
         }
         
         prices

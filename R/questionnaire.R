@@ -17,7 +17,8 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
         pages = list(...),
         pageIndex = 1,
         visitedPageIndexes = NULL,
-        questionOrder = NULL
+        questionOrder = NULL,
+        validationResults = list()
     )
 
     shiny::isolate({
@@ -37,15 +38,21 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
         context$visitedPageIndexes <- unique(c(context$visitedPageIndexes, context$pageIndex))
         
         validationFailed <- NULL
+        validationResults <- context$validationResults
         
         for (question in context$pages[[context$pageIndex]]$questions) {
-            validationResult <- .validateResult(context, question)
-    
-            if (validationResult != .validResult) {
-                validationFailed <- question$id
-                break;    
+            if (.isQuestion(question)) {
+                validationResult <- .validateResult(context, question)
+                
+                if ((validationResult != .validResult) && is.null(validationFailed)) {
+                    validationFailed <- question$id
+                }
+                
+                validationResults[[question$id]] <- validationResult
             }
         }
+        
+        context$validationResults <- validationResults
         
         if (is.null(validationFailed)) {
             if (context$pageIndex >= length(context$pages)) {
