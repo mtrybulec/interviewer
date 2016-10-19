@@ -3,7 +3,7 @@ library(shiny)
 
 function(input, output, session) {
 
-    responses <- data.frame(
+    responses <- buildResponses(
         id = c("a", "b", "c"),
         label = c("response A", "response B", "response C")
     )
