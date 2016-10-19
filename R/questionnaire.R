@@ -3,8 +3,9 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
     domain <- shiny::getDefaultReactiveDomain()
     input <- domain$input
     output <- domain$output
-    
-    buttonsID <- "buttons"
+    session <- domain$session
+
+    pageContentId <- "pageContent"    
     buttonInitID <- paste0(.buttonPrefix, "Init")
     buttonBackID <- paste0(.buttonPrefix, "Back")
     buttonNextID <- paste0(.buttonPrefix, "Next")
@@ -84,55 +85,50 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
         }
     })
     
-    output[[buttonsID]] <- shiny::renderUI({
-        initButtonDiv <- shiny::actionButton(inputId = buttonInitID, label = "Start")
-        if (context$started) {
-            initButtonDiv <- shinyjs::hidden(initButtonDiv)
-        }
+    shiny::observe({
+        shinyjs::toggle(buttonInitID, condition = !context$started)
+        shinyjs::toggle(buttonBackID, condition = context$started)
+        shinyjs::toggle(buttonNextID, condition = context$started)
         
-        backButtonDiv <- shiny::actionButton(inputId = buttonBackID, label = "Back")
-        if (!context$started || (context$pageIndex <= 1)) {
-            backButtonDiv <- shinyjs::hidden(backButtonDiv)
-        }
+        shinyjs::toggleState(buttonBackID, condition = context$started && (context$pageIndex > 1) && !context$done)
+        shinyjs::toggleState(buttonNextID, condition = context$started && !context$done)
         
         if (context$pageIndex >= length(context$pages)) {
             nextButtonLabel <- "Done"
         } else {
             nextButtonLabel <- "Next"
         }
-        nextButtonDiv <- shiny::actionButton(inputId = buttonNextID, label = nextButtonLabel)
-        if (!context$started) {
-            nextButtonDiv <- shinyjs::hidden(nextButtonDiv)
-        }
 
-        shiny::div(id = "interviewer-buttons",
-            initButtonDiv,
-            backButtonDiv,
-            nextButtonDiv
-        )
+        shiny::updateActionButton(session, buttonNextID, label = nextButtonLabel)
     })
-  
+    
+    output[[pageContentId]] <- shiny::renderUI({
+        if (!context$started) {
+            pageContent <- shiny::p(welcome)
+        } else {
+            pageContent <- context$page$ui(context)
+        }
+        
+        pageContent
+    })
+    
     shiny::renderUI({
         if (context$done) {
-            pageContent <- shiny::p(goodbye)
+            screenContent <- shiny::p(goodbye)
         } else {
-            if (!context$started) {
-                pageContent <- shiny::p(welcome)
-            } else {
-                pageContent <- context$page$ui(context)
-            }
-            
-            pageContent <- list(
-                pageContent,
+            screenContent <- list(
+                uiOutput(outputId = pageContentId),
                 shiny::hr(),
-                shiny::uiOutput(outputId = buttonsID)
+                shiny::actionButton(inputId = buttonInitID, label = "Start"),
+                shinyjs::hidden(shiny::actionButton(inputId = buttonBackID, label = "Back")),
+                shinyjs::hidden(shiny::actionButton(inputId = buttonNextID, label = ""))
             )
         }
         
         list(
             shiny::h2(label),
             shiny::hr(),
-            pageContent
+            screenContent
         )
     })
 }

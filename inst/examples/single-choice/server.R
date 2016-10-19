@@ -32,14 +32,14 @@ function(input, output, session) {
                     responses = responses,
                     inline = TRUE
                 ),
-                
+
                 interviewer::question.list(
                     id = "RadioButtonsOptional",
                     label = "Radio-buttons, no response required (required set to FALSE; a second click on a selected radio-button deselects it)",
                     responses = responses,
                     required = FALSE
                 ),
-                
+
                 interviewer::question.list(
                     id = "RadioButtonsNarrow",
                     label = "Radio-buttons, inline and narrow (width set to '200px')",
