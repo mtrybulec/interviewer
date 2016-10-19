@@ -13,9 +13,9 @@
     if ((!is.null(question$required)) && question$required) {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
-        questionId <- .questionId(question$id)
+        questionInputId <- makeQuestionInputId(question$id)
         
-        if (!.isAnswered(input[[questionId]])) {
+        if (!.isAnswered(input[[questionInputId]])) {
             result <- "Response required."
         }
     }

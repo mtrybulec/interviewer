@@ -11,7 +11,7 @@ question.list(id, label, responses, multiple = FALSE, required = TRUE,
 \arguments{
 \item{id}{(character) the unique identifier of the question; it will be used
 as the column name in the data.frame returning the questionnaire data
-and when prefixed with 'question' - as the \code{inputId} 
+and when prefixed with \code{'question'} - as the \code{inputId}
 for the \code{input} slot.}
 
 \item{label}{(character) the text displayed as the header of the question.}
@@ -24,7 +24,7 @@ each row represents a single response.}
 if \code{TRUE}, dfines a multiple-choice question.}
 
 \item{required}{(logical) if \code{FALSE}, the respondent is free to not choose
-a response; if \code{TRUE}, the respondent must select a response before 
+a response; if \code{TRUE}, the respondent must select a response before
 moving on to subsequent pages of the questionnaire.}
 
 \item{use.select}{(logical) if \code{FALSE}, displays radio-buttons
@@ -32,7 +32,7 @@ for single-choice questions and check-boxes for multiple-choice
 questions; if \code{TRUE}, displays a combo-box with all responses available
 through the drop-down list.}
 
-\item{inline}{(logical) if \code{FALSE}, radio-buttons and check-boxes will be 
+\item{inline}{(logical) if \code{FALSE}, radio-buttons and check-boxes will be
 displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
 If \code{use.select == TRUE}, this argument will be ignored.}
 
@@ -53,11 +53,11 @@ as radio-buttons, check-boxes, or combo-boxes. Can be used for single-
 and multiple-choice questions.
 }
 \seealso{
-\code{\link[shiny]{checkboxGroupInput}}, 
+\code{\link[shiny]{checkboxGroupInput}},
     \code{\link[shiny]{radioButtons}},
     \code{\link[shiny]{selectInput}}.
 
-Other question.definitions: \code{\link{question.numeric}},
+Other question definitions: \code{\link{question.numeric}},
   \code{\link{question.text}}
 }
 

@@ -1,3 +1,33 @@
+.questionPrefix <- "question"
+.questionStatusPrefix <- "questionStatus"
+
+#' Define a question input identifier.
+#'
+#' \code{makeQuestionInputId} retuns a standard question identifier used
+#' for defining input fields.
+#'
+#' @param id (character) the unique identifier of the question;
+#'     it will be prefixed with \code{'question'} to create the \code{inputId}
+#'     for the \code{input} slot. Only input fields
+#'     with the \code{'question'} prefix will be returned in the final data.frame.
+#'
+#'     For use only when defining questions from scratch. When using question
+#'     builing functions, use the question identifier only.
+#'
+#' @family question buidling functions
+#' @seealso
+#'     \code{\link{question.list}},
+#'     \code{\link{question.numeric}},
+#'     \code{\link{question.text}}.
+#' @export
+makeQuestionInputId <- function(id) {
+    paste0(.questionPrefix, id)
+}
+
+.questionStatusId <- function(id) {
+    paste0(.questionStatusPrefix, id)
+}
+
 .question <- function(id, ui, required, validate = NULL) {
     list(
         id = id,
@@ -12,14 +42,14 @@
 }
 
 #' Define a question that displays a list of possible responses.
-#' 
+#'
 #' \code{question.list} retuns a question definition that displays responses
 #' as radio-buttons, check-boxes, or combo-boxes. Can be used for single-
 #' and multiple-choice questions.
-#' 
+#'
 #' @param id (character) the unique identifier of the question; it will be used
 #'     as the column name in the data.frame returning the questionnaire data
-#'     and when prefixed with 'question' - as the \code{inputId} 
+#'     and when prefixed with \code{'question'} - as the \code{inputId}
 #'     for the \code{input} slot.
 #' @param label (character) the text displayed as the header of the question.
 #' @param responses (data.frame) a listing of the identifiers and labels
@@ -28,13 +58,13 @@
 #' @param multiple (logical) if \code{FALSE}, defines a single-choice question;
 #'     if \code{TRUE}, dfines a multiple-choice question.
 #' @param required (logical) if \code{FALSE}, the respondent is free to not choose
-#'     a response; if \code{TRUE}, the respondent must select a response before 
+#'     a response; if \code{TRUE}, the respondent must select a response before
 #'     moving on to subsequent pages of the questionnaire.
 #' @param use.select (logical) if \code{FALSE}, displays radio-buttons
 #'     for single-choice questions and check-boxes for multiple-choice
 #'     questions; if \code{TRUE}, displays a combo-box with all responses available
 #'     through the drop-down list.
-#' @param inline (logical) if \code{FALSE}, radio-buttons and check-boxes will be 
+#' @param inline (logical) if \code{FALSE}, radio-buttons and check-boxes will be
 #'     displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
 #'     If \code{use.select == TRUE}, this argument will be ignored.
 #' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
@@ -48,7 +78,7 @@
 #'
 #' @family question definitions
 #' @seealso
-#'     \code{\link[shiny]{checkboxGroupInput}}, 
+#'     \code{\link[shiny]{checkboxGroupInput}},
 #'     \code{\link[shiny]{radioButtons}},
 #'     \code{\link[shiny]{selectInput}}.
 #' @export
@@ -66,24 +96,24 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
     if (inline && use.select) {
         warning("inline ignored - use.select takes precedence.")
     }
-    
-    questionId <- .questionId(id)
-    
-    choices <- as.character(responses$ids) 
+
+    questionInputId <- makeQuestionInputId(id)
+
+    choices <- as.character(responses$ids)
     names(choices) <- responses$labels
 
     ui <- function(context) {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
 
-        selected <- shiny::isolate(input[[questionId]])
+        selected <- shiny::isolate(input[[questionInputId]])
 
         if (multiple && !use.select) {
             shiny::checkboxGroupInput(
                 choices = choices,
                 inline = inline,
-                inputId = questionId, 
-                label = label, 
+                inputId = questionInputId,
+                label = label,
                 selected = selected,
                 width = width
             )
@@ -94,22 +124,22 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
                         selectizePlaceholder <- "Click to select responses"
                     } else {
                         selectizePlaceholder <- "Click to select a response"
-                    }  
-                } 
+                    }
+                }
 
                 selectizeOptions <- list(
-                    placeholder = selectizePlaceholder, 
+                    placeholder = selectizePlaceholder,
                     plugins = list("remove_button")
                 )
-            } 
-            
+            }
+
             if (!multiple) {
                 choices <- c(selectizePlaceholder = .emptyResponseValue, choices)
             }
 
             shiny::selectizeInput(
                 choices = choices,
-                inputId = questionId, 
+                inputId = questionInputId,
                 label = label,
                 multiple = multiple,
                 options = selectizeOptions,
@@ -121,43 +151,43 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
                 # Don't pre-select responses; see also main.js code that handles radio-button unchecking.
                 selected <- character(0)
             }
-            
+
             shiny::radioButtons(
                 choices = choices,
                 inline = inline,
-                inputId = questionId, 
-                label = label, 
+                inputId = questionInputId,
+                label = label,
                 selected = selected,
                 width = width
             )
         }
     }
-    
+
     .question(id, ui, required)
 }
 
 #' Define a question that allows the selection of numeric values.
-#' 
+#'
 #' \code{question.numeric} retuns a question definition that uses
 #' an input line with a spinner or a slider control for entry of numeric values.
-#' 
+#'
 #' @param id (character) the unique identifier of the question; it will be used
 #'     as the column name in the data.frame returning the questionnaire data
-#'     and when prefixed with 'question' - as the \code{inputId} 
+#'     and when prefixed with \code{'question'} - as the \code{inputId}
 #'     for the \code{input} slot.
 #' @param label (character) the text displayed as the header of the question.
 #' @param min (numeric) minimum allowed value.
 #' @param max (numeric) maximum allowed value.
 #' @param step (numeric) interval to use when stepping between \code{min} and \code{max}.
 #' @param required (logical) if \code{FALSE}, the respondent is free to not choose
-#'     a response; if \code{TRUE}, the respondent must select a response before 
+#'     a response; if \code{TRUE}, the respondent must select a response before
 #'     moving on to subsequent pages of the questionnaire.
 #'     If \code{use.slider == TRUE}, this argument will be ignored.
-#' @param use.slider (logical) if \code{FALSE}, displays an input line 
+#' @param use.slider (logical) if \code{FALSE}, displays an input line
 #'     with a spinner to increase/decrease the value; if \code{TRUE},
 #'     displays a slider control.
 #' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
-#'     
+#'
 #' @family question definitions
 #' @seealso
 #'     \code{\link[shiny]{numericInput}},
@@ -172,27 +202,27 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
     } else if (!missing(step) && (step > max - min)) {
         warning("step > max - min.")
     }
-    
-    questionId <- .questionId(id)
-    
+
+    questionInputId <- makeQuestionInputId(id)
+
     ui <- function(context) {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
-        
+
         value <- shiny::isolate({
-            result <- input[[questionId]]
-            
+            result <- input[[questionInputId]]
+
             if (is.null(result) && use.slider) {
                 result <- min
             }
-            
+
             result
         })
 
         if (use.slider) {
             shiny::sliderInput(
                 dragRange = FALSE, # set so that the mouse cursor doesn't change to a resize arrow
-                inputId = questionId, 
+                inputId = questionInputId,
                 label = label,
                 min = min,
                 max = max,
@@ -202,7 +232,7 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
             )
         } else {
             shiny::numericInput(
-                inputId = questionId, 
+                inputId = questionInputId,
                 label = label,
                 min = min,
                 max = max,
@@ -222,13 +252,13 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
             domain <- shiny::getDefaultReactiveDomain()
             input <- domain$input
 
-            value <- input[[questionId]]
+            value <- input[[questionInputId]]
 
             if (.isAnswered(value) && (value < min || value > max)) {
                 result <- sprintf("Value out of bounds (%g..%g).", min, max)
             }
         }
-        
+
         result
     }
 
@@ -236,17 +266,17 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 }
 
 #' Define a question that allows text entry.
-#' 
+#'
 #' \code{question.text} retuns a question definition that uses
 #' an input line or text area for entry of text values.
-#' 
+#'
 #' @param id (character) the unique identifier of the question; it will be used
 #'     as the column name in the data.frame returning the questionnaire data
-#'     and when prefixed with 'question' - as the \code{inputId} 
+#'     and when prefixed with \code{'question'} - as the \code{inputId}
 #'     for the \code{input} slot.
 #' @param label (character) the text displayed as the header of the question.
 #' @param required (logical) if \code{FALSE}, the respondent is free to not choose
-#'     a response; if \code{TRUE}, the respondent must select a response before 
+#'     a response; if \code{TRUE}, the respondent must select a response before
 #'     moving on to subsequent pages of the questionnaire.
 #' @param use.textArea (logical) if \code{FALSE}, displays a single-row edit line;
 #'     if \code{TRUE}, displays a larger text area.
@@ -262,43 +292,43 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 #' @param regexHint (character) a human-readable description of the regular expression
 #'     to be displayed when the entered value doesn't match the \code{regex}.
 #'     If \code{regex} is not set, this argument is ignored.
-#'     
+#'
 #' @family question definitions
 #' @seealso
 #'     \code{\link[shiny]{textAreaInput}},
 #'     \code{\link[shiny]{textInput}}.
 #' @export
-question.text <- function(id, label, required = TRUE, use.textArea = FALSE, width = NULL, height = NULL, rows = NULL, 
+question.text <- function(id, label, required = TRUE, use.textArea = FALSE, width = NULL, height = NULL, rows = NULL,
                           placeholder = NULL, regex = NULL, regexHint = NULL) {
     if (!use.textArea) {
         if (!is.null(height)) {
-            warning("height ignored - use.textArea is FALSE.")    
+            warning("height ignored - use.textArea is FALSE.")
         }
         if (!is.null(rows)) {
-            warning("rows ignored - use.textArea is FALSE.")    
+            warning("rows ignored - use.textArea is FALSE.")
         }
     } else {
         if (!is.null(height) && !is.null(rows)) {
             warning("rows ignored - height takes precedence.")
         }
     }
-    
+
     if (!is.null(regexHint) && is.null(regex)) {
         warning("regexHint ignored - regex not defined.")
     }
-    
-    questionId <- .questionId(id)
-    
+
+    questionInputId <- makeQuestionInputId(id)
+
     ui <- function(context) {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
-        
-        value <- shiny::isolate(input[[questionId]])
+
+        value <- shiny::isolate(input[[questionInputId]])
 
         if (use.textArea) {
             shiny::textAreaInput(
                 height = height,
-                inputId = questionId,
+                inputId = questionInputId,
                 label = label,
                 placeholder = placeholder,
                 rows = rows,
@@ -307,7 +337,7 @@ question.text <- function(id, label, required = TRUE, use.textArea = FALSE, widt
             )
         } else {
             shiny::textInput(
-                inputId = questionId,
+                inputId = questionInputId,
                 label = label,
                 placeholder = placeholder,
                 value = value,
@@ -320,13 +350,13 @@ question.text <- function(id, label, required = TRUE, use.textArea = FALSE, widt
 
     question$validate <- function(context) {
         result <- .validateIsAnswered(question)
-        
+
         if ((result == .validResult) && !is.null(regex)) {
             domain <- shiny::getDefaultReactiveDomain()
             input <- domain$input
-            
-            value <- input[[questionId]]
-            
+
+            value <- input[[questionInputId]]
+
             if (.isAnswered(value) && !grepl(regex, value)) {
                 if (is.null(regexHint)) {
                     regexHint <- regex
@@ -335,7 +365,7 @@ question.text <- function(id, label, required = TRUE, use.textArea = FALSE, widt
                 result <- sprintf("Value does not match the given pattern (%s).", regexHint)
             }
         }
-        
+
         result
     }
 

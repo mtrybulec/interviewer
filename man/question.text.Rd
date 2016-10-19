@@ -11,13 +11,13 @@ question.text(id, label, required = TRUE, use.textArea = FALSE,
 \arguments{
 \item{id}{(character) the unique identifier of the question; it will be used
 as the column name in the data.frame returning the questionnaire data
-and when prefixed with 'question' - as the \code{inputId} 
+and when prefixed with \code{'question'} - as the \code{inputId}
 for the \code{input} slot.}
 
 \item{label}{(character) the text displayed as the header of the question.}
 
 \item{required}{(logical) if \code{FALSE}, the respondent is free to not choose
-a response; if \code{TRUE}, the respondent must select a response before 
+a response; if \code{TRUE}, the respondent must select a response before
 moving on to subsequent pages of the questionnaire.}
 
 \item{use.textArea}{(logical) if \code{FALSE}, displays a single-row edit line;
@@ -49,7 +49,7 @@ an input line or text area for entry of text values.
 \code{\link[shiny]{textAreaInput}},
     \code{\link[shiny]{textInput}}.
 
-Other question.definitions: \code{\link{question.list}},
+Other question definitions: \code{\link{question.list}},
   \code{\link{question.numeric}}
 }
 

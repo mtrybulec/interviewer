@@ -10,7 +10,7 @@ question.numeric(id, label, min, max, step = NA, required = TRUE,
 \arguments{
 \item{id}{(character) the unique identifier of the question; it will be used
 as the column name in the data.frame returning the questionnaire data
-and when prefixed with 'question' - as the \code{inputId} 
+and when prefixed with \code{'question'} - as the \code{inputId}
 for the \code{input} slot.}
 
 \item{label}{(character) the text displayed as the header of the question.}
@@ -22,11 +22,11 @@ for the \code{input} slot.}
 \item{step}{(numeric) interval to use when stepping between \code{min} and \code{max}.}
 
 \item{required}{(logical) if \code{FALSE}, the respondent is free to not choose
-a response; if \code{TRUE}, the respondent must select a response before 
+a response; if \code{TRUE}, the respondent must select a response before
 moving on to subsequent pages of the questionnaire.
 If \code{use.slider == TRUE}, this argument will be ignored.}
 
-\item{use.slider}{(logical) if \code{FALSE}, displays an input line 
+\item{use.slider}{(logical) if \code{FALSE}, displays an input line
 with a spinner to increase/decrease the value; if \code{TRUE},
 displays a slider control.}
 
@@ -40,7 +40,7 @@ an input line with a spinner or a slider control for entry of numeric values.
 \code{\link[shiny]{numericInput}},
     \code{\link[shiny]{sliderInput}}.
 
-Other question.definitions: \code{\link{question.list}},
+Other question definitions: \code{\link{question.list}},
   \code{\link{question.text}}
 }
 

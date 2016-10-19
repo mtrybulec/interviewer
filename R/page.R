@@ -32,8 +32,8 @@ page <- function(id, ...) {
                             context$questionOrder <- c(context$questionOrder, question$id)
                         }
 
-                        questionId <- .questionId(question$id)
-                        questionStatusId <- .questionStatusId(questionId)
+                        questionInputId <- makeQuestionInputId(question$id)
+                        questionStatusId <- .questionStatusId(questionInputId)
                         
                         result <- list(
                             question$ui(context), 

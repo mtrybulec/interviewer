@@ -3,7 +3,7 @@ library(shiny)
 
 function(input, output, session) {
 
-    output$questionnaireOutput <- 
+    output$questionnaireOutput <-
         interviewer::questionnaire(
             surveyId = "interviewer-demo-complete",
             userId = "demo",
@@ -13,7 +13,7 @@ function(input, output, session) {
                 shiny::HTML("<p>This demo shows a relatively complete set of <strong>interviewer</strong> questions and options.</p>")
             ),
             goodbye = "Done!",
-            
+
             interviewer::page(id = "1",
                 interviewer::question.list(
                     id = "Sex",
@@ -94,14 +94,14 @@ function(input, output, session) {
                     dataIds = paste0("Price", c(1:12)),
                     ui = function(context) {
                         priceInput <- function(month) {
-                            questionId <- paste0("questionPrice", month)
-                            shiny::numericInput(inputId = questionId, 
-                                                label = month.abb[month], 
-                                                min = 1, 
-                                                max = 1000, 
-                                                value = shiny::isolate(input[[questionId]]))
+                            questionInputId <- makeQuestionInputId(paste0("Price", month))
+                            shiny::numericInput(inputId = questionInputId,
+                                                label = month.abb[month],
+                                                min = 1,
+                                                max = 1000,
+                                                value = shiny::isolate(input[[questionInputId]]))
                         }
-                         
+
                         list(
                             shiny::tags$label("Enter the product's price for each month of last year:"),
                             shiny::p(),
@@ -134,12 +134,12 @@ function(input, output, session) {
                                     "Click Next where you are happy with the data.")
                             }
                         }
-                        
+
                         result
                     }
                 )
             ),
-            
+
             interviewer::page(id = "4",
                 interviewer::question.text(
                     id = "Nick",
@@ -152,7 +152,7 @@ function(input, output, session) {
                     regex = "^\\d{3} \\d{3}-\\d{3}$",
                     regexHint = "ddd ddd-ddd"
                 ),
-                
+
                 shiny::HTML("<p>Now, before you answer the next question,<br />please take a moment to think...</p>"),
 
                 interviewer::question.text(
@@ -160,9 +160,9 @@ function(input, output, session) {
                     label = "Anything you want to add?",
                     use.textArea = TRUE
                 ),
-                 
+
                 shiny::p("The question below has responses ordered randomly (except for the last response)."),
-                 
+
                 interviewer::question.list(
                     id = "Random",
                     label = "Which continents have you ever been to?",
@@ -171,15 +171,15 @@ function(input, output, session) {
                             ids = c("af", "as", "an", "au", "eu", "na", "sa"),
                             labels = c("Africa", "Asia", "Antarctica", "Australia", "Europe", "North America", "South America")
                         )
-                         
+
                         rand <- sample(nrow(responses))
-                         
+
                         rbind(responses[rand, ], data.frame(ids = "dk", labels = "Don't know..."))
                     },
                     multiple = TRUE
                 )
             ),
-            
+
             interviewer::page(id = "5",
                 interviewer::question.list(
                     id = "Like",
@@ -190,7 +190,7 @@ function(input, output, session) {
                     )
                 )
             ),
-            
+
             onExit = function(data) {
                 cat("onExit:\n")
                 print(data)
@@ -198,31 +198,32 @@ function(input, output, session) {
         )
 
     checkedPrices <- NULL
-    
+
     getPrices <- function(convert.na) {
         ifNULLThenNA <- function(value) {
             if (is.null(value)) {
                 value <- NA
             }
-            
+
             value
         }
-        
+
         prices <- data.frame(value = integer(0))
-        
+
         for (month in 1:12) {
-            prices[month, "value"] <- ifNULLThenNA(input[[paste0("questionPrice", month)]])
+            questionInputId <- makeQuestionInputId(paste0("Price", month))
+            prices[month, "value"] <- ifNULLThenNA(input[[questionInputId]])
         }
-        
+
         prices
     }
-    
+
     output$questionPricePlot <- shiny::renderPlot({
         prices <- getPrices(convert.na = FALSE)
 
         if (length(which(!is.na(prices$value))) > 0) {
-            par(mar = c(2, 0, 3, 0))    
-            plot(prices$value, 
+            par(mar = c(2, 0, 3, 0))
+            plot(prices$value,
                  type = "b",
                  xlab = "",
                  ylab = "")
@@ -232,10 +233,10 @@ function(input, output, session) {
     output$questionPriceBoxplot <- shiny::renderPlot({
         prices <- getPrices(convert.na = FALSE)
         stats <- boxplot.stats(prices$value)
-        
+
         if (stats$n > 0) {
-            par(mar = c(2, 0, 3, 0))    
-            boxplot(prices$value)    
+            par(mar = c(2, 0, 3, 0))
+            boxplot(prices$value)
         }
     })
 
