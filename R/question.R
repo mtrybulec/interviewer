@@ -123,12 +123,16 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
         warning("inline ignored - use.select takes precedence.")
     }
 
-    questionInputId <- makeQuestionInputId(id)
-
-    choices <- as.character(responses$id)
-    names(choices) <- responses$label
 
     ui <- function(context) {
+        questionInputId <- makeQuestionInputId(id)
+
+        if (class(responses) == "function") {
+            responses <- responses(context)
+        }
+        choices <- as.character(responses$id)
+        names(choices) <- responses$label
+
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
 

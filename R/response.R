@@ -56,11 +56,45 @@ mergeResponses <- function(...) {
 #' @param responses (response list) the list of responses
 #'     (e.g. as returned by \code{\link{buildResponses}}).
 #'
+#' @family response handling functions
 #' @seealso
-#'     \code{\link{buildResponses}},
-#'     \code{\link{mergeResponses}}.
+#'     \code{\link{buildResponses}}.
 #' @export
 randomizeResponses <- function(responses) {
     rand <- sample(nrow(responses))
     responses[rand, ]
+}
+
+#' Mask the response list using responses given to another question.
+#'
+#' \code{maskResponses} drops or keeps those responses from the response list
+#'     that were mentioned in an earlier question.
+#'
+#' @param responses (response list) the list of responses
+#'     (e.g. as returned by \code{\link{buildResponses}}).
+#' @param questionId (character) the identifier of the question
+#'     that has the reference list of responses.
+#' @param operation (character) if set to \code{'keep'}, only those responses
+#'     in both response lists will be returned; if set to \code{'drop'},
+#'     responses given in the reference question will be dropped from
+#'     the given response list.
+#'
+#' @family response handling functions
+#' @seealso
+#'     \code{\link{buildResponses}}.
+#' @export
+maskResponses <- function(responses, questionId, operation = "keep") {
+    domain <- shiny::getDefaultReactiveDomain()
+    input <- domain$input
+    value <- input[[makeQuestionInputId(questionId)]]
+
+    if (operation == "keep") {
+        filter <- responses$id %in% value
+    } else if (operation == "drop") {
+        filter <- !(responses$id %in% value)
+    } else {
+        stop("Invalid value of operation; possible values: 'keep', 'drop'.")
+    }
+
+    responses[which(filter), ]
 }

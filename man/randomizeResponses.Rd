@@ -15,7 +15,8 @@ randomizeResponses(responses)
     but randomly ordered.
 }
 \seealso{
-\code{\link{buildResponses}},
-    \code{\link{mergeResponses}}.
+\code{\link{buildResponses}}.
+
+Other response handling functions: \code{\link{maskResponses}}
 }
 

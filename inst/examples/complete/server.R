@@ -3,6 +3,19 @@ library(shiny)
 
 function(input, output, session) {
 
+    dk <- interviewer::buildResponses(
+        id = "dk",
+        label = "Don't know..."
+    )
+
+    continents <-
+        interviewer::randomizeResponses(
+            interviewer::buildResponses(
+                id = c("af", "as", "an", "au", "eu", "na", "sa"),
+                label = c("Africa", "Asia", "Antarctica", "Australia", "Europe", "North America", "South America")
+            )
+        )
+
     output$questionnaireOutput <-
         interviewer::questionnaire(
             surveyId = "interviewer-demo-complete",
@@ -159,32 +172,51 @@ function(input, output, session) {
                     id = "Comment",
                     label = "Anything you want to add?",
                     use.textArea = TRUE
-                ),
+                )
+            ),
 
+            interviewer::page(id = "6a",
                 shiny::p("The question below has responses ordered randomly (except for the last response)."),
 
                 interviewer::question.list(
-                    id = "Random",
+                    id = "Continents1",
                     label = "Which continents have you ever been to?",
-                    responses = {
+                    responses = interviewer::mergeResponses(continents, dk),
+                    multiple = TRUE
+                )
+            ),
+
+            interviewer::page(id = "6b",
+                shiny::p("The question below displays only those responses that were mentioned in the question on the previous page."),
+
+                interviewer::question.list(
+                    id = "Continents2a",
+                    label = "Which continents would you like to visit again?",
+                    responses = function(context) {
                         interviewer::mergeResponses(
-                            interviewer::randomizeResponses(
-                                interviewer::buildResponses(
-                                    id = c("af", "as", "an", "au", "eu", "na", "sa"),
-                                    label = c("Africa", "Asia", "Antarctica", "Australia", "Europe", "North America", "South America")
-                                )
-                            ),
-                            interviewer::buildResponses(
-                                id = "dk",
-                                label = "Don't know..."
-                            )
+                            interviewer::maskResponses(continents, "Continents1", operation = "keep"),
+                            dk
+                        )
+                    },
+                    multiple = TRUE
+                ),
+
+                shiny::p("The question below displays only those responses that were not mentioned in the question on the previous page."),
+
+                interviewer::question.list(
+                    id = "Continents2b",
+                    label = "Which continents would you still like to visit?",
+                    responses = function(context) {
+                        interviewer::mergeResponses(
+                            interviewer::maskResponses(continents, "Continents1", operation = "drop"),
+                            dk
                         )
                     },
                     multiple = TRUE
                 )
             ),
 
-            interviewer::page(id = "5",
+            interviewer::page(id = "6",
                 interviewer::question.list(
                     id = "Like",
                     label = "Did you like the questionnaire?",

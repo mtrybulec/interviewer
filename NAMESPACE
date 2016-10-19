@@ -3,6 +3,7 @@
 export(buildQuestion)
 export(buildResponses)
 export(makeQuestionInputId)
+export(maskResponses)
 export(mergeResponses)
 export(page)
 export(question.list)
