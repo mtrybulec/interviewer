@@ -195,8 +195,8 @@ function(input, output, session) {
                 )
             ),
 
-            onExit = function(data) {
-                cat("onExit:\n")
+            exit = function(data) {
+                cat("Done:\n")
                 print(data)
             }
         )

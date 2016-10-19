@@ -2,8 +2,8 @@ library(interviewer)
 library(shiny)
 
 function(input, output, session) {
-    
-    output$questionnaireOutput <- 
+
+    output$questionnaireOutput <-
         interviewer::questionnaire(
             surveyId = "interviewer-demo-text",
             userId = "demo",
@@ -13,7 +13,7 @@ function(input, output, session) {
                 shiny::HTML("<p>This demo shows how <strong>text</strong> questions can be defined in <strong>interviewer</strong>.</p>")
             ),
             goodbye = "Done!",
-            
+
             interviewer::page(id = "text",
                 interviewer::question.text(
                     id = "TextStandard",
@@ -38,7 +38,7 @@ function(input, output, session) {
                     label = "Text, narrow (width set to '200px')",
                     width = "200px"
                 ),
-                
+
                 interviewer::question.text(
                     id = "TextPlaceholder",
                     label = "Text, with placeholder (placeholder set to 'Enter text')",
@@ -46,14 +46,14 @@ function(input, output, session) {
                     required = FALSE
                 )
             ),
-            
+
             interviewer::page(id = "textArea",
                 interviewer::question.text(
                     id = "TextAreaStandard",
                     label = "TextArea, standard (use.textArea set to TRUE)",
                     use.textArea = TRUE
                 ),
-                 
+
                 interviewer::question.text(
                     id = "TextAreaLarge",
                     label = "TextArea, high and wide (width set to '400px', rows set to 5)",
@@ -61,7 +61,7 @@ function(input, output, session) {
                     rows = 5,
                     use.textArea = TRUE
                 ),
-                 
+
                 interviewer::question.text(
                     id = "TextAreaSmall",
                     label = "TextArea, short and narrow (width set to '200px', height set to '34px'):",
@@ -69,7 +69,7 @@ function(input, output, session) {
                     width = "200px",
                     use.textArea = TRUE
                 ),
-                
+
                 interviewer::question.text(
                     id = "TextAreaPlaceholder",
                     label = "TextArea, with placeholder (placeholder set to 'Enter text')",
@@ -78,9 +78,9 @@ function(input, output, session) {
                     required = FALSE
                 )
             ),
-            
-            onExit = function(data) {
-                cat("onExit:\n")
+
+            exit = function(data) {
+                cat("Done:\n")
                 print(data)
             }
         )

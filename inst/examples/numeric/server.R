@@ -2,8 +2,8 @@ library(interviewer)
 library(shiny)
 
 function(input, output, session) {
-    
-    output$questionnaireOutput <- 
+
+    output$questionnaireOutput <-
         interviewer::questionnaire(
             surveyId = "interviewer-demo-numeric",
             userId = "demo",
@@ -13,7 +13,7 @@ function(input, output, session) {
                 shiny::HTML("<p>This demo shows how <strong>numeric</strong> questions can be defined in <strong>interviewer</strong>.</p>")
             ),
             goodbye = "Done!",
-            
+
             interviewer::page(id = "numeric",
                 interviewer::question.numeric(
                     id = "NumericStandard",
@@ -29,7 +29,7 @@ function(input, output, session) {
                     max = 20,
                     required = FALSE
                 ),
-                
+
                 interviewer::question.numeric(
                     id = "NumericStep",
                     label = "Numeric, step set to 5",
@@ -37,9 +37,9 @@ function(input, output, session) {
                     max = 20,
                     step = 5
                 ),
-                
+
                 shiny::p("Note: in the above, the step is set to help the user enter values, it is not used to validate data."),
-                
+
                 interviewer::question.numeric(
                     id = "NumericNarrow",
                     label = "Numeric, narrow (width set to '200px')",
@@ -48,7 +48,7 @@ function(input, output, session) {
                     width = "200px"
                 )
             ),
-            
+
             interviewer::page(id = "slider",
                 interviewer::question.numeric(
                     id = "SliderStandard",
@@ -57,7 +57,7 @@ function(input, output, session) {
                     max = 20,
                     use.slider = TRUE
                 ),
-                 
+
                 interviewer::question.numeric(
                     id = "SliderStep",
                     label = "Slider, step set to 5",
@@ -66,7 +66,7 @@ function(input, output, session) {
                     step = 5,
                     use.slider = TRUE
                 ),
-                 
+
                 interviewer::question.numeric(
                     id = "SliderNarrow",
                     label = "Slider, narrow (width set to '200px'):",
@@ -76,9 +76,9 @@ function(input, output, session) {
                     use.slider = TRUE
                 )
             ),
-            
-            onExit = function(data) {
-                cat("onExit:\n")
+
+            exit = function(data) {
+                cat("Done:\n")
                 print(data)
             }
         )

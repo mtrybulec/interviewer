@@ -1,5 +1,5 @@
 #' @export
-questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...) {
+questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) {
     domain <- shiny::getDefaultReactiveDomain()
     input <- domain$input
     output <- domain$output
@@ -80,7 +80,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
 
             data <- data[, intersect(context$questionOrder, names)]
 
-            onExit(data)
+            exit(data)
         }
     })
 
