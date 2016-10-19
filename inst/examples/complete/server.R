@@ -94,7 +94,7 @@ function(input, output, session) {
                     dataIds = paste0("Price", c(1:12)),
                     ui = function(context) {
                         priceInput <- function(month) {
-                            questionInputId <- makeQuestionInputId(paste0("Price", month))
+                            questionInputId <- interviewer::makeQuestionInputId(paste0("Price", month))
                             shiny::numericInput(inputId = questionInputId,
                                                 label = month.abb[month],
                                                 min = 1,
@@ -167,14 +167,14 @@ function(input, output, session) {
                     id = "Random",
                     label = "Which continents have you ever been to?",
                     responses = {
-                        mergeResponses(
-                            randomizeResponses(
-                                buildResponses(
+                        interviewer::mergeResponses(
+                            interviewer::randomizeResponses(
+                                interviewer::buildResponses(
                                     id = c("af", "as", "an", "au", "eu", "na", "sa"),
                                     label = c("Africa", "Asia", "Antarctica", "Australia", "Europe", "North America", "South America")
                                 )
                             ),
-                            buildResponses(
+                            interviewer::buildResponses(
                                 id = "dk",
                                 label = "Don't know..."
                             )

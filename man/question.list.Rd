@@ -16,9 +16,8 @@ for the \code{input} slot.}
 
 \item{label}{(character) the text displayed as the header of the question.}
 
-\item{responses}{(data.frame) a listing of the identifiers and labels
-of all responses; use \code{id} and \code{label} as column names;
-each row represents a single response.}
+\item{responses}{(response lst) the response list giving the identifiers and labels
+of all responses (e.g. as returned by \code{\link{buildResponses}}).}
 
 \item{multiple}{(logical) if \code{FALSE}, defines a single-choice question;
 if \code{TRUE}, dfines a multiple-choice question.}
@@ -53,7 +52,8 @@ as radio-buttons, check-boxes, or combo-boxes. Can be used for single-
 and multiple-choice questions.
 }
 \seealso{
-\code{\link[shiny]{checkboxGroupInput}},
+\code{\link{buildResponses}},
+    \code{\link[shiny]{checkboxGroupInput}},
     \code{\link[shiny]{radioButtons}},
     \code{\link[shiny]{selectInput}}.
 

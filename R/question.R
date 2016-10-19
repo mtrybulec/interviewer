@@ -78,9 +78,8 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #'     and when prefixed with \code{'question'} - as the \code{inputId}
 #'     for the \code{input} slot.
 #' @param label (character) the text displayed as the header of the question.
-#' @param responses (data.frame) a listing of the identifiers and labels
-#'     of all responses; use \code{id} and \code{label} as column names;
-#'     each row represents a single response.
+#' @param responses (response lst) the response list giving the identifiers and labels
+#'     of all responses (e.g. as returned by \code{\link{buildResponses}}).
 #' @param multiple (logical) if \code{FALSE}, defines a single-choice question;
 #'     if \code{TRUE}, dfines a multiple-choice question.
 #' @param required (logical) if \code{FALSE}, the respondent is free to not choose
@@ -104,6 +103,7 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #'
 #' @family question definitions
 #' @seealso
+#'     \code{\link{buildResponses}},
 #'     \code{\link[shiny]{checkboxGroupInput}},
 #'     \code{\link[shiny]{radioButtons}},
 #'     \code{\link[shiny]{selectInput}}.
