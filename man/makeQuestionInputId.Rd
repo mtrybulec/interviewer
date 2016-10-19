@@ -23,5 +23,7 @@ for defining input fields.
 \code{\link{question.list}},
     \code{\link{question.numeric}},
     \code{\link{question.text}}.
+
+Other question buidling functions: \code{\link{buildQuestion}}
 }
 

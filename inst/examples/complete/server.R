@@ -89,7 +89,7 @@ function(input, output, session) {
 
             # Page with a custom question:
             interviewer::page(id = "C",
-                list(
+                buildQuestion(
                     id = "chart",
                     dataIds = paste0("Price", c(1:12)),
                     ui = function(context) {

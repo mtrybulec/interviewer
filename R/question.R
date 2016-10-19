@@ -28,11 +28,37 @@ makeQuestionInputId <- function(id) {
     paste0(.questionStatusPrefix, id)
 }
 
-.question <- function(id, ui, required, validate = NULL) {
+#' Build a question definition from scratch.
+#'
+#' \code{buildQuestion} retuns a question definition given the parts
+#'     a fully formed question definition consists of.
+#'
+#' @param id (character) the unique identifier of the question; it will be used
+#'     as the column name in the data.frame returning the questionnaire data
+#'     and when prefixed with \code{'question'} - as the \code{inputId}
+#'     for the \code{input} slot.
+#' @param dataIds (character) the list of identifiers that should be
+#'     moved from the \code{input} slot to the final data.frame.
+#'
+#'     When a question definition consists of multiple input fields,
+#'     this argument needs to specify the identifiers of those fields.
+#' @param ui (function(context)) a function that should return
+#'     the UI components of the question.
+#' @param validate (function(context)) a function that should return
+#'     an empty string if the entered data is valid and a non-empty string,
+#'     with the validation message, if the entered data is not valid.
+#'
+#' @family question buidling functions
+#' @seealso
+#'     \code{\link{question.list}},
+#'     \code{\link{question.numeric}},
+#'     \code{\link{question.text}}.
+#' @export
+buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
     list(
         id = id,
+        dataIds = dataIds,
         ui = ui,
-        required = required,
         validate = validate
     )
 }
@@ -163,7 +189,13 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
         }
     }
 
-    .question(id, ui, required)
+    question <- buildQuestion(id = id, ui = ui)
+
+    question$validate <- function(context) {
+        .validateIsAnswered(question, required)
+    }
+
+    question
 }
 
 #' Define a question that allows the selection of numeric values.
@@ -243,10 +275,10 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
         }
     }
 
-    question <- .question(id, ui, required)
+    question <- buildQuestion(id = id, ui = ui)
 
     question$validate <- function(context) {
-        result <- .validateIsAnswered(question)
+        result <- .validateIsAnswered(question, required)
 
         if (result == .validResult) {
             domain <- shiny::getDefaultReactiveDomain()
@@ -346,10 +378,10 @@ question.text <- function(id, label, required = TRUE, use.textArea = FALSE, widt
         }
     }
 
-    question <- .question(id, ui, required)
+    question <- buildQuestion(id = id, ui = ui)
 
     question$validate <- function(context) {
-        result <- .validateIsAnswered(question)
+        result <- .validateIsAnswered(question, required)
 
         if ((result == .validResult) && !is.null(regex)) {
             domain <- shiny::getDefaultReactiveDomain()
