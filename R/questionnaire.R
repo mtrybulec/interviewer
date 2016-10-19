@@ -69,7 +69,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
         }
     })
 
-    shiny::observe({
+    shiny::observeEvent(context$done, {
         if (context$done) {
             data <- context$data
             data <- lapply(data, function(item) paste(item, collapse = ","))
@@ -85,11 +85,13 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
         }
     })
     
-    shiny::observe({
+    shiny::observeEvent(context$started, {
         shinyjs::toggle(buttonInitID, condition = !context$started)
         shinyjs::toggle(buttonBackID, condition = context$started)
         shinyjs::toggle(buttonNextID, condition = context$started)
-        
+    })
+    
+    shiny::observe({
         shinyjs::toggleState(buttonBackID, condition = context$started && (context$pageIndex > 1) && !context$done)
         shinyjs::toggleState(buttonNextID, condition = context$started && !context$done)
         
