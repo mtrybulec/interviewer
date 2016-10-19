@@ -79,7 +79,7 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #'     for the \code{input} slot.
 #' @param label (character) the text displayed as the header of the question.
 #' @param responses (data.frame) a listing of the identifiers and labels
-#'     of all responses; use \code{ids} and \code{labels} as column names;
+#'     of all responses; use \code{id} and \code{label} as column names;
 #'     each row represents a single response.
 #' @param multiple (logical) if \code{FALSE}, defines a single-choice question;
 #'     if \code{TRUE}, dfines a multiple-choice question.
@@ -125,8 +125,8 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
 
     questionInputId <- makeQuestionInputId(id)
 
-    choices <- as.character(responses$ids)
-    names(choices) <- responses$labels
+    choices <- as.character(responses$id)
+    names(choices) <- responses$label
 
     ui <- function(context) {
         domain <- shiny::getDefaultReactiveDomain()

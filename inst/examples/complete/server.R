@@ -19,8 +19,8 @@ function(input, output, session) {
                     id = "Sex",
                     label = "Please enter your sex:",
                     responses = data.frame(
-                        ids = c("m", "f"),
-                        labels = c("male", "female")
+                        id = c("m", "f"),
+                        label = c("male", "female")
                     )
                 ),
 
@@ -28,8 +28,8 @@ function(input, output, session) {
                     id = "Age",
                     label = "Please enter your age:",
                     responses = data.frame(
-                        ids = c("<=20", "21-30", "31-40", ">40"),
-                        labels = c("20 or younger", "21 to 30", "31 to 40", "older than 40")
+                        id = c("<=20", "21-30", "31-40", ">40"),
+                        label = c("20 or younger", "21 to 30", "31 to 40", "older than 40")
                     ),
                     use.select = TRUE
                 )
@@ -40,8 +40,8 @@ function(input, output, session) {
                     id = "MaritalStatus",
                     label = "What is your marital status?",
                     responses = data.frame(
-                        ids = c("s", "m", "o"),
-                        labels = c("single", "married", "other")
+                        id = c("s", "m", "o"),
+                        label = c("single", "married", "other")
                     ),
                     required = FALSE
                 ),
@@ -50,8 +50,8 @@ function(input, output, session) {
                     id = "Owns",
                     label = "Select, from the list, all items that you own:",
                     responses = data.frame(
-                        ids = c("sph", "t", "lt", "dt"),
-                        labels = c("smartphone", "tablet", "laptop", "desktop")
+                        id = c("sph", "t", "lt", "dt"),
+                        label = c("smartphone", "tablet", "laptop", "desktop")
                     ),
                     use.select = TRUE,
                     multiple = TRUE,
@@ -65,8 +65,8 @@ function(input, output, session) {
                     label = "What pets do you have?",
                     multiple = TRUE,
                     responses = data.frame(
-                        ids = c("c", "d", "s"),
-                        labels = c("cat", "dog", "spider")
+                        id = c("c", "d", "s"),
+                        label = c("cat", "dog", "spider")
                     ),
                     required = FALSE
                 ),
@@ -168,13 +168,13 @@ function(input, output, session) {
                     label = "Which continents have you ever been to?",
                     responses = {
                         responses <- data.frame(
-                            ids = c("af", "as", "an", "au", "eu", "na", "sa"),
-                            labels = c("Africa", "Asia", "Antarctica", "Australia", "Europe", "North America", "South America")
+                            id = c("af", "as", "an", "au", "eu", "na", "sa"),
+                            label = c("Africa", "Asia", "Antarctica", "Australia", "Europe", "North America", "South America")
                         )
 
                         rand <- sample(nrow(responses))
 
-                        rbind(responses[rand, ], data.frame(ids = "dk", labels = "Don't know..."))
+                        rbind(responses[rand, ], data.frame(id = "dk", label = "Don't know..."))
                     },
                     multiple = TRUE
                 )
@@ -185,8 +185,8 @@ function(input, output, session) {
                     id = "Like",
                     label = "Did you like the questionnaire?",
                     responses = data.frame(
-                        ids = c("y", "n"),
-                        labels = c("Yes", "No")
+                        id = c("y", "n"),
+                        label = c("Yes", "No")
                     )
                 )
             ),

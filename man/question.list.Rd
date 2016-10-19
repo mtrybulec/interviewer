@@ -17,7 +17,7 @@ for the \code{input} slot.}
 \item{label}{(character) the text displayed as the header of the question.}
 
 \item{responses}{(data.frame) a listing of the identifiers and labels
-of all responses; use \code{ids} and \code{labels} as column names;
+of all responses; use \code{id} and \code{label} as column names;
 each row represents a single response.}
 
 \item{multiple}{(logical) if \code{FALSE}, defines a single-choice question;
