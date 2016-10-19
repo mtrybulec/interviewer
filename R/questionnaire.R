@@ -94,14 +94,6 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
     shiny::observe({
         shinyjs::toggleState(backButtonId, condition = context$started && (context$pageIndex > 1) && !context$done)
         shinyjs::toggleState(nextButtonId, condition = context$started && !context$done)
-        
-        if (context$pageIndex >= length(context$pages)) {
-            nextButtonLabel <- "Done"
-        } else {
-            nextButtonLabel <- "Next"
-        }
-
-        shiny::updateActionButton(session, nextButtonId, label = nextButtonLabel)
     })
     
     output[[pageContentId]] <- shiny::renderUI({
@@ -123,7 +115,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
                 shiny::hr(),
                 shiny::actionButton(inputId = initButtonId, label = "Start"),
                 shinyjs::hidden(shiny::actionButton(inputId = backButtonId, label = "Back")),
-                shinyjs::hidden(shiny::actionButton(inputId = nextButtonId, label = ""))
+                shinyjs::hidden(shiny::actionButton(inputId = nextButtonId, label = "Next"))
             )
         }
         
