@@ -6,9 +6,9 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
     session <- domain$session
 
     pageContentId <- "pageContent"    
-    buttonInitID <- paste0(.buttonPrefix, "Init")
-    buttonBackID <- paste0(.buttonPrefix, "Back")
-    buttonNextID <- paste0(.buttonPrefix, "Next")
+    initButtonId <- paste0(.buttonPrefix, "Init")
+    backButtonId <- paste0(.buttonPrefix, "Back")
+    nextButtonId <- paste0(.buttonPrefix, "Next")
 
     context <- shiny::reactiveValues(
         data = NULL,
@@ -26,16 +26,16 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
         context$page <- context$pages[[context$pageIndex]]
     })
     
-    shiny::observeEvent(input[[buttonInitID]], {
+    shiny::observeEvent(input[[initButtonId]], {
         context$started <- TRUE
     })
   
-    shiny::observeEvent(input[[buttonBackID]], {
+    shiny::observeEvent(input[[backButtonId]], {
         context$pageIndex <- context$pageIndex - 1
         context$page <- context$pages[[context$pageIndex]]
     })
 
-    shiny::observeEvent(input[[buttonNextID]], {
+    shiny::observeEvent(input[[nextButtonId]], {
         context$visitedPageIndexes <- unique(c(context$visitedPageIndexes, context$pageIndex))
         
         validationFailed <- NULL
@@ -86,14 +86,14 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
     })
     
     shiny::observeEvent(context$started, {
-        shinyjs::toggle(buttonInitID, condition = !context$started)
-        shinyjs::toggle(buttonBackID, condition = context$started)
-        shinyjs::toggle(buttonNextID, condition = context$started)
+        shinyjs::toggle(initButtonId, condition = !context$started)
+        shinyjs::toggle(backButtonId, condition = context$started)
+        shinyjs::toggle(nextButtonId, condition = context$started)
     })
     
     shiny::observe({
-        shinyjs::toggleState(buttonBackID, condition = context$started && (context$pageIndex > 1) && !context$done)
-        shinyjs::toggleState(buttonNextID, condition = context$started && !context$done)
+        shinyjs::toggleState(backButtonId, condition = context$started && (context$pageIndex > 1) && !context$done)
+        shinyjs::toggleState(nextButtonId, condition = context$started && !context$done)
         
         if (context$pageIndex >= length(context$pages)) {
             nextButtonLabel <- "Done"
@@ -101,7 +101,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
             nextButtonLabel <- "Next"
         }
 
-        shiny::updateActionButton(session, buttonNextID, label = nextButtonLabel)
+        shiny::updateActionButton(session, nextButtonId, label = nextButtonLabel)
     })
     
     output[[pageContentId]] <- shiny::renderUI({
@@ -121,9 +121,9 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, onExit, ...
             screenContent <- list(
                 uiOutput(outputId = pageContentId),
                 shiny::hr(),
-                shiny::actionButton(inputId = buttonInitID, label = "Start"),
-                shinyjs::hidden(shiny::actionButton(inputId = buttonBackID, label = "Back")),
-                shinyjs::hidden(shiny::actionButton(inputId = buttonNextID, label = ""))
+                shiny::actionButton(inputId = initButtonId, label = "Start"),
+                shinyjs::hidden(shiny::actionButton(inputId = backButtonId, label = "Back")),
+                shinyjs::hidden(shiny::actionButton(inputId = nextButtonId, label = ""))
             )
         }
         
