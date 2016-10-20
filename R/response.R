@@ -12,7 +12,7 @@
 
 #' Build a definition of a response list.
 #'
-#' \code{buildResponses} retuns response definitions given
+#' \code{buildResponses} returns response definitions given
 #'     response identifiers and labels.
 #'
 #' @param id (character) the list of unique response identifiers.
@@ -29,7 +29,7 @@ buildResponses <- function(id, label) {
 
 #' Merge two or more response lists.
 #'
-#' \code{mergeResponses} retuns a single response list
+#' \code{mergeResponses} returns a single response list
 #'     as a merge of individual response lists.
 #'
 #' @param ... (response lists) the list of response lists
@@ -50,7 +50,7 @@ mergeResponses <- function(...) {
 
 #' Randomize the order of responses in a response list.
 #'
-#' \code{randomizeResponses} retuns the same response list
+#' \code{randomizeResponses} returns the same response list
 #'     but randomly ordered.
 #'
 #' @param responses (response list) the list of responses

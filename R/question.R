@@ -3,7 +3,7 @@
 
 #' Define a question input identifier.
 #'
-#' \code{makeQuestionInputId} retuns a standard question identifier used
+#' \code{makeQuestionInputId} returns a standard question identifier used
 #' for defining input fields.
 #'
 #' @param id (character) the unique identifier of the question;
@@ -30,7 +30,7 @@ makeQuestionInputId <- function(id) {
 
 #' Build a question definition from scratch.
 #'
-#' \code{buildQuestion} retuns a question definition given the parts
+#' \code{buildQuestion} returns a question definition given the parts
 #'     a fully formed question definition consists of.
 #'
 #' @param id (character) the unique identifier of the question; it will be used
@@ -69,8 +69,8 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 
 #' Define a question that displays a list of possible responses.
 #'
-#' \code{question.list} retuns a question definition that displays responses
-#' as radio-buttons, check-boxes, or combo-boxes. Can be used for single-
+#' \code{question.list} returns a question definition that displays responses
+#' as radio-buttons, check-boxes, or a combo-box. Can be used for single-
 #' and multiple-choice questions.
 #'
 #' @param id (character) the unique identifier of the question; it will be used
@@ -78,7 +78,7 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #'     and when prefixed with \code{'question'} - as the \code{inputId}
 #'     for the \code{input} slot.
 #' @param label (character) the text displayed as the header of the question.
-#' @param responses (response lst) the response list giving the identifiers and labels
+#' @param responses (response list) the response list giving the identifiers and labels
 #'     of all responses (e.g. as returned by \code{\link{buildResponses}}).
 #' @param multiple (logical) if \code{FALSE}, defines a single-choice question;
 #'     if \code{TRUE}, dfines a multiple-choice question.
@@ -202,9 +202,107 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
     question
 }
 
+#' Define a question that displays a list of mixed single- and multi-choice responses.
+#'
+#' \code{question.mixed} returns a question definition that displays responses
+#' as a mix of radio-buttons and check-boxes, or as a combo-box.
+#' Can be used for defining multi-choice questions with responses
+#' such as "none of the above" or "don't know".
+#'
+#' @param id (character) the unique identifier of the question; it will be used
+#'     as the column name in the data.frame returning the questionnaire data
+#'     and when prefixed with \code{'question'} - as the \code{inputId}
+#'     for the \code{input} slot.
+#' @param label (character) the text displayed as the header of the question.
+#' @param responses (response list) the response list giving the identifiers and labels
+#'     of all responses (e.g. as returned by \code{\link{buildResponses}}).
+#' @param types (character) the types of responses; use \code{radio}
+#'     for radio-buttons (single-choice / mutually exclusive responses) and
+#'     \code{checkbox} for check-boxes (multi-choice responses).
+#'     The length of this vector must be the same as the number of responses defined in \code{responses}.
+#' @param required (logical) if \code{FALSE}, the respondent is free to not choose
+#'     a response; if \code{TRUE}, the respondent must select a response before
+#'     moving on to subsequent pages of the questionnaire.
+#' @param use.select (logical) if \code{FALSE}, displays radio-buttons and check-boxes;
+#'     if \code{TRUE}, displays a combo-box with all responses available
+#'     through the drop-down list.
+#' @param inline (logical) if \code{FALSE}, radio-buttons and check-boxes will be
+#'     displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
+#'     If \code{use.select == TRUE}, this argument will be ignored.
+#' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
+#' @param selectizePlaceholder (character) the text that will be displayed
+#'     in the combo-box when there are no responses selected yet; defaults to
+#'     \code{"Click to select a response"} for single-choice questions and
+#'     \code{"Click to select responses"} for multiple-choice questions.
+#'     If \code{use.select == FALSE}, this argument will be ignored.
+#' @param selectizeOptions (list) a list of selectize options as documented
+#'     in \code{\link[shiny]{selectInput}}. If defined, it overrides \code{selectizePlaceholder}.
+#'
+#' @family question definitions
+#' @seealso
+#'     \code{\link{buildResponses}},
+#'     \code{\link{mixedOptionsInput}},
+#'     \code{\link[shiny]{selectInput}}.
+#' @export
+question.mixed <- function(id, label, responses, types, required = TRUE, use.select = FALSE, inline = FALSE,
+                           width = NULL, selectizePlaceholder = NULL, selectizeOptions = NULL) {
+    if (!use.select && !is.null(selectizePlaceholder)) {
+        warning("selectizePlaceholder ignored - use.select is FALSE.")
+    }
+    if (!use.select && !is.null(selectizeOptions)) {
+        warning("selectizeOptions ignored - use.select is FALSE.")
+    }
+    if (!is.null(selectizePlaceholder) && !is.null(selectizeOptions)) {
+        warning("selectizePlaceholder ignored - selectizeOptions takes precedence.")
+    }
+    if (inline && use.select) {
+        warning("inline ignored - use.select takes precedence.")
+    }
+
+    ui <- function(context) {
+        questionInputId <- makeQuestionInputId(id)
+
+        if (class(responses) == "function") {
+            responses <- responses(context)
+        }
+        choices <- as.character(responses$id)
+        names(choices) <- responses$label
+
+        if (class(types) == "function") {
+            types <- types(context)
+        }
+
+        domain <- shiny::getDefaultReactiveDomain()
+        input <- domain$input
+
+        selected <- shiny::isolate(input[[questionInputId]])
+
+        if (use.select) {
+        } else {
+            interviewer::mixedOptionsInput(
+                choices = choices,
+                inline = inline,
+                inputId = questionInputId,
+                label = label,
+                selected = selected,
+                types = types,
+                width = width
+            )
+        }
+    }
+
+    question <- buildQuestion(id = id, ui = ui)
+
+    question$validate <- function(context) {
+        .validateIsAnswered(question, required)
+    }
+
+    question
+}
+
 #' Define a question that allows the selection of numeric values.
 #'
-#' \code{question.numeric} retuns a question definition that uses
+#' \code{question.numeric} returns a question definition that uses
 #' an input line with a spinner or a slider control for entry of numeric values.
 #'
 #' @param id (character) the unique identifier of the question; it will be used
@@ -303,7 +401,7 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 
 #' Define a question that allows text entry.
 #'
-#' \code{question.text} retuns a question definition that uses
+#' \code{question.text} returns a question definition that uses
 #' an input line or text area for entry of text values.
 #'
 #' @param id (character) the unique identifier of the question; it will be used

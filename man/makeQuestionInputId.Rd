@@ -16,7 +16,7 @@ makeQuestionInputId(id)
     builing functions, use the question identifier only.}
 }
 \description{
-\code{makeQuestionInputId} retuns a standard question identifier used
+\code{makeQuestionInputId} returns a standard question identifier used
 for defining input fields.
 }
 \seealso{

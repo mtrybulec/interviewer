@@ -14,7 +14,7 @@ mergeResponses(...)
     after the merge operation.}
 }
 \description{
-\code{mergeResponses} retuns a single response list
+\code{mergeResponses} returns a single response list
     as a merge of individual response lists.
 }
 \seealso{

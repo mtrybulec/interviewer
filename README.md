@@ -8,6 +8,7 @@ Features:
 * The whole questionnaire is split into pages, each page contains one or more questions.
 * Single-choice questions using radio-buttons or combo-boxes.
 * Multi-choice questions using check-boxes or combo-boxes (selectize).
+* Mixed single- and multi-choice questions (e.g. "none of the above").
 * Vertical or horizontal (inline) layout of radio-buttons and check-boxes.
 * Numeric questions using number edit lines or sliders.
 * Text questions using single-line text inputs or multi-line text areas.
@@ -23,3 +24,6 @@ Features:
   * mask responses (keep, drop) using responses from an earlier question.
 * Go back to already asked questions, go forward to the last question displayed.
 * Data returned via a callback as a standard R data.frame.
+
+`mixedOptionsInput` - a control that mixes radio-buttons and check-boxes -
+can be used in any Shiny application as a normal input element.

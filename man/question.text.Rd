@@ -42,7 +42,7 @@ to be displayed when the entered value doesn't match the \code{regex}.
 If \code{regex} is not set, this argument is ignored.}
 }
 \description{
-\code{question.text} retuns a question definition that uses
+\code{question.text} returns a question definition that uses
 an input line or text area for entry of text values.
 }
 \seealso{
@@ -50,6 +50,7 @@ an input line or text area for entry of text values.
     \code{\link[shiny]{textInput}}.
 
 Other question definitions: \code{\link{question.list}},
+  \code{\link{question.mixed}},
   \code{\link{question.numeric}}
 }
 

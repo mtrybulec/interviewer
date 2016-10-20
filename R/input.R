@@ -38,8 +38,32 @@ generateMixedOptions <- function(inputId, choices, types, selected, inline) {
     )
 }
 
+#' Define an input field with both radio-buttons and check-boxes.
+#'
+#' \code{mixedOptionsInput} creates a set of radio-buttons and check-boxes.
+#'     Check-boxes can be used to toggle multiple choices indepdenently,
+#'     while radio-buttons can be used to define additional, mutually exclusive options.
+#'
+#' @param inputId (character) the \code{input} slot that will be used to access the value.
+#' @param label (character) display label for the control, or \code{NULL} for no label.
+#' @param choices (list) list of values to show radio-buttons and check-boxes for;
+#'     if elements of the list are named then that name, rather than the value,
+#'     will be displayed to the user.
+#' @param selected (vector) the values that should be initially selected, if any.
+#' @param inline (logical) if \code{TRUE}, render the choices inline (i.e. horizontally).
+#' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'};
+#'     see \code{\link[shiny]{validateCssUnit}}.
+#'
+#' @seealso
+#'     \code{\link{question.mixed}},
+#'     \code{\link[shiny]{checkboxGroupInput}},
+#'     \code{\link[shiny]{radioButtons}}.
 #' @export
 mixedOptionsInput <- function(inputId, label, choices, types, selected = NULL, inline = FALSE, width = NULL) {
+    if (length(choices) != length(types)) {
+        stop("Different choice and type counts.")
+    }
+
     selected <- shiny::restoreInput(id = inputId, default = selected)
 
     if (is.null(selected)) {

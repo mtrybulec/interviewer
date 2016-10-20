@@ -33,7 +33,7 @@ displays a slider control.}
 \item{width}{(character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.}
 }
 \description{
-\code{question.numeric} retuns a question definition that uses
+\code{question.numeric} returns a question definition that uses
 an input line with a spinner or a slider control for entry of numeric values.
 }
 \seealso{
@@ -41,6 +41,6 @@ an input line with a spinner or a slider control for entry of numeric values.
     \code{\link[shiny]{sliderInput}}.
 
 Other question definitions: \code{\link{question.list}},
-  \code{\link{question.text}}
+  \code{\link{question.mixed}}, \code{\link{question.text}}
 }
 

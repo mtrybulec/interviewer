@@ -3,7 +3,7 @@ library(shiny)
 
 function(input, output, session) {
 
-    responses <- buildResponses(
+    responses <- interviewer::buildResponses(
         id = c("a", "b", "c"),
         label = c("response A", "response B", "response C")
     )

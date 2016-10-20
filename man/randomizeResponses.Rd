@@ -11,7 +11,7 @@ randomizeResponses(responses)
 (e.g. as returned by \code{\link{buildResponses}}).}
 }
 \description{
-\code{randomizeResponses} retuns the same response list
+\code{randomizeResponses} returns the same response list
     but randomly ordered.
 }
 \seealso{

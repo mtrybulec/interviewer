@@ -26,7 +26,7 @@ an empty string if the entered data is valid and a non-empty string,
 with the validation message, if the entered data is not valid.}
 }
 \description{
-\code{buildQuestion} retuns a question definition given the parts
+\code{buildQuestion} returns a question definition given the parts
     a fully formed question definition consists of.
 }
 \seealso{

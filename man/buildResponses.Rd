@@ -12,7 +12,7 @@ buildResponses(id, label)
 \item{label}{(character) the list of unique response labels.}
 }
 \description{
-\code{buildResponses} retuns response definitions given
+\code{buildResponses} returns response definitions given
     response identifiers and labels.
 }
 \seealso{

@@ -31,7 +31,7 @@ function(input, output, session) {
                 interviewer::question.list(
                     id = "Sex",
                     label = "Please enter your sex:",
-                    responses = buildResponses(
+                    responses = interviewer::buildResponses(
                         id = c("m", "f"),
                         label = c("male", "female")
                     )
@@ -40,7 +40,7 @@ function(input, output, session) {
                 interviewer::question.list(
                     id = "Age",
                     label = "Please enter your age:",
-                    responses = buildResponses(
+                    responses = interviewer::buildResponses(
                         id = c("<=20", "21-30", "31-40", ">40"),
                         label = c("20 or younger", "21 to 30", "31 to 40", "older than 40")
                     ),
@@ -52,7 +52,7 @@ function(input, output, session) {
                 interviewer::question.list(
                     id = "MaritalStatus",
                     label = "What is your marital status?",
-                    responses = buildResponses(
+                    responses = interviewer::buildResponses(
                         id = c("s", "m", "o"),
                         label = c("single", "married", "other")
                     ),
@@ -62,7 +62,7 @@ function(input, output, session) {
                 interviewer::question.list(
                     id = "Owns",
                     label = "Select, from the list, all items that you own:",
-                    responses = buildResponses(
+                    responses = interviewer::buildResponses(
                         id = c("sph", "t", "lt", "dt"),
                         label = c("smartphone", "tablet", "laptop", "desktop")
                     ),
@@ -77,7 +77,7 @@ function(input, output, session) {
                     id = "Pets",
                     label = "What pets do you have?",
                     multiple = TRUE,
-                    responses = buildResponses(
+                    responses = interviewer::buildResponses(
                         id = c("c", "d", "s"),
                         label = c("cat", "dog", "spider")
                     ),
@@ -178,18 +178,18 @@ function(input, output, session) {
             interviewer::page(id = "6a",
                 shiny::p("The question below has responses ordered randomly (except for the last response)."),
 
-                interviewer::question.list(
+                interviewer::question.mixed(
                     id = "Continents1",
                     label = "Which continents have you ever been to?",
                     responses = interviewer::mergeResponses(continents, dk),
-                    multiple = TRUE
+                    types = c(rep("checkbox", nrow(continents)), "radio")
                 )
             ),
 
             interviewer::page(id = "6b",
                 shiny::p("The question below displays only those responses that were mentioned in the question on the previous page."),
 
-                interviewer::question.list(
+                interviewer::question.mixed(
                     id = "Continents2a",
                     label = "Which continents would you like to visit again?",
                     responses = function(context) {
@@ -198,12 +198,14 @@ function(input, output, session) {
                             dk
                         )
                     },
-                    multiple = TRUE
+                    types = function(context) {
+                        c(rep("checkbox", nrow(interviewer::maskResponses(continents, "Continents1", operation = "keep"))), "radio")
+                    }
                 ),
 
                 shiny::p("The question below displays only those responses that were not mentioned in the question on the previous page."),
 
-                interviewer::question.list(
+                interviewer::question.mixed(
                     id = "Continents2b",
                     label = "Which continents would you still like to visit?",
                     responses = function(context) {
@@ -212,7 +214,9 @@ function(input, output, session) {
                             dk
                         )
                     },
-                    multiple = TRUE
+                    types = function(context) {
+                        c(rep("checkbox", nrow(interviewer::maskResponses(continents, "Continents1", operation = "drop"))), "radio")
+                    }
                 )
             ),
 
@@ -220,7 +224,7 @@ function(input, output, session) {
                 interviewer::question.list(
                     id = "Like",
                     label = "Did you like the questionnaire?",
-                    responses = buildResponses(
+                    responses = interviewer::buildResponses(
                         id = c("y", "n"),
                         label = c("Yes", "No")
                     )

@@ -96,7 +96,7 @@ $.extend(mixedOptionsInputBinding, {
     },
 
     getValue: function(el) {
-        var values
+        var values;
         var radios = $("input:radio[name='" + Shiny.$escape(el.id) + "']:checked");
 
         if (radios.length) {
