@@ -3,7 +3,7 @@
 `interviewer` - questionnaires for computer-aided interviewing using R and Shiny.
 
 Features:
-* R *is* the scripting language.
+* R *is* the questionnaire scripting language.
 * The whole questionnaire is a single Shiny output, so do whatever you want with the rest of the page.
 * The whole questionnaire is split into pages, each page contains one or more questions.
 * Single-choice questions using radio-buttons or combo-boxes.
