@@ -48,7 +48,7 @@ mixedOptionsInput <- function(inputId, label, choices, types, selected = NULL, i
 
     options <- generateMixedOptions(inputId, choices, types, selected, inline)
 
-    divClass <- "form-group shiny-input-radiogroup shiny-input-checkboxgroup interviewer-mixedoptionsgroup shiny-input-container"
+    divClass <- "form-group interviewer-mixedoptionsgroup shiny-input-container"
 
     if (inline) {
         divClass <- paste(divClass, "shiny-input-container-inline")
