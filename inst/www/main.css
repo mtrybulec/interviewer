@@ -8,3 +8,33 @@
 #interviewer-buttons {
     margin-bottom: 20px;
 }
+
+/* mixedOptionsInput: */
+
+.checkbox+.radio,
+.radio+.checkbox {
+    margin-top: -5px;
+}
+
+/*
+  Fix for the problem of multi-line inline radio-buttons / check-boxes
+  (starting from the 2nd line, every line is indented by the left-margin setting).
+  http://stackoverflow.com/questions/25730961/bootstrap-radio-inline-line-wrapping-and-stacked-radio-buttons
+*/
+
+.radio-inline+.radio-inline,
+.checkbox-inline+.checkbox-inline,
+.checkbox-inline+.radio-inline,
+.radio-inline+.checkbox-inline {
+    margin-left: 0;
+}
+
+.radio-inline,
+.checkbox-inline {
+    margin-right: 10px;
+}
+
+/* Fix - end.
+
+/* mixedOptionsInput - end. */
+

@@ -45,11 +45,11 @@ function(input, output, session) {
 
                 interviewer::question.list(
                     id = "CheckBoxesNarrow",
-                    label = "Check-boxes, inline and narrow (width set to '200px')",
+                    label = "Check-boxes, inline and narrow (width set to '250px')",
                     responses = responses,
                     multiple = TRUE,
                     inline = TRUE,
-                    width = "200px"
+                    width = "250px"
                 )
             ),
 

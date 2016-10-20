@@ -42,10 +42,10 @@ function(input, output, session) {
 
                 interviewer::question.list(
                     id = "RadioButtonsNarrow",
-                    label = "Radio-buttons, inline and narrow (width set to '200px')",
+                    label = "Radio-buttons, inline and narrow (width set to '250px')",
                     responses = responses,
                     inline = TRUE,
-                    width = "200px"
+                    width = "250px"
                 )
             ),
 
