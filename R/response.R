@@ -84,17 +84,31 @@ randomizeResponses <- function(responses) {
 #'     \code{\link{buildResponses}}.
 #' @export
 maskResponses <- function(responses, questionId, operation = "keep") {
-    domain <- shiny::getDefaultReactiveDomain()
-    input <- domain$input
-    value <- input[[makeQuestionInputId(questionId)]]
+    responseIds <- getResponseIds(questionId)
 
     if (operation == "keep") {
-        filter <- responses$id %in% value
+        filter <- responses$id %in% responseIds
     } else if (operation == "drop") {
-        filter <- !(responses$id %in% value)
+        filter <- !(responses$id %in% responseIds)
     } else {
         stop("Invalid value of operation; possible values: 'keep', 'drop'.")
     }
 
     responses[which(filter), ]
+}
+
+#' Get the identifiers of responses given by the respondent to another question.
+#'
+#' \code{getResponseIds} returns the identifiers to responses
+#'     mentioned by the respondent in an earlier question.
+#'     Can be \code{NULL} if no response was given.
+#'     In case of text questions, returns the text verbatim.
+#'
+#' @param questionId (character) the identifier of the question.
+#' @export
+getResponseIds <- function(questionId) {
+    domain <- shiny::getDefaultReactiveDomain()
+    input <- domain$input
+
+    input[[makeQuestionInputId(questionId)]]
 }

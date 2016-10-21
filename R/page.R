@@ -9,16 +9,7 @@ page <- function(id, ...) {
 
     list(
         id = id,
-        questions = 
-            lapply(questions, function(question) {
-                if (.isQuestion(question)) {
-                    result <- question
-                } else {
-                    result <- NULL
-                }
-                
-                result    
-            }),
+        questions = questions,
         ui = function(context) {
             shiny::div(
                 id = id,
@@ -34,12 +25,12 @@ page <- function(id, ...) {
 
                         questionInputId <- makeQuestionInputId(question$id)
                         questionStatusId <- .questionStatusId(questionInputId)
-                        
+
                         result <- list(
-                            question$ui(context), 
+                            question$ui(context),
                             shiny::uiOutput(outputId = questionStatusId)
                         )
-                        
+
                         output[[questionStatusId]] <- shiny::renderUI({
                             validationResult <- context$validationResults[[question$id]]
 
@@ -50,8 +41,8 @@ page <- function(id, ...) {
                     } else {
                         result <- question
                     }
-                    
-                    result    
+
+                    result
                 })
             )
         }

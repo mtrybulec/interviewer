@@ -5,7 +5,7 @@
 Features:
 * R *is* the questionnaire scripting language.
 * The whole questionnaire is a single Shiny output, so do whatever you want with the rest of the page.
-* The whole questionnaire is split into pages, each page contains one or more questions.
+* The whole questionnaire is split into pages, each page contains one or more questions or other UI elements.
 * Single-choice questions using radio-buttons or combo-boxes.
 * Multi-choice questions using check-boxes or combo-boxes (selectize).
 * Mixed single- and multi-choice questions (e.g. "none of the above").

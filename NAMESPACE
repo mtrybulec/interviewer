@@ -2,6 +2,7 @@
 
 export(buildQuestion)
 export(buildResponses)
+export(getResponseIds)
 export(makeQuestionInputId)
 export(maskResponses)
 export(mergeResponses)
