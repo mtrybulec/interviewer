@@ -6,7 +6,7 @@
 \usage{
 question.mixed(id, label, responses, types, required = TRUE,
   use.select = FALSE, inline = FALSE, width = NULL,
-  selectizePlaceholder = NULL, selectizeOptions = NULL)
+  selectizePlaceholder = NULL)
 }
 \arguments{
 \item{id}{(character) the unique identifier of the question; it will be used
@@ -43,9 +43,6 @@ in the combo-box when there are no responses selected yet; defaults to
 \code{"Click to select a response"} for single-choice questions and
 \code{"Click to select responses"} for multiple-choice questions.
 If \code{use.select == FALSE}, this argument will be ignored.}
-
-\item{selectizeOptions}{(list) a list of selectize options as documented
-in \code{\link[shiny]{selectInput}}. If defined, it overrides \code{selectizePlaceholder}.}
 }
 \description{
 \code{question.mixed} returns a question definition that displays responses

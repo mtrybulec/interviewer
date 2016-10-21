@@ -98,8 +98,6 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #'     \code{"Click to select a response"} for single-choice questions and
 #'     \code{"Click to select responses"} for multiple-choice questions.
 #'     If \code{use.select == FALSE}, this argument will be ignored.
-#' @param selectizeOptions (list) a list of selectize options as documented
-#'     in \code{\link[shiny]{selectInput}}. If defined, it overrides \code{selectizePlaceholder}.
 #'
 #' @family question definitions
 #' @seealso
@@ -109,15 +107,9 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #'     \code{\link[shiny]{selectInput}}.
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, required = TRUE, use.select = FALSE, inline = FALSE,
-                          width = NULL, selectizePlaceholder = NULL, selectizeOptions = NULL) {
+                          width = NULL, selectizePlaceholder = NULL) {
     if (!use.select && !is.null(selectizePlaceholder)) {
         warning("selectizePlaceholder ignored - use.select is FALSE.")
-    }
-    if (!use.select && !is.null(selectizeOptions)) {
-        warning("selectizeOptions ignored - use.select is FALSE.")
-    }
-    if (!is.null(selectizePlaceholder) && !is.null(selectizeOptions)) {
-        warning("selectizePlaceholder ignored - selectizeOptions takes precedence.")
     }
     if (inline && use.select) {
         warning("inline ignored - use.select takes precedence.")
@@ -148,19 +140,12 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
                 width = width
             )
         } else if (use.select) {
-            if (is.null(selectizeOptions)) {
-                if (is.null(selectizePlaceholder)) {
-                    if (multiple) {
-                        selectizePlaceholder <- "Click to select responses"
-                    } else {
-                        selectizePlaceholder <- "Click to select a response"
-                    }
+            if (is.null(selectizePlaceholder)) {
+                if (multiple) {
+                    selectizePlaceholder <- "Click to select responses"
+                } else {
+                    selectizePlaceholder <- "Click to select a response"
                 }
-
-                selectizeOptions <- list(
-                    placeholder = selectizePlaceholder,
-                    plugins = list("remove_button")
-                )
             }
 
             if (!multiple) {
@@ -172,7 +157,10 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
                 inputId = questionInputId,
                 label = label,
                 multiple = multiple,
-                options = selectizeOptions,
+                options = list(
+                    placeholder = selectizePlaceholder,
+                    plugins = list("remove_button")
+                ),
                 selected = selected,
                 width = width
             )
@@ -235,8 +223,6 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
 #'     \code{"Click to select a response"} for single-choice questions and
 #'     \code{"Click to select responses"} for multiple-choice questions.
 #'     If \code{use.select == FALSE}, this argument will be ignored.
-#' @param selectizeOptions (list) a list of selectize options as documented
-#'     in \code{\link[shiny]{selectInput}}. If defined, it overrides \code{selectizePlaceholder}.
 #'
 #' @family question definitions
 #' @seealso
@@ -245,15 +231,9 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
 #'     \code{\link[shiny]{selectInput}}.
 #' @export
 question.mixed <- function(id, label, responses, types, required = TRUE, use.select = FALSE, inline = FALSE,
-                           width = NULL, selectizePlaceholder = NULL, selectizeOptions = NULL) {
+                           width = NULL, selectizePlaceholder = NULL) {
     if (!use.select && !is.null(selectizePlaceholder)) {
         warning("selectizePlaceholder ignored - use.select is FALSE.")
-    }
-    if (!use.select && !is.null(selectizeOptions)) {
-        warning("selectizeOptions ignored - use.select is FALSE.")
-    }
-    if (!is.null(selectizePlaceholder) && !is.null(selectizeOptions)) {
-        warning("selectizePlaceholder ignored - selectizeOptions takes precedence.")
     }
     if (inline && use.select) {
         warning("inline ignored - use.select takes precedence.")
@@ -278,25 +258,24 @@ question.mixed <- function(id, label, responses, types, required = TRUE, use.sel
         selected <- shiny::isolate(input[[questionInputId]])
 
         if (use.select) {
-            if (is.null(selectizeOptions)) {
-                if (is.null(selectizePlaceholder)) {
-                    selectizePlaceholder <- "Click to select responses"
-                }
+            if (is.null(selectizePlaceholder)) {
+                selectizePlaceholder <- "Click to select responses"
+            }
 
-                mutexOptions <- choices[which(types == "radio")]
-                print(mutexOptions)
-                mutexOptions <- paste(paste0('"', gsub('"', '\\"', mutexOptions), '"'), collapse = ', ')
-                print(mutexOptions)
+            mutexOptions <- choices[which(types == "radio")]
+            print(mutexOptions)
+            mutexOptions <- paste(paste0('"', gsub('"', '\\"', mutexOptions), '"'), collapse = ', ')
+            print(mutexOptions)
 
-                selectizeOptions <- list(
-                    placeholder = selectizePlaceholder,
-                    plugins = list("remove_button"),
-                    onInitialize = I(sprintf("
+            options <- list(
+                placeholder = selectizePlaceholder,
+                plugins = list("remove_button"),
+                onInitialize = I(sprintf("
 function() {
     this.mutexOptions = [%s];
 }
 ", mutexOptions)),
-                    onItemAdd = I("
+                onItemAdd = I("
 function(value, $item) {
     if ((this.items.length > 0) && (this.items[0] != value)) {
         if ((this.mutexOptions.indexOf(value) != -1) || (this.mutexOptions.indexOf(this.items[0]) != -1)) {
@@ -304,15 +283,14 @@ function(value, $item) {
         }
     }
 }")
-                )
-            }
+            )
 
             shiny::selectizeInput(
                 choices = choices,
                 inputId = questionInputId,
                 label = label,
                 multiple = TRUE,
-                options = selectizeOptions,
+                options = options,
                 selected = selected,
                 width = width
             )
