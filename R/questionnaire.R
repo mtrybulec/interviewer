@@ -15,23 +15,25 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         done = FALSE,
         page = NULL,
         pages = list(...),
-        pageIndex = 1,
+        pageIndex = NULL,
         visitedPageIndexes = NULL,
         questionOrder = NULL,
         validationResults = list()
     )
 
-    shiny::isolate({
+    setPage <- function(pageIndex) {
+        context$pageIndex <- pageIndex
         context$page <- context$pages[[context$pageIndex]]
-    })
+        shinyjs::runjs("window.scrollTo(0, 0);")
+    }
 
     shiny::observeEvent(input[[initButtonId]], {
+        setPage(1)
         context$started <- TRUE
     })
 
     shiny::observeEvent(input[[backButtonId]], {
-        context$pageIndex <- context$pageIndex - 1
-        context$page <- context$pages[[context$pageIndex]]
+        setPage(context$pageIndex - 1)
     })
 
     shiny::observeEvent(input[[nextButtonId]], {
@@ -59,9 +61,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                 context$data <- shiny::reactiveValuesToList(input)
                 context$done <- TRUE
             } else {
-                context$pageIndex <- context$pageIndex + 1
-                context$page <- context$pages[[context$pageIndex]]
-                shinyjs::runjs("window.scrollTo(0, 0);")
+                setPage(context$pageIndex + 1)
             }
         } else {
             shinyjs::runjs(sprintf("interviewerJumpTo('%s');", validationFailed))
