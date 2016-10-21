@@ -23,35 +23,78 @@ function(input, output, session) {
 
             interviewer::page(id = "mixedButtons",
                 interviewer::question.mixed(
-                    id = "MixedStandard",
-                    label = "Mixed standard",
+                    id = "MixedButtonsStandard",
+                    label = "Mixed buttons, standard",
                     responses = responses,
                     types = types
                 ),
 
                 interviewer::question.mixed(
-                    id = "MixedInline",
-                    label = "Mixed, inline (inline set to TRUE)",
+                    id = "MixedButtonsInline",
+                    label = "Mixed buttons, inline (inline set to TRUE)",
                     responses = responses,
                     types = types,
                     inline = TRUE
                 ),
 
                 interviewer::question.mixed(
-                    id = "MixedOptional",
-                    label = "Mixed, no response required (required set to FALSE; a second click on a selected radio-button deselects it)",
+                    id = "MixedButtonsOptional",
+                    label = "Mixed buttons, no response required (required set to FALSE; a second click on a selected radio-button deselects it)",
                     responses = responses,
                     types = types,
                     required = FALSE
                 ),
 
                 interviewer::question.mixed(
-                    id = "MixedNarrow",
-                    label = "Mixed, inline and narrow (width set to '250px')",
+                    id = "MixedButtonsNarrow",
+                    label = "Mixed buttons, inline and narrow (width set to '250px')",
                     responses = responses,
                     types = types,
                     inline = TRUE,
                     width = "250px"
+                )
+            ),
+
+            interviewer::page(id = "mixedSelectize",
+
+                interviewer::question.mixed(
+                    id = "MixedComboBoxStandard",
+                    label = "Mixed combo-box, standard (use.select set to TRUE)",
+                    responses = responses,
+                    types = types,
+                    use.select = TRUE
+                ),
+
+                interviewer::question.mixed(
+                    id = "MixedComboBoxPlaceholder",
+                    label = "Mixed combo-box, custom message (selectizePlaceholder set to 'I need a response!')",
+                    responses = responses,
+                    types = types,
+                    use.select = TRUE,
+                    selectizePlaceholder = "I need a response!"
+                ),
+
+                interviewer::question.mixed(
+                    id = "MixedComboBoxOptional",
+                    label = "Mixed combo-box, no response required (required set to FALSE)",
+                    responses = responses,
+                    types = types,
+                    use.select = TRUE,
+                    required = FALSE
+                ),
+
+                shiny::p(paste(
+                    "Note how the combo-box below is displayed on top of the survey buttons. ",
+                    "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
+                )),
+
+                interviewer::question.mixed(
+                    id = "MixedComboBoxNarrow",
+                    label = "Mixed combo-box, inline and narrow (width set to '200px')",
+                    responses = responses,
+                    types = types,
+                    use.select = TRUE,
+                    width = "200px"
                 )
             ),
 

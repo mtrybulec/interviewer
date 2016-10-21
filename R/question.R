@@ -278,6 +278,44 @@ question.mixed <- function(id, label, responses, types, required = TRUE, use.sel
         selected <- shiny::isolate(input[[questionInputId]])
 
         if (use.select) {
+            if (is.null(selectizeOptions)) {
+                if (is.null(selectizePlaceholder)) {
+                    selectizePlaceholder <- "Click to select responses"
+                }
+
+                mutexOptions <- choices[which(types == "radio")]
+                print(mutexOptions)
+                mutexOptions <- paste(paste0('"', gsub('"', '\\"', mutexOptions), '"'), collapse = ', ')
+                print(mutexOptions)
+
+                selectizeOptions <- list(
+                    placeholder = selectizePlaceholder,
+                    plugins = list("remove_button"),
+                    onInitialize = I(sprintf("
+function() {
+    this.mutexOptions = [%s];
+}
+", mutexOptions)),
+                    onItemAdd = I("
+function(value, $item) {
+    if ((this.items.length > 0) && (this.items[0] != value)) {
+        if ((this.mutexOptions.indexOf(value) != -1) || (this.mutexOptions.indexOf(this.items[0]) != -1)) {
+            this.setValue(value, false);
+        }
+    }
+}")
+                )
+            }
+
+            shiny::selectizeInput(
+                choices = choices,
+                inputId = questionInputId,
+                label = label,
+                multiple = TRUE,
+                options = selectizeOptions,
+                selected = selected,
+                width = width
+            )
         } else {
             interviewer::mixedOptionsInput(
                 choices = choices,
