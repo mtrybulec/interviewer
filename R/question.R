@@ -148,19 +148,27 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
                 }
             }
 
+            options <- list(
+                placeholder = selectizePlaceholder,
+                plugins = list("remove_button")
+            )
+
             if (!multiple) {
                 choices <- c(selectizePlaceholder = .emptyResponseValue, choices)
+                options$onItemAdd <- I("
+function(value, $item) {
+    if ((this.items.length > 0) && (this.items[0] != value)) {
+        this.setValue(value, false);
+  }
+}")
             }
 
             shiny::selectizeInput(
                 choices = choices,
                 inputId = questionInputId,
                 label = label,
-                multiple = multiple,
-                options = list(
-                    placeholder = selectizePlaceholder,
-                    plugins = list("remove_button")
-                ),
+                multiple = TRUE,
+                options = options,
                 selected = selected,
                 width = width
             )
