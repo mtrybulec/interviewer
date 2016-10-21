@@ -63,10 +63,6 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
     )
 }
 
-.isQuestion <- function(question) {
-    is.list(question) && all(c("id", "ui") %in% names(question))
-}
-
 #' Define a question that displays a list of possible responses.
 #'
 #' \code{question.list} returns a question definition that displays responses

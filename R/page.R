@@ -15,34 +15,27 @@ page <- function(id, ...) {
                 id = id,
                 class = "page",
                 lapply(questions, function(question) {
-                    if (.isQuestion(question)) {
-                        if ("dataIds" %in% names(question)) {
-                            dataIds <- setdiff(question$dataIds, context$questionOrder)
-                            context$questionOrder <- c(context$questionOrder, dataIds)
-                        } else if (!(question$id %in% context$questionOrder)) {
-                            context$questionOrder <- c(context$questionOrder, question$id)
+                    questionInputId <- makeQuestionInputId(question$id)
+                    questionStatusId <- .questionStatusId(questionInputId)
+
+                    output[[questionStatusId]] <- shiny::renderUI({
+                        validationResult <- context$validationResults[[question$id]]
+
+                        if (!is.null(validationResult) && (validationResult != .validResult)) {
+                            shiny::div(class = "interviewer-question-status", shiny::HTML(validationResult))
                         }
+                    })
 
-                        questionInputId <- makeQuestionInputId(question$id)
-                        questionStatusId <- .questionStatusId(questionInputId)
-
-                        result <- list(
-                            question$ui(context),
-                            shiny::uiOutput(outputId = questionStatusId)
-                        )
-
-                        output[[questionStatusId]] <- shiny::renderUI({
-                            validationResult <- context$validationResults[[question$id]]
-
-                            if (!is.null(validationResult) && (validationResult != .validResult)) {
-                                shiny::div(class = "interviewer-question-status", shiny::HTML(validationResult))
-                            }
-                        })
+                    if ((length(class(question$ui)) == 1) && (class(question$ui) == "function")) {
+                        questionUI <- question$ui(context)
                     } else {
-                        result <- question
+                        questionUI <- question$ui
                     }
 
-                    result
+                    list(
+                        questionUI,
+                        shiny::uiOutput(outputId = questionStatusId)
+                    )
                 })
             )
         }

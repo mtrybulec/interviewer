@@ -15,15 +15,29 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         done = FALSE,
         page = NULL,
         pages = list(...),
-        pageIndex = NULL,
+        pageIndex = 0,
         visitedPageIndexes = NULL,
-        questionOrder = NULL,
+        history = list(),
         validationResults = list()
     )
 
     setPage <- function(pageIndex) {
+        prevIndex <- context$pageIndex
         context$pageIndex <- pageIndex
         context$page <- context$pages[[context$pageIndex]]
+
+        if (prevIndex < pageIndex) {
+            context$history[[context$page$id]] <- context$page
+
+            for (question in context$page$questions) {
+                context$history[[makeQuestionInputId(question$id)]] <- question
+            }
+        } else {
+            historyPages <- grepl(paste0("^", .pagePrefix), names(context$history))
+            lastHistoryPage <- max(which(historyPages))
+            context$history <- context$history[1:(lastHistoryPage - 1)]
+        }
+
         shinyjs::runjs("window.scrollTo(0, 0);")
     }
 
@@ -43,15 +57,13 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         validationResults <- context$validationResults
 
         for (question in context$page$questions) {
-            if (.isQuestion(question)) {
-                validationResult <- .validateResult(context, question)
+            validationResult <- .validateResult(context, question)
 
-                if ((validationResult != .validResult) && is.null(validationFailed)) {
-                    validationFailed <- question$id
-                }
-
-                validationResults[[question$id]] <- validationResult
+            if ((validationResult != .validResult) && is.null(validationFailed)) {
+                validationFailed <- question$id
             }
+
+            validationResults[[question$id]] <- validationResult
         }
 
         context$validationResults <- validationResults
@@ -78,7 +90,10 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             names <- sub(paste0("^", .questionPrefix), "", names)
             colnames(data) <- names
 
-            data <- data[, intersect(context$questionOrder, names), drop = FALSE]
+            historyQuestions <- context$history[which(grepl(paste0("^", .questionPrefix), names(context$history)))]
+            historyQuestionIds <- unlist(lapply(historyQuestions, function(question) as.list(question$dataIds)))
+
+            data <- data[, intersect(historyQuestionIds, names), drop = FALSE]
 
             exit(data)
         }

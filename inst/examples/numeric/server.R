@@ -14,7 +14,9 @@ function(input, output, session) {
             ),
             goodbye = "Done!",
 
-            interviewer::page(id = "numeric",
+            interviewer::page(
+                id = "Numeric",
+
                 interviewer::question.numeric(
                     id = "NumericStandard",
                     label = "Numeric, standard",
@@ -38,7 +40,10 @@ function(input, output, session) {
                     step = 5
                 ),
 
-                shiny::p("Note: in the above, the step is set to help the user enter values, it is not used to validate data."),
+                interviewer::buildQuestion(
+                    id = "NumericStepNote",
+                    ui = shiny::p("Note: in the above, the step is set to help the user enter values, it is not used to validate data.")
+                ),
 
                 interviewer::question.numeric(
                     id = "NumericNarrow",
@@ -49,7 +54,9 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "slider",
+            interviewer::page(
+                id = "Slider",
+
                 interviewer::question.numeric(
                     id = "SliderStandard",
                     label = "Slider, standard",

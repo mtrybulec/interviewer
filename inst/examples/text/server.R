@@ -14,7 +14,9 @@ function(input, output, session) {
             ),
             goodbye = "Done!",
 
-            interviewer::page(id = "text",
+            interviewer::page(
+                id = "Text",
+
                 interviewer::question.text(
                     id = "TextStandard",
                     label = "Text, standard"
@@ -47,7 +49,9 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "textArea",
+            interviewer::page(
+                id = "TextArea",
+
                 interviewer::question.text(
                     id = "TextAreaStandard",
                     label = "TextArea, standard (use.textArea set to TRUE)",

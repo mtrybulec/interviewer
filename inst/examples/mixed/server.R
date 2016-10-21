@@ -24,7 +24,9 @@ function(input, output, session) {
             ),
             goodbye = "Done!",
 
-            interviewer::page(id = "mixedButtons",
+            interviewer::page(
+                id = "MixedButtons",
+
                 interviewer::question.mixed(
                     id = "MixedButtonsStandard",
                     label = "Mixed buttons, standard",
@@ -58,7 +60,8 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "mixedSelectize",
+            interviewer::page(
+                id = "MixedSelectize",
 
                 interviewer::question.mixed(
                     id = "MixedComboBoxStandard",
@@ -86,10 +89,13 @@ function(input, output, session) {
                     required = FALSE
                 ),
 
-                shiny::p(paste(
-                    "Note how the combo-box below is displayed on top of the survey buttons. ",
-                    "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
-                )),
+                interviewer::buildQuestion(
+                    id = "ComboBoxNarrowNote",
+                    ui = shiny::p(paste(
+                        "Note how the combo-box below is displayed on top of the survey buttons. ",
+                        "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
+                    ))
+                ),
 
                 interviewer::question.mixed(
                     id = "MixedComboBoxNarrow",

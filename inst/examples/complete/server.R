@@ -27,7 +27,9 @@ function(input, output, session) {
             ),
             goodbye = "Done!",
 
-            interviewer::page(id = "1",
+            interviewer::page(
+                id = "1",
+
                 interviewer::question.list(
                     id = "Sex",
                     label = "Please enter your sex:",
@@ -48,7 +50,9 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "2",
+            interviewer::page(
+                id = "2",
+
                 interviewer::question.list(
                     id = "MaritalStatus",
                     label = "What is your marital status?",
@@ -72,7 +76,9 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "3",
+            interviewer::page(
+                id = "3",
+
                 interviewer::question.list(
                     id = "Pets",
                     label = "What pets do you have?",
@@ -101,9 +107,11 @@ function(input, output, session) {
             ),
 
             # Page with a custom question:
-            interviewer::page(id = "C",
+            interviewer::page(
+                id = "4",
+
                 buildQuestion(
-                    id = "chart",
+                    id = "Chart",
                     dataIds = paste0("Price", c(1:12)),
                     ui = function(context) {
                         priceInput <- function(month) {
@@ -153,7 +161,9 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "4",
+            interviewer::page(
+                id = "5",
+
                 interviewer::question.text(
                     id = "Nick",
                     label = "What's your nickname?"
@@ -166,7 +176,10 @@ function(input, output, session) {
                     regexHint = "ddd ddd-ddd"
                 ),
 
-                shiny::HTML("<p>Now, before you answer the next question,<br />please take a moment to think...</p>"),
+                interviewer::buildQuestion(
+                    id = "CommentNote",
+                    ui = shiny::HTML("<p>Now, before you answer the next question,<br />please take a moment to think...</p>")
+                ),
 
                 interviewer::question.text(
                     id = "Comment",
@@ -175,8 +188,13 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "6a",
-                shiny::p("The question below has responses ordered randomly (except for the last response)."),
+            interviewer::page(
+                id = "6a",
+
+                interviewer::buildQuestion(
+                    id = "Continents1Note",
+                    ui = shiny::p("The question below has responses ordered randomly (except for the last response).")
+                ),
 
                 interviewer::question.mixed(
                     id = "Continents1",
@@ -189,8 +207,13 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "6b",
-                shiny::p("The question below displays only those responses that were mentioned in the question on the previous page."),
+            interviewer::page(
+                id = "6b",
+
+                interviewer::buildQuestion(
+                    id = "Continents2aNote",
+                    ui = shiny::p("The question below displays only those responses that were mentioned in the question on the previous page.")
+                ),
 
                 interviewer::question.mixed(
                     id = "Continents2a",
@@ -210,7 +233,10 @@ function(input, output, session) {
                     }
                 ),
 
-                shiny::p("The question below displays only those responses that were not mentioned in the question on the previous page."),
+                interviewer::buildQuestion(
+                    id = "Continents2bNote",
+                    ui = shiny::p("The question below displays only those responses that were not mentioned in the question on the previous page.")
+                ),
 
                 interviewer::question.mixed(
                     id = "Continents2b",
@@ -231,7 +257,9 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "6",
+            interviewer::page(
+                id = "7",
+
                 interviewer::question.list(
                     id = "Like",
                     label = "Did you like the questionnaire?",

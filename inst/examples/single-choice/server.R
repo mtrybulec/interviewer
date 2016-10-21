@@ -19,7 +19,9 @@ function(input, output, session) {
             ),
             goodbye = "Done!",
 
-            interviewer::page(id = "radioButtons",
+            interviewer::page(
+                id = "RadioButtons",
+
                 interviewer::question.list(
                     id = "RadioButtonsStandard",
                     label = "Radio-buttons, standard",
@@ -49,7 +51,9 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "comboBoxes",
+            interviewer::page(
+                id = "ComboBoxes",
+
                 interviewer::question.list(
                     id = "ComboBoxStandard",
                     label = "Combo-box, standard (use.select set to TRUE)",
@@ -74,10 +78,13 @@ function(input, output, session) {
                     required = FALSE
                 ),
 
-                shiny::p(paste(
-                    "Note how the combo-box below is displayed on top of the survey buttons. ",
-                    "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
-                )),
+                interviewer::buildQuestion(
+                    id = "ComboBoxNarrowNote",
+                    ui = shiny::p(paste(
+                        "Note how the combo-box below is displayed on top of the survey buttons. ",
+                        "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
+                    ))
+                ),
 
                 interviewer::question.list(
                     id = "ComboBoxNarrow",
