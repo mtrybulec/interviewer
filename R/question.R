@@ -155,7 +155,9 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
 function(value, $item) {
     if ((this.items.length > 0) && (this.items[0] != value)) {
         this.setValue(value, false);
-  }
+    }
+
+    this.close();
 }")
             }
 
