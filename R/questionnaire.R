@@ -114,7 +114,34 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         if (!context$started) {
             pageContent <- shiny::p(welcome)
         } else {
-            pageContent <- context$page$ui(context)
+            pageContent <-
+                shiny::div(
+                    id = context$page$id,
+                    class = "page",
+                    lapply(context$page$questions, function(question) {
+                        questionInputId <- makeQuestionInputId(question$id)
+                        questionStatusId <- .questionStatusId(questionInputId)
+
+                        output[[questionStatusId]] <- shiny::renderUI({
+                            validationResult <- context$validationResults[[question$id]]
+
+                            if (!is.null(validationResult) && (validationResult != .validResult)) {
+                                shiny::div(class = "interviewer-question-status", shiny::HTML(validationResult))
+                            }
+                        })
+
+                        if ((length(class(question$ui)) == 1) && (class(question$ui) == "function")) {
+                            questionUI <- question$ui(context)
+                        } else {
+                            questionUI <- question$ui
+                        }
+
+                        list(
+                            questionUI,
+                            shiny::uiOutput(outputId = questionStatusId)
+                        )
+                    })
+                )
         }
 
         pageContent
