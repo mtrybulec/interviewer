@@ -38,6 +38,26 @@ generateMixedOptions <- function(inputId, choices, types, selected, inline) {
     )
 }
 
+#' Get the single (mutually-exclusive) option type for \code{mixedOptionsInput}.
+#'
+#' Returns the single (mutually-exclusive) option type for \code{mixedOptionsInput}'s \code{types} parameter.
+#'
+#' @family mixedOptionsInput option types
+#' @seealso
+#'     \code{\link{mixedOptionsInput}}.
+#' @export
+mixedOptions.single <- "radio"
+
+#' Get the multiple (non-mutually-exclusive) option type for \code{mixedOptionsInput}.
+#'
+#' Returns the multiple (non-mutually-exclusive) option type for \code{mixedOptionsInput}'s \code{types} parameter.
+#'
+#' @family mixedOptionsInput option types
+#' @seealso
+#'     \code{\link{mixedOptionsInput}}.
+#' @export
+mixedOptions.multi <- "checkbox"
+
 #' Define an input field with both radio-buttons and check-boxes.
 #'
 #' \code{mixedOptionsInput} creates a set of radio-buttons and check-boxes.

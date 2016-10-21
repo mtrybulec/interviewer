@@ -182,7 +182,10 @@ function(input, output, session) {
                     id = "Continents1",
                     label = "Which continents have you ever been to?",
                     responses = interviewer::mergeResponses(continents, dk),
-                    types = c(rep("checkbox", nrow(continents)), "radio")
+                    types = c(
+                        rep(interviewer::mixedOptions.multi, nrow(continents)),
+                        interviewer::mixedOptions.single
+                    )
                 )
             ),
 
@@ -199,7 +202,11 @@ function(input, output, session) {
                         )
                     },
                     types = function(context) {
-                        c(rep("checkbox", nrow(interviewer::maskResponses(continents, "Continents1", operation = "keep"))), "radio")
+                        continentCount <- nrow(interviewer::maskResponses(continents, "Continents1", operation = "keep"))
+                        c(
+                            rep(interviewer::mixedOptions.multi, continentCount),
+                            interviewer::mixedOptions.single
+                        )
                     }
                 ),
 
@@ -215,7 +222,11 @@ function(input, output, session) {
                         )
                     },
                     types = function(context) {
-                        c(rep("checkbox", nrow(interviewer::maskResponses(continents, "Continents1", operation = "drop"))), "radio")
+                        continentCount <- nrow(interviewer::maskResponses(continents, "Continents1", operation = "drop"))
+                        c(
+                            rep(interviewer::mixedOptions.multi, continentCount),
+                            interviewer::mixedOptions.single
+                        )
                     }
                 )
             ),

@@ -270,10 +270,8 @@ question.mixed <- function(id, label, responses, types, required = TRUE, use.sel
                 selectizePlaceholder <- "Click to select responses"
             }
 
-            mutexOptions <- choices[which(types == "radio")]
-            print(mutexOptions)
+            mutexOptions <- choices[which(types == mixedOptions.single)]
             mutexOptions <- paste(paste0('"', gsub('"', '\\"', mutexOptions), '"'), collapse = ', ')
-            print(mutexOptions)
 
             options <- list(
                 placeholder = selectizePlaceholder,

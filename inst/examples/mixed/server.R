@@ -8,7 +8,10 @@ function(input, output, session) {
         label = c("response A", "response B", "response C", "response D", "response E")
     )
 
-    types <- c("checkbox", "checkbox", "checkbox", "radio", "radio")
+    types <- c(
+        rep(interviewer::mixedOptions.multi, 3),
+        rep(interviewer::mixedOptions.single, 2)
+    )
 
     output$questionnaireOutput <-
         interviewer::questionnaire(

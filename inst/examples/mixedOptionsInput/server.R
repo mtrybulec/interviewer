@@ -10,7 +10,12 @@ function(input, output, session) {
 
     mixedChoices <- as.character(responses$id)
     names(mixedChoices) <- responses$label
-    mixedTypes <- c("checkbox", "checkbox", "checkbox", "radio", "radio", "checkbox", "radio")
+    mixedTypes <- c(
+        rep(interviewer::mixedOptions.multi, 3),
+        rep(interviewer::mixedOptions.single, 2),
+        interviewer::mixedOptions.multi,
+        interviewer::mixedOptions.single
+    )
 
     output$questionnaireOutput <- shiny::renderUI({
         list(
