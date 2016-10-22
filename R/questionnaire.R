@@ -4,10 +4,12 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
     input <- domain$input
     output <- domain$output
 
-    pageContentId <- "pageContent"
-    initButtonId <- paste0(.buttonPrefix, "Init")
-    backButtonId <- paste0(.buttonPrefix, "Back")
-    nextButtonId <- paste0(.buttonPrefix, "Next")
+    pageOutputId <- "pageOutput"
+
+    buttonPrefix = "button"
+    initButtonId <- paste0(buttonPrefix, "Init")
+    backButtonId <- paste0(buttonPrefix, "Back")
+    nextButtonId <- paste0(buttonPrefix, "Next")
 
     context <- shiny::reactiveValues(
         started = FALSE,
@@ -121,7 +123,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         shinyjs::toggleState(nextButtonId, condition = context$started && !context$done)
     })
 
-    output[[pageContentId]] <- shiny::renderUI({
+    output[[pageOutputId]] <- shiny::renderUI({
         if (!context$started) {
             pageContent <- shiny::p(welcome)
         } else {
@@ -162,7 +164,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             screenContent <- shiny::p(goodbye)
         } else {
             screenContent <- list(
-                uiOutput(outputId = pageContentId),
+                uiOutput(outputId = pageOutputId),
                 shiny::hr(),
                 shiny::actionButton(inputId = initButtonId, label = "Start"),
                 shinyjs::hidden(shiny::actionButton(inputId = backButtonId, label = "Back")),

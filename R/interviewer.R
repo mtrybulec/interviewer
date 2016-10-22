@@ -1,3 +1,5 @@
+.packageName <- "interviewer"
+
 #' interviewer
 #'
 #' Easily build questionnaires for computer-aided interviewing using R and Shiny.

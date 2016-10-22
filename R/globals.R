@@ -1,3 +1,0 @@
-.packageName <- "interviewer"
-
-.buttonPrefix = "button"
