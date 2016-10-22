@@ -10,7 +10,6 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
     nextButtonId <- paste0(.buttonPrefix, "Next")
 
     context <- shiny::reactiveValues(
-        data = NULL,
         started = FALSE,
         done = FALSE,
         items = list(...),
@@ -95,8 +94,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
 
     shiny::observeEvent(context$done, {
         if (context$done) {
-            context$data <- shiny::reactiveValuesToList(input)
-            data <- context$data
+            data <- shiny::reactiveValuesToList(input)
             data <- lapply(data, function(item) paste(item, collapse = ","))
             data <- as.data.frame(data)
 
