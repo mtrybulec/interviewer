@@ -13,50 +13,68 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         data = NULL,
         started = FALSE,
         done = FALSE,
+        items = list(...),
+        itemIndex = 0, # points to the first item on a page
         page = NULL,
-        pages = list(...),
-        pageIndex = 0,
-        visitedPageIndexes = NULL,
-        history = list(),
         validationResults = list()
     )
 
-    setPage <- function(pageIndex) {
-        prevIndex <- context$pageIndex
-        context$pageIndex <- pageIndex
-        context$page <- context$pages[[context$pageIndex]]
+    isolate({
+        itemIds <- lapply(context$items, function(item) item$id)
+        pageIndexes <- which(grepl(paste0("^", .pagePrefix), itemIds))
+    })
 
-        if (prevIndex < pageIndex) {
-            context$history[[context$page$id]] <- context$page
-
-            for (question in context$page$questions) {
-                context$history[[makeQuestionInputId(question$id)]] <- question
-            }
+    navigate <- function(delta) {
+        if (context$itemIndex <= 0) {
+            context$itemIndex <- 1
         } else {
-            historyPages <- grepl(paste0("^", .pagePrefix), names(context$history))
-            lastHistoryPage <- max(which(historyPages))
-            context$history <- context$history[1:(lastHistoryPage - 1)]
+            if (delta < 0) {
+                prevPageIndexes <- pageIndexes[which(pageIndexes < context$itemIndex - 1)]
+
+                if (length(prevPageIndexes) == 0) {
+                    context$itemIndex <- 1
+                } else {
+                    context$itemIndex <- max(prevPageIndexes) + 1
+                }
+            } else {
+                nextPageIndexes <- pageIndexes[which(pageIndexes > context$itemIndex)]
+
+                if (length(nextPageIndexes) == 0) {
+                    context$done <- TRUE
+                } else {
+                    context$itemIndex <- min(nextPageIndexes) + 1
+                }
+            }
         }
 
-        shinyjs::runjs("window.scrollTo(0, 0);")
+        if (!context$done) {
+            nextPageIndexes <- pageIndexes[which(pageIndexes > context$itemIndex)]
+
+            if (length(nextPageIndexes) == 0) {
+                lastItemIndex <- length(context$items)
+            } else {
+                lastItemIndex <- min(nextPageIndexes) - 1
+            }
+
+            context$page <- context$items[context$itemIndex:lastItemIndex]
+            shinyjs::runjs("window.scrollTo(0, 0);")
+        }
     }
 
     shiny::observeEvent(input[[initButtonId]], {
-        setPage(1)
+        navigate(1)
         context$started <- TRUE
     })
 
     shiny::observeEvent(input[[backButtonId]], {
-        setPage(context$pageIndex - 1)
+        navigate(-1)
     })
 
     shiny::observeEvent(input[[nextButtonId]], {
-        context$visitedPageIndexes <- unique(c(context$visitedPageIndexes, context$pageIndex))
-
         validationFailed <- NULL
         validationResults <- context$validationResults
 
-        for (question in context$page$questions) {
+        for (question in context$page) {
             validationResult <- .validateResult(context, question)
 
             if ((validationResult != .validResult) && is.null(validationFailed)) {
@@ -69,12 +87,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         context$validationResults <- validationResults
 
         if (is.null(validationFailed)) {
-            if (context$pageIndex >= length(context$pages)) {
-                context$data <- shiny::reactiveValuesToList(input)
-                context$done <- TRUE
-            } else {
-                setPage(context$pageIndex + 1)
-            }
+            navigate(1)
         } else {
             shinyjs::runjs(sprintf("interviewerJumpTo('%s');", validationFailed))
         }
@@ -82,6 +95,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
 
     shiny::observeEvent(context$done, {
         if (context$done) {
+            context$data <- shiny::reactiveValuesToList(input)
             data <- context$data
             data <- lapply(data, function(item) paste(item, collapse = ","))
             data <- as.data.frame(data)
@@ -90,10 +104,9 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             names <- sub(paste0("^", .questionPrefix), "", names)
             colnames(data) <- names
 
-            historyQuestions <- context$history[which(grepl(paste0("^", .questionPrefix), names(context$history)))]
-            historyQuestionIds <- unlist(lapply(historyQuestions, function(question) as.list(question$dataIds)))
+            questionIds <- unlist(lapply(context$items, function(item) as.list(item$dataIds)))
 
-            data <- data[, intersect(historyQuestionIds, names), drop = FALSE]
+            data <- data[, intersect(questionIds, names), drop = FALSE]
 
             exit(data)
         }
@@ -106,7 +119,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
     })
 
     shiny::observe({
-        shinyjs::toggleState(backButtonId, condition = context$started && (context$pageIndex > 1) && !context$done)
+        shinyjs::toggleState(backButtonId, condition = context$started && (context$itemIndex > 1) && !context$done)
         shinyjs::toggleState(nextButtonId, condition = context$started && !context$done)
     })
 
@@ -116,9 +129,8 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         } else {
             pageContent <-
                 shiny::div(
-                    id = context$page$id,
                     class = "page",
-                    lapply(context$page$questions, function(question) {
+                    lapply(context$page, function(question) {
                         questionInputId <- makeQuestionInputId(question$id)
                         questionStatusId <- .questionStatusId(questionInputId)
 
