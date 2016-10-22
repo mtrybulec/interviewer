@@ -27,7 +27,7 @@ function(input, output, session) {
 
             interviewer::pageBreak(),
 
-            function(context) {
+            function() {
                 if (getResponseIds("FilterSource") == "a") {
                     interviewer::question.list(
                         id = "FilterTargetA",
@@ -45,7 +45,7 @@ function(input, output, session) {
                         # Note that the page break is under a filter; it will take effect if the response to FilterSource is "b".
                         interviewer::pageBreak(),
 
-                        function(context) {
+                        function() {
                             if (getResponseIds("FilterTargetB") == "c") {
                                 interviewer::question.list(
                                     id = "FilterTargetBC",

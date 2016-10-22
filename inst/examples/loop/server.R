@@ -28,7 +28,7 @@ function(input, output, session) {
 
             interviewer::pageBreak(),
 
-            function(context) {
+            function() {
                 result <- list()
 
                 for (response in getResponseIds("LoopSource")) {

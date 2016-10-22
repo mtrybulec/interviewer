@@ -23,11 +23,11 @@
     result
 }
 
-.validateResult <- function(context, question) {
+.validateResult <- function(question) {
     result <- .validResult
 
     if (!is.null(question$validate)) {
-        result <- question$validate(context)
+        result <- question$validate()
     }
 
     result

@@ -104,7 +104,7 @@ function(input, output, session) {
             buildQuestion(
                 id = "Chart",
                 dataIds = paste0("Price", c(1:12)),
-                ui = function(context) {
+                ui = function() {
                     priceInput <- function(month) {
                         questionInputId <- interviewer::makeQuestionInputId(paste0("Price", month))
                         shiny::numericInput(inputId = questionInputId,
@@ -131,7 +131,7 @@ function(input, output, session) {
                         )
                     )
                 },
-                validate = function(context) {
+                validate = function() {
                     result <- ""
                     prices <- getPrices(convert.na = FALSE)
 
@@ -203,13 +203,13 @@ function(input, output, session) {
             interviewer::question.mixed(
                 id = "Continents2a",
                 label = "Which continents would you like to visit again?",
-                responses = function(context) {
+                responses = function() {
                     interviewer::mergeResponses(
                         interviewer::maskResponses(continents, "Continents1", operation = "keep"),
                         dk
                     )
                 },
-                types = function(context) {
+                types = function() {
                     continentCount <- nrow(interviewer::maskResponses(continents, "Continents1", operation = "keep"))
                     c(
                         rep(interviewer::mixedOptions.multi, continentCount),
@@ -226,13 +226,13 @@ function(input, output, session) {
             interviewer::question.mixed(
                 id = "Continents2b",
                 label = "Which continents would you still like to visit?",
-                responses = function(context) {
+                responses = function() {
                     interviewer::mergeResponses(
                         interviewer::maskResponses(continents, "Continents1", operation = "drop"),
                         dk
                     )
                 },
-                types = function(context) {
+                types = function() {
                     continentCount <- nrow(interviewer::maskResponses(continents, "Continents1", operation = "drop"))
                     c(
                         rep(interviewer::mixedOptions.multi, continentCount),

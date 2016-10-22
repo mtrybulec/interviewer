@@ -18,10 +18,10 @@ for the \code{input} slot.}
     When a question definition consists of multiple input fields,
     this argument needs to specify the identifiers of those fields.}
 
-\item{ui}{(function(context)) a function that should return
+\item{ui}{(function) a function that should return
 the UI components of the question.}
 
-\item{validate}{(function(context)) a function that should return
+\item{validate}{(function) a function that should return
 an empty string if the entered data is valid and a non-empty string,
 with the validation message, if the entered data is not valid.}
 }

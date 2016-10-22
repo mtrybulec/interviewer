@@ -42,9 +42,9 @@ makeQuestionInputId <- function(id) {
 #'
 #'     When a question definition consists of multiple input fields,
 #'     this argument needs to specify the identifiers of those fields.
-#' @param ui (function(context)) a function that should return
+#' @param ui (function) a function that should return
 #'     the UI components of the question.
-#' @param validate (function(context)) a function that should return
+#' @param validate (function) a function that should return
 #'     an empty string if the entered data is valid and a non-empty string,
 #'     with the validation message, if the entered data is not valid.
 #'
@@ -114,11 +114,11 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
 
     force(label)
 
-    ui <- function(context) {
+    ui <- function() {
         questionInputId <- makeQuestionInputId(id)
 
         if (class(responses) == "function") {
-            responses <- responses(context)
+            responses <- responses()
         }
         choices <- as.character(responses$id)
         names(choices) <- responses$label
@@ -190,7 +190,7 @@ function(value, $item) {
 
     question <- buildQuestion(id = id, ui = ui)
 
-    question$validate <- function(context) {
+    question$validate <- function() {
         .validateIsAnswered(question, required)
     }
 
@@ -246,17 +246,17 @@ question.mixed <- function(id, label, responses, types, required = TRUE, use.sel
         warning("inline ignored - use.select takes precedence.")
     }
 
-    ui <- function(context) {
+    ui <- function() {
         questionInputId <- makeQuestionInputId(id)
 
         if (class(responses) == "function") {
-            responses <- responses(context)
+            responses <- responses()
         }
         choices <- as.character(responses$id)
         names(choices) <- responses$label
 
         if (class(types) == "function") {
-            types <- types(context)
+            types <- types()
         }
 
         domain <- shiny::getDefaultReactiveDomain()
@@ -314,7 +314,7 @@ function(value, $item) {
 
     question <- buildQuestion(id = id, ui = ui)
 
-    question$validate <- function(context) {
+    question$validate <- function() {
         .validateIsAnswered(question, required)
     }
 
@@ -360,7 +360,7 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 
     questionInputId <- makeQuestionInputId(id)
 
-    ui <- function(context) {
+    ui <- function() {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
 
@@ -400,7 +400,7 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 
     question <- buildQuestion(id = id, ui = ui)
 
-    question$validate <- function(context) {
+    question$validate <- function() {
         result <- .validateIsAnswered(question, required)
 
         if (result == .validResult) {
@@ -474,7 +474,7 @@ question.text <- function(id, label, required = TRUE, use.textArea = FALSE, widt
 
     questionInputId <- makeQuestionInputId(id)
 
-    ui <- function(context) {
+    ui <- function() {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
 
@@ -503,7 +503,7 @@ question.text <- function(id, label, required = TRUE, use.textArea = FALSE, widt
 
     question <- buildQuestion(id = id, ui = ui)
 
-    question$validate <- function(context) {
+    question$validate <- function() {
         result <- .validateIsAnswered(question, required)
 
         if ((result == .validResult) && !is.null(regex)) {

@@ -72,7 +72,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                 if ((length(class(item)) == 1) && (class(item) == "function")) {
                     functionFound <- TRUE
 
-                    expandedItem <- item(context)
+                    expandedItem <- item()
 
                     if ((length(class(expandedItem)) == 1) && (class(expandedItem) == "list") && (!is.null(expandedItem$type)) && (expandedItem$type %in% c(.pageBreak, .question))) {
                         expandedItem <- list(expandedItem)
@@ -147,7 +147,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
 
         for (item in context$page) {
             if (item$type == .question) {
-                validationResult <- .validateResult(context, item)
+                validationResult <- .validateResult(item)
 
                 if ((validationResult != .validResult) && is.null(validationFailed)) {
                     validationFailed <- item$id
@@ -216,7 +216,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                             })
 
                             if ((length(class(item$ui)) == 1) && (class(item$ui) == "function")) {
-                                questionUI <- item$ui(context)
+                                questionUI <- item$ui()
                             } else {
                                 questionUI <- item$ui
                             }
