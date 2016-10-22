@@ -49,15 +49,19 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         }
 
         if (!context$done) {
-            nextPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes > context$itemIndex)]
+            currentIndex <- context$itemIndex
 
-            if (length(nextPageBreakIndexes) == 0) {
-                lastItemIndex <- length(context$items)
-            } else {
-                lastItemIndex <- min(nextPageBreakIndexes) - 1
+            while (currentIndex <= length(context$items)) {
+                item <- context$items[[currentIndex]]
+
+                if ((length(class(item)) == 1) && (class(item) == "list") && (!is.null(item$type)) && (item$type == .pageBreak)) {
+                    break;
+                } else {
+                    currentIndex <- currentIndex + 1
+                }
             }
 
-            context$page <- context$items[context$itemIndex:lastItemIndex]
+            context$page <- context$items[context$itemIndex:(currentIndex - 1)]
             shinyjs::runjs("window.scrollTo(0, 0);")
         }
     }
