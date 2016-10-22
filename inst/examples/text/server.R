@@ -45,7 +45,7 @@ function(input, output, session) {
                 required = FALSE
             ),
 
-            interviewer::page(id = "TextArea"),
+            interviewer::pageBreak(),
 
             interviewer::question.text(
                 id = "TextAreaStandard",

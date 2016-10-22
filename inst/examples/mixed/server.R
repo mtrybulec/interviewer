@@ -56,7 +56,7 @@ function(input, output, session) {
                 width = "250px"
             ),
 
-            interviewer::page(id = "MixedSelectize"),
+            interviewer::pageBreak(),
 
             interviewer::question.mixed(
                 id = "MixedComboBoxStandard",

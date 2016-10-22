@@ -20,9 +20,8 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
     )
 
     isolate({
-        itemIds <- lapply(context$items, function(item) item$id)
         itemTypes <- lapply(context$items, function(item) item$type)
-        pageIndexes <- which(itemTypes == .page)
+        pageBreakIndexes <- which(itemTypes == .pageBreak)
     })
 
     navigate <- function(delta) {
@@ -30,31 +29,31 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             context$itemIndex <- 1
         } else {
             if (delta < 0) {
-                prevPageIndexes <- pageIndexes[which(pageIndexes < context$itemIndex - 1)]
+                prevPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes < context$itemIndex - 1)]
 
-                if (length(prevPageIndexes) == 0) {
+                if (length(prevPageBreakIndexes) == 0) {
                     context$itemIndex <- 1
                 } else {
-                    context$itemIndex <- max(prevPageIndexes) + 1
+                    context$itemIndex <- max(prevPageBreakIndexes) + 1
                 }
             } else {
-                nextPageIndexes <- pageIndexes[which(pageIndexes > context$itemIndex)]
+                nextPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes > context$itemIndex)]
 
-                if (length(nextPageIndexes) == 0) {
+                if (length(nextPageBreakIndexes) == 0) {
                     context$done <- TRUE
                 } else {
-                    context$itemIndex <- min(nextPageIndexes) + 1
+                    context$itemIndex <- min(nextPageBreakIndexes) + 1
                 }
             }
         }
 
         if (!context$done) {
-            nextPageIndexes <- pageIndexes[which(pageIndexes > context$itemIndex)]
+            nextPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes > context$itemIndex)]
 
-            if (length(nextPageIndexes) == 0) {
+            if (length(nextPageBreakIndexes) == 0) {
                 lastItemIndex <- length(context$items)
             } else {
-                lastItemIndex <- min(nextPageIndexes) - 1
+                lastItemIndex <- min(nextPageBreakIndexes) - 1
             }
 
             context$page <- context$items[context$itemIndex:lastItemIndex]

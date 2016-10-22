@@ -47,7 +47,7 @@ function(input, output, session) {
                 width = "250px"
             ),
 
-            interviewer::page(id = "ComboBoxes"),
+            interviewer::pageBreak(),
 
             interviewer::question.list(
                 id = "ComboBoxStandard",

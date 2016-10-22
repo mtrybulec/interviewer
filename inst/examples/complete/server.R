@@ -46,7 +46,7 @@ function(input, output, session) {
                 use.select = TRUE
             ),
 
-            interviewer::page(id = "2"),
+            interviewer::pageBreak(),
 
             interviewer::question.list(
                 id = "MaritalStatus",
@@ -70,7 +70,7 @@ function(input, output, session) {
                 required = FALSE
             ),
 
-            interviewer::page(id = "3"),
+            interviewer::pageBreak(),
 
             interviewer::question.list(
                 id = "Pets",
@@ -98,9 +98,9 @@ function(input, output, session) {
                 max = 20
             ),
 
-            # Page with a custom question:
-            interviewer::page(id = "4"),
+            interviewer::pageBreak(),
 
+            # Custom question:
             buildQuestion(
                 id = "Chart",
                 dataIds = paste0("Price", c(1:12)),
@@ -151,7 +151,7 @@ function(input, output, session) {
                 }
             ),
 
-            interviewer::page(id = "5"),
+            interviewer::pageBreak(),
 
             interviewer::question.text(
                 id = "Nick",
@@ -176,7 +176,7 @@ function(input, output, session) {
                 use.textArea = TRUE
             ),
 
-            interviewer::page(id = "6a"),
+            interviewer::pageBreak(),
 
             interviewer::buildQuestion(
                 id = "Continents1Note",
@@ -193,7 +193,7 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::page(id = "6b"),
+            interviewer::pageBreak(),
 
             interviewer::buildQuestion(
                 id = "Continents2aNote",
@@ -241,7 +241,7 @@ function(input, output, session) {
                 }
             ),
 
-            interviewer::page(id = "7"),
+            interviewer::pageBreak(),
 
             interviewer::question.list(
                 id = "Like",

@@ -50,7 +50,7 @@ function(input, output, session) {
                 width = "200px"
             ),
 
-            interviewer::page(id = "Slider"),
+            interviewer::pageBreak(),
 
             interviewer::question.numeric(
                 id = "SliderStandard",
