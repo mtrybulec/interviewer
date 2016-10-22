@@ -21,7 +21,7 @@ function(input, output, session) {
 
             interviewer::question.list(
                 id = "LoopSource",
-                label = "Loop source (two questions will be asked for each response mentioned here)",
+                label = "Loop source (two questions will be asked for each response mentioned here, in random order)",
                 responses = responses,
                 multiple = TRUE
             ),
@@ -30,8 +30,9 @@ function(input, output, session) {
 
             function() {
                 result <- list()
+                responseIds <- getResponseIds("LoopSource")
 
-                for (response in getResponseIds("LoopSource")) {
+                for (response in responseIds[sample(length(responseIds))]) {
                     responseLabel <- responses[which(responses$id == response), "label"]
 
                     result <- append(
