@@ -112,6 +112,7 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
         warning("inline ignored - use.select takes precedence.")
     }
 
+    force(label)
 
     ui <- function(context) {
         questionInputId <- makeQuestionInputId(id)

@@ -10,12 +10,12 @@ function(input, output, session) {
 
     output$questionnaireOutput <-
         interviewer::questionnaire(
-            surveyId = "interviewer-demo-single-choice",
+            surveyId = "interviewer-demo-filters",
             userId = "demo",
-            label = "Single-choice DEMO",
+            label = "Filters DEMO",
             welcome = list(
                 shiny::p("Welcome!"),
-                shiny::HTML("<p>This demo shows how <strong>single-choice</strong> questions can be defined in <strong>interviewer</strong>.</p>")
+                shiny::HTML("<p>This demo shows how <strong>filters</strong> can be defined in <strong>interviewer</strong>.</p>")
             ),
             goodbye = "Done!",
 
@@ -38,10 +38,11 @@ function(input, output, session) {
                     list(
                         interviewer::question.list(
                             id = "FilterTargetB",
-                            label = "Filter target B (asked if the response to the first question was 'response B')",
+                            label = "Filter target B (asked if the response to the first question was 'response B'; 'Reponse C' here will show the next question)",
                             responses = responses
                         ),
 
+                        # Note that the page break is under a filter; it will take effect if the response to FilterSource is "b".
                         interviewer::pageBreak(),
 
                         function(context) {
