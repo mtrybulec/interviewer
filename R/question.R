@@ -1,5 +1,5 @@
-.questionPrefix <- "question"
-.questionStatusPrefix <- "questionStatus"
+.question <- "question"
+.questionStatus  <- "questionStatus"
 
 #' Define a question input identifier.
 #'
@@ -21,11 +21,11 @@
 #'     \code{\link{question.text}}.
 #' @export
 makeQuestionInputId <- function(id) {
-    paste0(.questionPrefix, id)
+    paste0(.question, id)
 }
 
 .questionStatusId <- function(id) {
-    paste0(.questionStatusPrefix, id)
+    paste0(.questionStatus, id)
 }
 
 #' Build a question definition from scratch.
@@ -58,6 +58,7 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
     list(
         id = id,
         dataIds = dataIds,
+        type = .question,
         ui = ui,
         validate = validate
     )

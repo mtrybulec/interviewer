@@ -1,4 +1,9 @@
+.page = "page"
+
 #' @export
 page <- function(id) {
-    list(id = .pageId(id))
+    list(
+        id = id,
+        type = .page
+    )
 }

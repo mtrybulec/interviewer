@@ -21,7 +21,8 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
 
     isolate({
         itemIds <- lapply(context$items, function(item) item$id)
-        pageIndexes <- which(grepl(paste0("^", .pagePrefix), itemIds))
+        itemTypes <- lapply(context$items, function(item) item$type)
+        pageIndexes <- which(itemTypes == .page)
     })
 
     navigate <- function(delta) {
@@ -101,7 +102,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             data <- as.data.frame(data)
 
             names <- colnames(data)
-            names <- sub(paste0("^", .questionPrefix), "", names)
+            names <- sub(paste0("^", .question), "", names)
             colnames(data) <- names
 
             questionIds <- unlist(lapply(context$items, function(item) as.list(item$dataIds)))
