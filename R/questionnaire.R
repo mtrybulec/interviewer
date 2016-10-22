@@ -1,3 +1,5 @@
+.function <- "function"
+
 #' @export
 questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) {
     domain <- shiny::getDefaultReactiveDomain()
@@ -20,10 +22,21 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         validationResults = list()
     )
 
-    isolate({
-        itemTypes <- lapply(context$items, function(item) item$type)
-        pageBreakIndexes <- which(itemTypes == .pageBreak)
-    })
+    recalculateBreakIndexes <- function() {
+        isolate({
+            itemTypes <- lapply(context$items, function(item) {
+                if ((length(class(item)) == 1) && (class(item) == "function")) {
+                    .function
+                } else {
+                    item$type
+                }
+            })
+
+            which(itemTypes == .pageBreak)
+        })
+    }
+
+    pageBreakIndexes <- recalculateBreakIndexes()
 
     navigate <- function(delta) {
         if (context$itemIndex <= 0) {
@@ -50,15 +63,45 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
 
         if (!context$done) {
             currentIndex <- context$itemIndex
+            functionFound <- FALSE
 
             while (currentIndex <= length(context$items)) {
                 item <- context$items[[currentIndex]]
 
-                if ((length(class(item)) == 1) && (class(item) == "list") && (!is.null(item$type)) && (item$type == .pageBreak)) {
+                if ((length(class(item)) == 1) && (class(item) == "function")) {
+                    functionFound <- TRUE
+
+                    expandedItem <- item(context)
+                    functionItem <- list(
+                        type = .function,
+                        call = item,
+                        resultCount = length(expandedItem)
+                    )
+
+                    if ((length(class(expandedItem)) == 1) && (class(expandedItem) == "list") && (!is.null(expandedItem$type)) && (expandedItem$type %in% c(.pageBreak, .question))) {
+                        expandedItem <- list(expandedItem)
+                    }
+
+                    newItems <- list()
+                    if (currentIndex > 1) {
+                        newItems <- append(newItems, context$items[1:(currentIndex - 1)])
+                    }
+                    newItems <- append(newItems, list(functionItem))
+                    if (length(expandedItem) > 0) {
+                        newItems <- append(newItems, expandedItem)
+                    }
+                    newItems <- append(newItems, context$items[(currentIndex + 1):length(context$items)])
+
+                    context$items <- newItems
+                } else if ((length(class(item)) == 1) && (class(item) == "list") && (!is.null(item$type)) && (item$type == .pageBreak)) {
                     break;
-                } else {
-                    currentIndex <- currentIndex + 1
                 }
+
+                currentIndex <- currentIndex + 1
+            }
+
+            if (functionFound) {
+                pageBreakIndexes <<- recalculateBreakIndexes()
             }
 
             context$page <- context$items[context$itemIndex:(currentIndex - 1)]
@@ -79,14 +122,16 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         validationFailed <- NULL
         validationResults <- context$validationResults
 
-        for (question in context$page) {
-            validationResult <- .validateResult(context, question)
+        for (item in context$page) {
+            if (item$type == .question) {
+                validationResult <- .validateResult(context, item)
 
-            if ((validationResult != .validResult) && is.null(validationFailed)) {
-                validationFailed <- question$id
+                if ((validationResult != .validResult) && is.null(validationFailed)) {
+                    validationFailed <- item$id
+                }
+
+                validationResults[[item$id]] <- validationResult
             }
-
-            validationResults[[question$id]] <- validationResult
         }
 
         context$validationResults <- validationResults
@@ -134,28 +179,30 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             pageContent <-
                 shiny::div(
                     class = "page",
-                    lapply(context$page, function(question) {
-                        questionInputId <- makeQuestionInputId(question$id)
-                        questionStatusId <- .questionStatusId(questionInputId)
+                    lapply(context$page, function(item) {
+                        if (item$type == .question) {
+                            questionInputId <- makeQuestionInputId(item$id)
+                            questionStatusId <- .questionStatusId(questionInputId)
 
-                        output[[questionStatusId]] <- shiny::renderUI({
-                            validationResult <- context$validationResults[[question$id]]
+                            output[[questionStatusId]] <- shiny::renderUI({
+                                validationResult <- context$validationResults[[item$id]]
 
-                            if (!is.null(validationResult) && (validationResult != .validResult)) {
-                                shiny::div(class = "interviewer-question-status", shiny::HTML(validationResult))
+                                if (!is.null(validationResult) && (validationResult != .validResult)) {
+                                    shiny::div(class = "interviewer-question-status", shiny::HTML(validationResult))
+                                }
+                            })
+
+                            if ((length(class(item$ui)) == 1) && (class(item$ui) == "function")) {
+                                questionUI <- item$ui(context)
+                            } else {
+                                questionUI <- item$ui
                             }
-                        })
 
-                        if ((length(class(question$ui)) == 1) && (class(question$ui) == "function")) {
-                            questionUI <- question$ui(context)
-                        } else {
-                            questionUI <- question$ui
+                            list(
+                                questionUI,
+                                shiny::uiOutput(outputId = questionStatusId)
+                            )
                         }
-
-                        list(
-                            questionUI,
-                            shiny::uiOutput(outputId = questionStatusId)
-                        )
                     })
                 )
         }
