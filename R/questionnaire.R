@@ -65,6 +65,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             currentIndex <- context$itemIndex
             functionFound <- FALSE
 
+            # Handle current page - expand any functions found on this page:
             while (currentIndex <= length(context$items)) {
                 item <- context$items[[currentIndex]]
 
@@ -72,15 +73,16 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                     functionFound <- TRUE
 
                     expandedItem <- item(context)
+
+                    if ((length(class(expandedItem)) == 1) && (class(expandedItem) == "list") && (!is.null(expandedItem$type)) && (expandedItem$type %in% c(.pageBreak, .question))) {
+                        expandedItem <- list(expandedItem)
+                    }
+
                     functionItem <- list(
                         type = .function,
                         call = item,
                         resultCount = length(expandedItem)
                     )
-
-                    if ((length(class(expandedItem)) == 1) && (class(expandedItem) == "list") && (!is.null(expandedItem$type)) && (expandedItem$type %in% c(.pageBreak, .question))) {
-                        expandedItem <- list(expandedItem)
-                    }
 
                     newItems <- list()
                     if (currentIndex > 1) {
@@ -98,6 +100,27 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                 }
 
                 currentIndex <- currentIndex + 1
+            }
+
+            # Handle pages after the current page - collapse any functions found there:
+            if (currentIndex < length(context$items)) {
+                for (nextIndex in length(context$items):(currentIndex + 1)) {
+                    item <- context$items[[nextIndex]]
+
+                    if ((length(class(item)) == 1) && (class(item) == "list") && (!is.null(item$type)) && (item$type == .function)) {
+                        functionFound <- TRUE
+                        collapsedItem <- item$call
+
+                        newItems <- append(context$items[1:(nextIndex - 1)], collapsedItem)
+
+                        mergeIndex <- nextIndex + item$resultCount + 1
+                        if (mergeIndex <= length(context$items)) {
+                            newItems <- append(newItems, context$items[mergeIndex:length(context$items)])
+                        }
+
+                        context$items <- newItems
+                    }
+                }
             }
 
             if (functionFound) {
