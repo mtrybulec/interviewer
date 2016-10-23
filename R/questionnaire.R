@@ -86,13 +86,13 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
 
                     newItems <- list()
                     if (currentIndex > 1) {
-                        newItems <- append(newItems, context$items[1:(currentIndex - 1)])
+                        newItems <- c(newItems, context$items[1:(currentIndex - 1)])
                     }
-                    newItems <- append(newItems, list(functionItem))
+                    newItems <- c(newItems, list(functionItem))
                     if (length(expandedItem) > 0) {
-                        newItems <- append(newItems, expandedItem)
+                        newItems <- c(newItems, expandedItem)
                     }
-                    newItems <- append(newItems, context$items[(currentIndex + 1):length(context$items)])
+                    newItems <- c(newItems, context$items[(currentIndex + 1):length(context$items)])
 
                     context$items <- newItems
                 } else if ((length(class(item)) == 1) && (class(item) == "list") && (!is.null(item$type)) && (item$type == .pageBreak)) {
@@ -111,11 +111,11 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                         functionFound <- TRUE
                         collapsedItem <- item$call
 
-                        newItems <- append(context$items[1:(nextIndex - 1)], collapsedItem)
+                        newItems <- c(context$items[1:(nextIndex - 1)], collapsedItem)
 
                         mergeIndex <- nextIndex + item$resultCount + 1
                         if (mergeIndex <= length(context$items)) {
-                            newItems <- append(newItems, context$items[mergeIndex:length(context$items)])
+                            newItems <- c(newItems, context$items[mergeIndex:length(context$items)])
                         }
 
                         context$items <- newItems
