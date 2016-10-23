@@ -112,8 +112,6 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
         warning("inline ignored - use.select takes precedence.")
     }
 
-    force(names(as.list(environment())))
-
     ui <- function() {
         questionInputId <- makeQuestionInputId(id)
 
@@ -246,8 +244,6 @@ question.mixed <- function(id, label, responses, types, required = TRUE, use.sel
         warning("inline ignored - use.select takes precedence.")
     }
 
-    force(names(as.list(environment())))
-
     ui <- function() {
         questionInputId <- makeQuestionInputId(id)
 
@@ -362,8 +358,6 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 
     questionInputId <- makeQuestionInputId(id)
 
-    force(names(as.list(environment())))
-
     ui <- function() {
         domain <- shiny::getDefaultReactiveDomain()
         input <- domain$input
@@ -477,8 +471,6 @@ question.text <- function(id, label, required = TRUE, use.textArea = FALSE, widt
     }
 
     questionInputId <- makeQuestionInputId(id)
-
-    force(names(as.list(environment())))
 
     ui <- function() {
         domain <- shiny::getDefaultReactiveDomain()
