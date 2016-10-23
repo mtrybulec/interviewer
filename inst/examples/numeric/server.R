@@ -37,8 +37,7 @@ function(input, output, session) {
                 step = 5
             ),
 
-            interviewer::buildQuestion(
-                id = "NumericStepNote",
+            interviewer::buildNonQuestion(
                 ui = shiny::p("Note: in the above, the step is set to help the user enter values, it is not used to validate data.")
             ),
 

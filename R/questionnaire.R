@@ -74,7 +74,11 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
 
                     expandedItem <- item()
 
-                    if ((length(class(expandedItem)) == 1) && (class(expandedItem) == "list") && (!is.null(expandedItem$type)) && (expandedItem$type %in% c(.pageBreak, .question))) {
+                    if ((length(class(expandedItem)) == 1) &&
+                        (class(expandedItem) == "list") &&
+                        (!is.null(expandedItem$type)) &&
+                        (expandedItem$type %in% c(.nonQuestion, .pageBreak, .question))) {
+
                         expandedItem <- list(expandedItem)
                     }
 
@@ -225,6 +229,14 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                                 questionUI,
                                 shiny::uiOutput(outputId = questionStatusId)
                             )
+                        } else if (item$type == .nonQuestion) {
+                            if ((length(class(item$ui)) == 1) && (class(item$ui) == "function")) {
+                                nonQuestionUI <- item$ui()
+                            } else {
+                                nonQuestionUI <- item$ui
+                            }
+
+                            nonQuestionUI
                         }
                     })
                 )

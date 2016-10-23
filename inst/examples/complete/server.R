@@ -101,7 +101,7 @@ function(input, output, session) {
             interviewer::pageBreak(),
 
             # Custom question:
-            buildQuestion(
+            interviewer::buildQuestion(
                 id = "Chart",
                 dataIds = paste0("Price", c(1:12)),
                 ui = function() {
@@ -165,8 +165,7 @@ function(input, output, session) {
                 regexHint = "ddd ddd-ddd"
             ),
 
-            interviewer::buildQuestion(
-                id = "CommentNote",
+            interviewer::buildNonQuestion(
                 ui = shiny::HTML("<p>Now, before you answer the next question,<br />please take a moment to think...</p>")
             ),
 
@@ -178,8 +177,7 @@ function(input, output, session) {
 
             interviewer::pageBreak(),
 
-            interviewer::buildQuestion(
-                id = "Continents1Note",
+            interviewer::buildNonQuestion(
                 ui = shiny::p("The question below has responses ordered randomly (except for the last response).")
             ),
 
@@ -195,8 +193,7 @@ function(input, output, session) {
 
             interviewer::pageBreak(),
 
-            interviewer::buildQuestion(
-                id = "Continents2aNote",
+            interviewer::buildNonQuestion(
                 ui = shiny::p("The question below displays only those responses that were mentioned in the question on the previous page.")
             ),
 
@@ -218,8 +215,7 @@ function(input, output, session) {
                 }
             ),
 
-            interviewer::buildQuestion(
-                id = "Continents2bNote",
+            interviewer::buildNonQuestion(
                 ui = shiny::p("The question below displays only those responses that were not mentioned in the question on the previous page.")
             ),
 

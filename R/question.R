@@ -42,14 +42,16 @@ makeQuestionInputId <- function(id) {
 #'
 #'     When a question definition consists of multiple input fields,
 #'     this argument needs to specify the identifiers of those fields.
-#' @param ui (function) a function that should return
-#'     the UI components of the question.
+#' @param ui (list|function) a list of UI components of the question or
+#'     a function that should return the UI components of the question.
+#'     Use a list to build static content and a function to build dynamic content.
 #' @param validate (function) a function that should return
 #'     an empty string if the entered data is valid and a non-empty string,
 #'     with the validation message, if the entered data is not valid.
 #'
 #' @family question buidling functions
 #' @seealso
+#'     \code{\link{buildNonQuestion}},
 #'     \code{\link{question.list}},
 #'     \code{\link{question.numeric}},
 #'     \code{\link{question.text}}.

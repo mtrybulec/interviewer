@@ -18,8 +18,9 @@ for the \code{input} slot.}
     When a question definition consists of multiple input fields,
     this argument needs to specify the identifiers of those fields.}
 
-\item{ui}{(function) a function that should return
-the UI components of the question.}
+\item{ui}{(list|function) a list of UI components of the question or
+a function that should return the UI components of the question.
+Use a list to build static content and a function to build dynamic content.}
 
 \item{validate}{(function) a function that should return
 an empty string if the entered data is valid and a non-empty string,
@@ -30,7 +31,8 @@ with the validation message, if the entered data is not valid.}
     a fully formed question definition consists of.
 }
 \seealso{
-\code{\link{question.list}},
+\code{\link{buildNonQuestion}},
+    \code{\link{question.list}},
     \code{\link{question.numeric}},
     \code{\link{question.text}}.
 
