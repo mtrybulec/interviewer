@@ -46,6 +46,30 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         })
     }
 
+    getPrevPageBreakIndex <- function(currentIndex) {
+        prevPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes < currentIndex)]
+
+        if (length(prevPageBreakIndexes) == 0) {
+            result <- 0
+        } else {
+            result <- max(prevPageBreakIndexes)
+        }
+
+        result
+    }
+
+    getNextPageBreakIndex <- function(currentIndex) {
+        nextPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes > currentIndex)]
+
+        if (length(nextPageBreakIndexes) == 0) {
+            result <- length(context$items) + 1
+        } else {
+            result <- min(nextPageBreakIndexes)
+        }
+
+        result
+    }
+
     pageBreakIndexes <- recalculatePageBreakIndexes()
 
     # Navigate to the next (delta == 1) or previous (delta == -1) page.
@@ -55,20 +79,12 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             context$started <- TRUE
         } else {
             if (delta < 0) {
-                prevPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes < context$itemIndex - 1)]
-
-                if (length(prevPageBreakIndexes) == 0) {
-                    context$itemIndex <- 1
-                } else {
-                    context$itemIndex <- max(prevPageBreakIndexes) + 1
-                }
+                context$itemIndex <- getPrevPageBreakIndex(context$itemIndex - 1) + 1
             } else {
-                nextPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes > context$itemIndex)]
+                context$itemIndex <- getNextPageBreakIndex(context$itemIndex) + 1
 
-                if (length(nextPageBreakIndexes) == 0) {
+                if (context$itemIndex > length(context$items)) {
                     context$done <- TRUE
-                } else {
-                    context$itemIndex <- min(nextPageBreakIndexes) + 1
                 }
             }
         }
