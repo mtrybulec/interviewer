@@ -46,6 +46,9 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         })
     }
 
+    # Calculate initial indexes of page breaks:
+    pageBreakIndexes <- recalculatePageBreakIndexes()
+
     getPrevPageBreakIndex <- function(currentIndex) {
         prevPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes < currentIndex)]
 
@@ -70,7 +73,84 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         result
     }
 
-    pageBreakIndexes <- recalculatePageBreakIndexes()
+    # Expand any (collapsed / non-expanded) functions found on this page:
+    expandFunctionsOnCurrentPage <- function() {
+        currentIndex <- context$itemIndex
+        functionFound <- FALSE
+
+        while (currentIndex <= length(context$items)) {
+            item <- context$items[[currentIndex]]
+
+            if (isFunction(item)) {
+                functionFound <- TRUE
+
+                expandedItem <- item()
+
+                if (isItemType(expandedItem, c(.nonQuestion, .pageBreak, .question))) {
+                    expandedItem <- list(expandedItem)
+                }
+
+                functionItem <- list(
+                    type = .function,
+                    call = item,
+                    resultCount = length(expandedItem)
+                )
+
+                newItems <- list()
+                if (currentIndex > 1) {
+                    newItems <- c(newItems, context$items[1:(currentIndex - 1)])
+                }
+                newItems <- c(newItems, list(functionItem))
+                if (length(expandedItem) > 0) {
+                    newItems <- c(newItems, expandedItem)
+                }
+                newItems <- c(newItems, context$items[(currentIndex + 1):length(context$items)])
+
+                context$items <- newItems
+            } else if (isItemType(item, .pageBreak)) {
+                break;
+            }
+
+            currentIndex <- currentIndex + 1
+        }
+
+        if (functionFound) {
+            pageBreakIndexes <<- recalculatePageBreakIndexes()
+        }
+
+        context$page <- context$items[context$itemIndex:(currentIndex - 1)]
+        shinyjs::runjs("window.scrollTo(0, 0);")
+    }
+
+    # Collapse any (expanded) functions found on all pages after the current page:
+    collapseFunctionsOnSubsequentPages <- function() {
+        currentIndex <- getNextPageBreakIndex(context$itemIndex)
+        functionFound <- FALSE
+
+        if (currentIndex < length(context$items)) {
+            for (nextIndex in length(context$items):(currentIndex + 1)) {
+                item <- context$items[[nextIndex]]
+
+                if (isItemType(item, .function)) {
+                    functionFound <- TRUE
+                    collapsedItem <- item$call
+
+                    newItems <- c(context$items[1:(nextIndex - 1)], collapsedItem)
+
+                    mergeIndex <- nextIndex + item$resultCount + 1
+                    if (mergeIndex <= length(context$items)) {
+                        newItems <- c(newItems, context$items[mergeIndex:length(context$items)])
+                    }
+
+                    context$items <- newItems
+                }
+            }
+        }
+
+        if (functionFound) {
+            pageBreakIndexes <<- recalculatePageBreakIndexes()
+        }
+    }
 
     # Navigate to the next (delta == 1) or previous (delta == -1) page.
     navigate <- function(delta) {
@@ -90,73 +170,8 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         }
 
         if (!context$done) {
-            currentIndex <- context$itemIndex
-            functionFound <- FALSE
-
-            # Handle current page - expand any functions found on this page:
-            while (currentIndex <= length(context$items)) {
-                item <- context$items[[currentIndex]]
-
-                if (isFunction(item)) {
-                    functionFound <- TRUE
-
-                    expandedItem <- item()
-
-                    if (isItemType(expandedItem, c(.nonQuestion, .pageBreak, .question))) {
-                        expandedItem <- list(expandedItem)
-                    }
-
-                    functionItem <- list(
-                        type = .function,
-                        call = item,
-                        resultCount = length(expandedItem)
-                    )
-
-                    newItems <- list()
-                    if (currentIndex > 1) {
-                        newItems <- c(newItems, context$items[1:(currentIndex - 1)])
-                    }
-                    newItems <- c(newItems, list(functionItem))
-                    if (length(expandedItem) > 0) {
-                        newItems <- c(newItems, expandedItem)
-                    }
-                    newItems <- c(newItems, context$items[(currentIndex + 1):length(context$items)])
-
-                    context$items <- newItems
-                } else if (isItemType(item, .pageBreak)) {
-                    break;
-                }
-
-                currentIndex <- currentIndex + 1
-            }
-
-            # Handle pages after the current page - collapse any functions found there:
-            if (currentIndex < length(context$items)) {
-                for (nextIndex in length(context$items):(currentIndex + 1)) {
-                    item <- context$items[[nextIndex]]
-
-                    if (isItemType(item, .function)) {
-                        functionFound <- TRUE
-                        collapsedItem <- item$call
-
-                        newItems <- c(context$items[1:(nextIndex - 1)], collapsedItem)
-
-                        mergeIndex <- nextIndex + item$resultCount + 1
-                        if (mergeIndex <= length(context$items)) {
-                            newItems <- c(newItems, context$items[mergeIndex:length(context$items)])
-                        }
-
-                        context$items <- newItems
-                    }
-                }
-            }
-
-            if (functionFound) {
-                pageBreakIndexes <<- recalculatePageBreakIndexes()
-            }
-
-            context$page <- context$items[context$itemIndex:(currentIndex - 1)]
-            shinyjs::runjs("window.scrollTo(0, 0);")
+            expandFunctionsOnCurrentPage()
+            collapseFunctionsOnSubsequentPages()
         }
     }
 
