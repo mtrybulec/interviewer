@@ -245,36 +245,32 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                 shiny::div(
                     class = "page",
                     lapply(context$page, function(item) {
-                        if (item$type == .question) {
-                            questionInputId <- makeQuestionInputId(item$id)
-                            questionStatusId <- .questionStatusId(questionInputId)
-
-                            output[[questionStatusId]] <- shiny::renderUI({
-                                validationResult <- context$validationResults[[item$id]]
-
-                                if (!is.null(validationResult) && (validationResult != .validResult)) {
-                                    shiny::div(class = "interviewer-question-status", shiny::HTML(validationResult))
-                                }
-                            })
-
-                            if ((length(class(item$ui)) == 1) && (class(item$ui) == "function")) {
-                                questionUI <- item$ui()
+                        if (item$type %in% c(.question, .nonQuestion)) {
+                            if (isFunction(item$ui)) {
+                                itemUI <- item$ui()
                             } else {
-                                questionUI <- item$ui
+                                itemUI <- item$ui
                             }
 
-                            list(
-                                questionUI,
-                                shiny::uiOutput(outputId = questionStatusId)
-                            )
-                        } else if (item$type == .nonQuestion) {
-                            if ((length(class(item$ui)) == 1) && (class(item$ui) == "function")) {
-                                nonQuestionUI <- item$ui()
-                            } else {
-                                nonQuestionUI <- item$ui
-                            }
+                            if (item$type == .question) {
+                                questionInputId <- makeQuestionInputId(item$id)
+                                questionStatusId <- .questionStatusId(questionInputId)
 
-                            nonQuestionUI
+                                output[[questionStatusId]] <- shiny::renderUI({
+                                    validationResult <- context$validationResults[[item$id]]
+
+                                    if (!is.null(validationResult) && (validationResult != .validResult)) {
+                                        shiny::div(class = "interviewer-question-status", shiny::HTML(validationResult))
+                                    }
+                                })
+
+                                list(
+                                    itemUI,
+                                    shiny::uiOutput(outputId = questionStatusId)
+                                )
+                            } else {
+                                itemUI
+                            }
                         }
                     })
                 )

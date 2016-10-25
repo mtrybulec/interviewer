@@ -22,7 +22,7 @@ Features:
 * Build custom questions with any valid Shiny output.
 * Add custom validation functions.
 * Add any valid Shiny output in-between questions.
-* Dynamic response lists - modify response lists based on ealier responses.
+* Dynamic response lists - modify response lists based on earlier responses.
 * Helper functions to:
   * merge response lists,
   * randomize responses,
