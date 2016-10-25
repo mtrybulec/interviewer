@@ -22,10 +22,20 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         validationResults = list()
     )
 
-    recalculateBreakIndexes <- function() {
+    isFunction <- function(item) {
+        (length(class(item)) == 1) && (class(item) == "function")
+    }
+
+    isItemType <- function(item, types) {
+        (length(class(item)) == 1) && (class(item) == "list") && (!is.null(item$type)) && (item$type %in% types)
+    }
+
+    # After applying functions (on Next or Back), need to recalculate where the current page breaks are
+    # (to be able to show questions that are on the current screen).
+    recalculatePageBreakIndexes <- function() {
         isolate({
             itemTypes <- lapply(context$items, function(item) {
-                if ((length(class(item)) == 1) && (class(item) == "function")) {
+                if (isFunction(item)) {
                     .function
                 } else {
                     item$type
@@ -36,11 +46,13 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
         })
     }
 
-    pageBreakIndexes <- recalculateBreakIndexes()
+    pageBreakIndexes <- recalculatePageBreakIndexes()
 
+    # Navigate to the next (delta == 1) or previous (delta == -1) page.
     navigate <- function(delta) {
         if (context$itemIndex <= 0) {
             context$itemIndex <- 1
+            context$started <- TRUE
         } else {
             if (delta < 0) {
                 prevPageBreakIndexes <- pageBreakIndexes[which(pageBreakIndexes < context$itemIndex - 1)]
@@ -69,16 +81,12 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             while (currentIndex <= length(context$items)) {
                 item <- context$items[[currentIndex]]
 
-                if ((length(class(item)) == 1) && (class(item) == "function")) {
+                if (isFunction(item)) {
                     functionFound <- TRUE
 
                     expandedItem <- item()
 
-                    if ((length(class(expandedItem)) == 1) &&
-                        (class(expandedItem) == "list") &&
-                        (!is.null(expandedItem$type)) &&
-                        (expandedItem$type %in% c(.nonQuestion, .pageBreak, .question))) {
-
+                    if (isItemType(expandedItem, c(.nonQuestion, .pageBreak, .question))) {
                         expandedItem <- list(expandedItem)
                     }
 
@@ -99,7 +107,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                     newItems <- c(newItems, context$items[(currentIndex + 1):length(context$items)])
 
                     context$items <- newItems
-                } else if ((length(class(item)) == 1) && (class(item) == "list") && (!is.null(item$type)) && (item$type == .pageBreak)) {
+                } else if (isItemType(item, .pageBreak)) {
                     break;
                 }
 
@@ -111,7 +119,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
                 for (nextIndex in length(context$items):(currentIndex + 1)) {
                     item <- context$items[[nextIndex]]
 
-                    if ((length(class(item)) == 1) && (class(item) == "list") && (!is.null(item$type)) && (item$type == .function)) {
+                    if (isItemType(item, .function)) {
                         functionFound <- TRUE
                         collapsedItem <- item$call
 
@@ -128,7 +136,7 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
             }
 
             if (functionFound) {
-                pageBreakIndexes <<- recalculateBreakIndexes()
+                pageBreakIndexes <<- recalculatePageBreakIndexes()
             }
 
             context$page <- context$items[context$itemIndex:(currentIndex - 1)]
@@ -138,7 +146,6 @@ questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) 
 
     shiny::observeEvent(input[[initButtonId]], {
         navigate(1)
-        context$started <- TRUE
     })
 
     shiny::observeEvent(input[[backButtonId]], {
