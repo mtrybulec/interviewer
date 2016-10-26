@@ -74,7 +74,7 @@ this is just a standard R data.frame. As such, you can construct this data.frame
 whatever R code you'd like to use (including things like randomization of responses).
 `buildResponses` is just a helper function like some other question and response helper functions.
 
-[Simple DEMO]((https://github.com/mtrybulec/interviewer/blob/master/img/simple-demo.png "Simple DEMO")
+![Simple DEMO](https://github.com/mtrybulec/interviewer/blob/master/img/simple-demo.png "Simple DEMO")
 
 While the texts `"Question 1"` and `"response A"` to `"response C"` will be displayed on the screen,
 the data will be saved in the `"q1"` column, and it will be one of the values: `"a"`, `"b"`, or `"c"`.
