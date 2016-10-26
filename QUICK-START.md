@@ -187,6 +187,89 @@ If it's `FALSE`, the respondent may choose not to select a response (enter a val
 Single-choice questions have several options: you can display those as radio-buttons (recommended, default)
 or combo-boxes. And if you decide to use radio-buttons, you can display those vertically (default) or inline/horizontally.
 
+```r
+server.R - radio-buttons:
+
+            . . .
+
+            interviewer::question.list(
+                id = "RadioButtonsStandard",
+                label = "Radio-buttons, standard",
+                responses = responses
+            ),
+
+            interviewer::question.list(
+                id = "RadioButtonsInline",
+                label = "Radio-buttons, inline (inline set to TRUE)",
+                responses = responses,
+                inline = TRUE
+            ),
+
+            interviewer::question.list(
+                id = "RadioButtonsOptional",
+                label = "Radio-buttons, no response required (required set to FALSE; a second click on a selected radio-button deselects it)",
+                responses = responses,
+                required = FALSE
+            ),
+
+            interviewer::question.list(
+                id = "RadioButtonsNarrow",
+                label = "Radio-buttons, inline and narrow (width set to '250px')",
+                responses = responses,
+                inline = TRUE,
+                width = "250px"
+            ),
+
+            . . .
+```            
+
+![Single-choice radio-buttons](https://github.com/mtrybulec/interviewer/blob/master/img/single-choice-radio-buttons.png "Single-choice radio-buttons")
+
+```r
+server.R - combo-boxes:
+            
+            . . .
+
+            interviewer::question.list(
+                id = "ComboBoxStandard",
+                label = "Combo-box, standard (use.select set to TRUE)",
+                responses = responses,
+                use.select = TRUE
+            ),
+
+            interviewer::question.list(
+                id = "ComboBoxPlaceholder",
+                label = "Combo-box, custom message (selectizePlaceholder set to 'I need a response!')",
+                responses = responses,
+                use.select = TRUE,
+                selectizePlaceholder = "I need a response!"
+            ),
+
+            interviewer::question.list(
+                id = "ComboBoxOptional",
+                label = "Combo-box, no response required (required set to FALSE)",
+                responses = responses,
+                use.select = TRUE,
+                selectizePlaceholder = "This question is optional",
+                required = FALSE
+            ),
+
+            interviewer::question.list(
+                id = "ComboBoxNarrow",
+                label = "Combo-box, narrow (width set to '200px')",
+                responses = responses,
+                use.select = TRUE,
+                width = "200px"
+            ),
+            
+            . . .
+
+```
+
+![Single-choice combo-boxes](https://github.com/mtrybulec/interviewer/blob/master/img/single-choice-combo-boxes.png "Single-choice combo-boxes")
+
+(The above code comes from the `"single-choice"` example - execute `runExample("single-choice")`.)
+
 ### Multi-choice
 
 ### Mixed-choice
