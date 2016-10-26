@@ -107,6 +107,8 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, required = TRUE, use.select = FALSE, inline = FALSE,
                           width = NULL, selectizePlaceholder = NULL) {
+    force(names(as.list(environment())))
+
     if (!use.select && !is.null(selectizePlaceholder)) {
         warning("selectizePlaceholder ignored - use.select is FALSE.")
     }
@@ -239,6 +241,8 @@ function(value, $item) {
 #' @export
 question.mixed <- function(id, label, responses, types, required = TRUE, use.select = FALSE, inline = FALSE,
                            width = NULL, selectizePlaceholder = NULL) {
+    force(names(as.list(environment())))
+
     if (!use.select && !is.null(selectizePlaceholder)) {
         warning("selectizePlaceholder ignored - use.select is FALSE.")
     }
@@ -349,6 +353,8 @@ function(value, $item) {
 #'     \code{\link[shiny]{sliderInput}}.
 #' @export
 question.numeric <- function(id, label, min, max, step = NA, required = TRUE, use.slider = FALSE, width = NULL) {
+    force(names(as.list(environment())))
+
     if (use.slider && !required) {
         warning("required ignored - use.slider forces a selection of a value.")
     }
@@ -455,6 +461,8 @@ question.numeric <- function(id, label, min, max, step = NA, required = TRUE, us
 #' @export
 question.text <- function(id, label, required = TRUE, use.textArea = FALSE, width = NULL, height = NULL, rows = NULL,
                           placeholder = NULL, regex = NULL, regexHint = NULL) {
+    force(names(as.list(environment())))
+
     if (!use.textArea) {
         if (!is.null(height)) {
             warning("height ignored - use.textArea is FALSE.")

@@ -31,30 +31,32 @@ function(input, output, session) {
             function() {
                 result <- list()
                 responseIds <- getResponseIds("LoopSource")
-                # Randomize subsequent blocks:
-                responseIds <- responseIds[sample(length(responseIds))]
+                responseIds <- responseIds[sample(length(responseIds))] # randomize subsequent blocks
 
-                result <- lapply(responseIds, function(responseId) {
+                for (responseId in responseIds) {
                     responseLabel <- responses[which(responses$id == responseId), "label"]
 
-                    list(
-                        interviewer::question.list(
-                            id = paste0("LoopQuestion1", responseId),
-                            label = sprintf("Loop question 1 for '%s'", responseLabel),
-                            responses = responses
-                        ),
+                    result <- append(
+                        result,
+                        list(
+                            interviewer::question.list(
+                                id = paste0("LoopQuestion1", responseId),
+                                label = sprintf("Loop question 1 for '%s'", responseLabel),
+                                responses = responses
+                            ),
 
-                        interviewer::question.list(
-                            id = paste0("LoopQuestion2", responseId),
-                            label = sprintf("Loop question 2 for '%s'", responseLabel),
-                            responses = responses
-                        ),
+                            interviewer::question.list(
+                                id = paste0("LoopQuestion2", responseId),
+                                label = sprintf("Loop question 2 for '%s'", responseLabel),
+                                responses = responses
+                            ),
 
-                        interviewer::pageBreak()
+                            interviewer::pageBreak()
+                        )
                     )
-                })
+                }
 
-                unlist(result, recursive = FALSE)
+                result
             },
 
             interviewer::question.list(
