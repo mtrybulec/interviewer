@@ -2,6 +2,8 @@
 
 `interviewer` - questionnaires for computer-aided interviewing using R and Shiny.
 
+See the [quick-start](https://github.com/mtrybulec/interviewer/blob/master/QUICK-START.md) guide for details.
+
 Features:
 * R *is* the questionnaire scripting language.
 * The whole questionnaire is a single Shiny output, so do whatever you want with the rest of the page.
@@ -32,5 +34,3 @@ Features:
 
 `mixedOptionsInput` - a control that mixes radio-buttons and check-boxes -
 can be used in any Shiny application as a normal input element.
-
-See the [quick-start](https://github.com/mtrybulec/interviewer/blob/master/QUICK-START.md) guide for details.

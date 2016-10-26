@@ -170,17 +170,40 @@ Done:
 
 ## Standard question definitions
 
-In progress, but check out `interviewer` examples using `runExample()`...
+Up till now, only simple, single-response questions were shown. However, `interviewer` comes
+equipped with several question templates for the most common scenarios
+(plus you can build your questions from scratch, but that's for later).
+
+### Validation
+
+All pre-defined question templates take a `required` argument; if it's `TRUE` (default),
+the validation function will not let the respondent move to the next page without answering the question.
+If it's `FALSE`, the respondent may choose not to select a response (enter a value).
+
+![Validation message](https://github.com/mtrybulec/interviewer/blob/master/img/validation.png "Standard validation")
+
+### Single-choice
+
+Single-choice questions have several options: you can display those as radio-buttons (recommended, default)
+or combo-boxes. And if you decide to use radio-buttons, you can display those vertically (default) or inline/horizontally.
+
+### Multi-choice
+
+### Mixed-choice
+
+### Text
+
+### Numeric
 
 ## Dynamic response lists
+
+In progress, but check out `interviewer` examples using `runExample()`...
 
 ## Arbitrary Shiny UI
 
 ## Custom question definitions
 
 ## Custom question validation
-
-## Arbitrary R code
 
 ## Questionnaire control-flow
 
