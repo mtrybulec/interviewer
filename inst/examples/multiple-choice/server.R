@@ -10,8 +10,6 @@ function(input, output, session) {
 
     output$questionnaireOutput <-
         interviewer::questionnaire(
-            surveyId = "interviewer-demo-multiple-choice",
-            userId = "demo",
             label = "Multiple-choice DEMO",
             welcome = list(
                 shiny::p("Welcome!"),

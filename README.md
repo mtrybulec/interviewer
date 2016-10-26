@@ -32,3 +32,5 @@ Features:
 
 `mixedOptionsInput` - a control that mixes radio-buttons and check-boxes -
 can be used in any Shiny application as a normal input element.
+
+See the [quick-start](https://github.com/mtrybulec/interviewer/blob/master/QUICK-START.md) guide for details.

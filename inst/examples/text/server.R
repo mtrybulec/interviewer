@@ -5,8 +5,6 @@ function(input, output, session) {
 
     output$questionnaireOutput <-
         interviewer::questionnaire(
-            surveyId = "interviewer-demo-text",
-            userId = "demo",
             label = "Text DEMO",
             welcome = list(
                 shiny::p("Welcome!"),

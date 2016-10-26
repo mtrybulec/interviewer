@@ -1,7 +1,31 @@
 .function <- "function"
 
+#' Define an \code{interviewer} questionnaire.
+#'
+#' \code{questionnaire} is the central function via which the whole questionnaire,
+#'     including its questions, responses, and flow logic, is defined.
+#'
+#' @param label (character) the name/label/text that will be displayed
+#'     at the top of the UI area assigned to the questionnaire.
+#' @param welcome (Shiny tag list) the Shiny output that will be displayed
+#'     as the first page of the questionnaire - the welcome page.
+#' @param goodbye (Shiny tag list) the Shiny output that will be displayed
+#'     as the last page of the questionnaire, after the respondent
+#'     replies to the last question.
+#' @param exit (function(data.frame)) the callback function that will be called
+#'     after the interview finishes; the data.frame will contain responses
+#'     to all interview questions; column names will be named using
+#'     question ids, and the single row will have the respondent's answers.
+#' @param ... question definitions, non-question UI output,
+#'     and functions defining the logic of the questionnaire.
+#'
+#' @details See \url{https://github.com/mtrybulec/interviewer/blob/master/QUICK-START.md}
+#'    for details on using \code{questionnaire} in Shiny apps.
+#'
+#' @seealso
+#'     \code{\link{runExample}}.
 #' @export
-questionnaire <- function(surveyId, userId, label, welcome, goodbye, exit, ...) {
+questionnaire <- function(label, welcome, goodbye, exit, ...) {
     domain <- shiny::getDefaultReactiveDomain()
     input <- domain$input
     output <- domain$output
