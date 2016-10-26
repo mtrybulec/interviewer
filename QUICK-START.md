@@ -79,9 +79,10 @@ whatever R code you'd like to use (including things like randomization of respon
 While the texts `"Question 1"` and `"response A"` to `"response C"` will be displayed on the screen,
 the data will be saved in the `"q1"` column, and it will be one of the values: `"a"`, `"b"`, or `"c"`.
 
-And that's what the final argument of the `questionnaire` function does: `exit` defines a callback function
+And that's what the final argument of the `questionnaire` does: `exit` defines a callback function
 that will be called when the respondent is done with the interview. The function will be called
-with the data.frame that contains the respondent's answers. Here, it just prints the results:
+with the data.frame that contains the respondent's answers. Here, it just prints the results,
+but you may choose to save the data to a database, a file, etc.:
 
 ```
 Done:
@@ -89,7 +90,87 @@ Done:
 1  b
 ```
 
-## Pages and standard question definitions
+## Longer questionnaires, splitting questions into pages
+
+Obviously, you can build longer than just one-question questionnaires.
+Just add more question definitions in the `...` part of the call to `questionnaire`.
+
+You may also choose to break the questionnaire into pages or screens -
+so that the respondent in not overwhelmed when presented with a very long web page.
+
+From now on I'll omit showing the `ui.R` code - it's the same for all examples -
+and screenshots of the welcome and goodbye pages.
+
+And, for most examples, we'll define a single response list that can be reused
+in multiple questions (which, BTW, shows how R *is* the questionnaire scripting language
+and can be used for defining common question elements).
+
+```r
+server.R:
+
+library(interviewer)
+library(shiny)
+
+function(input, output) {
+
+    responses = interviewer::buildResponses(
+        id = c("a", "b", "c"),
+        label = c("response A", "response B", "response C")
+    )
+    
+    output$questionnaireOutput <-
+        interviewer::questionnaire(
+            label = "Simple DEMO",
+            welcome = "Welcome",
+            goodbye = "Done!",
+
+            interviewer::question.list(
+                id = "q1",
+                label = "Question 1",
+                responses = responses
+            ),
+
+            interviewer::question.list(
+                id = "q2",
+                label = "Question 2",
+                responses = responses
+            ),
+
+            interviewer::pageBreak(),
+
+            interviewer::question.list(
+                id = "q3",
+                label = "Question 3",
+                responses = responses
+            ),
+
+            exit = function(data) {
+                cat("Done:\n")
+                print(data)
+            }
+        )
+
+}
+```
+
+In the above, we have two questions on the first page, and one question on the second page.
+
+![Page DEMO](https://github.com/mtrybulec/interviewer/blob/master/img/page-demo.png "Page DEMO")
+
+You can use the Back and Next buttons to navigate to earlier questions
+and then back to the current question.
+
+And the resulting data.frame:
+
+```
+Done:
+  q1 q2 q3
+1  a  b  c
+```
+
+## Standard question definitions
+
+In progress, but check out `interviewer` examples using `runExample()`...
 
 ## Dynamic response lists
 
@@ -104,5 +185,3 @@ Done:
 ## Questionnaire control-flow
 
 ## Navigating backwards and forwards through the questionnaire
-
-## Getting back questionnaire data
