@@ -227,7 +227,8 @@ server.R - radio-buttons:
 The first question is just a standard single-choice question as seen earlier.
 The second question uses `inline` (horizontal) layout.
 The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question
-The final question shows basic styling of the question layout - changing its `width`.
+The final question shows basic styling of the question layout - changing its `width`
+(note that, in this case, radio-buttons wrap over multiple lines).
 
 All questions are initially displayed without any pre-selected responses;
 the respondent is always free to deselect a response,
@@ -289,7 +290,7 @@ The final question shows basic styling of the question layout - changing its `wi
 
 A note on using combo-boxes: they're harder to use (for respondents) 
 than radio-buttons - they require two clicks to select a response.
-Combo-boxes can also display on top of subsequent questions or navigation buttons,
+Combo-boxes can also display on top of subsequent questions or navigation buttons (as in the screenshot above),
 hiding contents and requiring yet another click outside of the pull-down list.
 
 So, combo-boxes should really be used only when the list of responses is very long
