@@ -207,7 +207,8 @@ server.R - radio-buttons:
 
             interviewer::question.list(
                 id = "RadioButtonsOptional",
-                label = "Radio-buttons, no response required (required set to FALSE; a second click on a selected radio-button deselects it)",
+                label = paste("Radio-buttons, no response required",
+                              "(required set to FALSE; a second click on a selected radio-button deselects it)"),
                 responses = responses,
                 required = FALSE
             ),
@@ -223,7 +224,18 @@ server.R - radio-buttons:
             . . .
 ```            
 
+The first question is just a standard single-choice question as seen earlier.
+The second question uses `inline` (horizontal) layout.
+The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question
+The final question shows basic styling of the question layout - changing its `width`.
+
+All questions are initially displayed without any pre-selected responses;
+the respondent is always free to deselect a response,
+even when the question uses radio-buttons.
+
 ![Single-choice radio-buttons](https://github.com/mtrybulec/interviewer/blob/master/img/single-choice-radio-buttons.png "Single-choice radio-buttons")
+
+And now, a similar set of questions, but using (single-selection) combo-boxes:
 
 ```r
 server.R - combo-boxes:
@@ -266,7 +278,22 @@ server.R - combo-boxes:
 
 ```
 
+The first question is just a standard single-choice question,
+but sets `use.select` to `TRUE` to display as a combo-box.
+The second question uses defines a `placeholder` that will be displayed
+in the edit area of the combo-box before any selections are made.
+The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question
+The final question shows basic styling of the question layout - changing its `width`.
+
 ![Single-choice combo-boxes](https://github.com/mtrybulec/interviewer/blob/master/img/single-choice-combo-boxes.png "Single-choice combo-boxes")
+
+A note on using combo-boxes: they're harder to use (for respondents) 
+than radio-buttons - they require two clicks to select a response.
+Combo-boxes can also display on top of subsequent questions or navigation buttons,
+hiding contents and requiring yet another click outside of the pull-down list.
+
+So, combo-boxes should really be used only when the list of responses is very long
+(respondents can then filter the list by typing a part of the response text).
 
 (The above code comes from the `"single-choice"` example - execute `runExample("single-choice")`.)
 
