@@ -12,8 +12,8 @@ pageBreak <- function() {
 
 #' Build a non-question (UI) element to show next to questions.
 #'
-#' \code{buildQuestion} returns a question definition given the parts
-#'     a fully formed question definition consists of.
+#' \code{buildNonQuestion} returns a non-question definition
+#'     that displays arbitray UI elements.
 #'
 #' @param ui (list|function) a list of UI components to show on screen
 #'     or a function that should return the UI components to show on screen.

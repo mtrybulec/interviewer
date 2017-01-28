@@ -12,8 +12,8 @@ or a function that should return the UI components to show on screen.
 Use a list to build static content and a function to build dynamic content.}
 }
 \description{
-\code{buildQuestion} returns a question definition given the parts
-    a fully formed question definition consists of.
+\code{buildNonQuestion} returns a non-question definition
+    that displays arbitray UI elements.
 }
 \seealso{
 \code{\link{buildQuestion}}.
