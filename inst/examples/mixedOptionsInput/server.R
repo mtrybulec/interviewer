@@ -1,4 +1,3 @@
-source("c:/Users/michal.trybulec/interviewer/R/input.R")
 library(shiny)
 
 function(input, output, session) {
