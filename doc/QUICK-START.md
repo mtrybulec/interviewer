@@ -74,7 +74,7 @@ this is just a standard R data.frame. As such, you can construct this data.frame
 whatever R code you'd like to use (including things like randomization of responses).
 `buildResponses` is just a helper function like some other question and response helper functions.
 
-![Simple DEMO](https://github.com/mtrybulec/interviewer/blob/master/img/simple-demo.png "Simple DEMO")
+![Simple DEMO](./img/simple-demo.png "Simple DEMO")
 
 While the texts `"Question 1"` and `"response A"` to `"response C"` will be displayed on the screen,
 the data will be saved in the `"q1"` column, and it will be one of the values: `"a"`, `"b"`, or `"c"`.
@@ -155,7 +155,7 @@ function(input, output) {
 
 In the above, we have two questions on the first page, and one question on the second page.
 
-![Page DEMO](https://github.com/mtrybulec/interviewer/blob/master/img/page-demo.png "Page DEMO")
+![Page DEMO](./img/page-demo.png "Page DEMO")
 
 You can use the Back and Next buttons to navigate to earlier questions
 and then back to the current question.
@@ -180,7 +180,7 @@ All pre-defined question templates take a `required` argument; if it's `TRUE` (d
 the validation function will not let the respondent move to the next page without answering the question.
 If it's `FALSE`, the respondent may choose not to select a response (enter a value).
 
-![Validation message](https://github.com/mtrybulec/interviewer/blob/master/img/validation.png "Standard validation")
+![Validation message](./img/validation.png "Standard validation")
 
 ### Single-choice
 
@@ -234,7 +234,7 @@ All questions are initially displayed without any pre-selected responses;
 the respondent is always free to deselect a response,
 even when the question uses radio-buttons.
 
-![Single-choice radio-buttons](https://github.com/mtrybulec/interviewer/blob/master/img/single-choice-radio-buttons.png "Single-choice radio-buttons")
+![Single-choice radio-buttons](./img/single-choice-radio-buttons.png "Single-choice radio-buttons")
 
 And now, a similar set of questions, but using (single-selection) combo-boxes:
 
@@ -286,7 +286,7 @@ in the edit area of the combo-box before any selections are made.
 The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question
 The final question shows basic styling of the question layout - changing its `width`.
 
-![Single-choice combo-boxes](https://github.com/mtrybulec/interviewer/blob/master/img/single-choice-combo-boxes.png "Single-choice combo-boxes")
+![Single-choice combo-boxes](./img/single-choice-combo-boxes.png "Single-choice combo-boxes")
 
 A note on using combo-boxes: they're harder to use (for respondents) 
 than radio-buttons - they require two clicks to select a response.
