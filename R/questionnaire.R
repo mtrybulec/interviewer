@@ -57,7 +57,7 @@ questionnaire <- function(label, welcome, goodbye, exit, ...) {
     # After applying functions (on Next or Back), need to recalculate where the current page breaks are
     # (to be able to show questions that are on the current screen).
     recalculatePageBreakIndexes <- function() {
-        isolate({
+        shiny::isolate({
             itemTypes <- lapply(context$items, function(item) {
                 if (isFunction(item)) {
                     .function
@@ -308,7 +308,7 @@ questionnaire <- function(label, welcome, goodbye, exit, ...) {
             screenContent <- shiny::p(goodbye)
         } else {
             screenContent <- list(
-                uiOutput(outputId = pageOutputId),
+                shiny::uiOutput(outputId = pageOutputId),
                 shiny::hr(),
                 shiny::actionButton(inputId = initButtonId, label = "Start"),
                 shinyjs::hidden(shiny::actionButton(inputId = backButtonId, label = "Back")),

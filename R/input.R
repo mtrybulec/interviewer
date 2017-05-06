@@ -24,7 +24,7 @@ generateMixedOptions <- function(inputId, choices, types, selected, inline) {
             } else {
                 shiny::div(
                     class = type,
-                    shiny::tags$label(inputTag, tags$span(name))
+                    shiny::tags$label(inputTag, shiny::tags$span(name))
                 )
             }
         },
