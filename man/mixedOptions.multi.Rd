@@ -17,4 +17,3 @@ Returns the multiple (non-mutually-exclusive) option type for \code{mixedOptions
 Other mixedOptionsInput option types: \code{\link{mixedOptions.single}}
 }
 \keyword{datasets}
-

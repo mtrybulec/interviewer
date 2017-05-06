@@ -59,4 +59,3 @@ Other question definitions: \code{\link{question.list}},
   \code{\link{question.numeric}},
   \code{\link{question.text}}
 }
-

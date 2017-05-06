@@ -43,4 +43,3 @@ an input line with a spinner or a slider control for entry of numeric values.
 Other question definitions: \code{\link{question.list}},
   \code{\link{question.mixed}}, \code{\link{question.text}}
 }
-

@@ -19,4 +19,3 @@ randomizeResponses(responses)
 
 Other response handling functions: \code{\link{maskResponses}}
 }
-

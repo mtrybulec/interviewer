@@ -16,4 +16,3 @@ useInterviewer()
 \code{\link{runExample}},
     \code{\link[shinyjs]{useShinyjs}}.
 }
-

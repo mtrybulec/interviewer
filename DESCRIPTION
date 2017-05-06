@@ -2,11 +2,10 @@ Package: interviewer
 Title: interviewer - questionnaires for computer-aided interviewing using R and Shiny
 Version: 1.0.0
 Date: 2017-05-07
-Author: Michal Trybulec
-Maintainer: Michal Trybulec <mtrybulec@yac.com.pl>
+Authors@R: person("Michal", "Trybulec", email = "mtrybulec@yac.com.pl", role = c("aut", "cre"))
 Description: interviewer - questionnaires for computer-aided interviewing using R and Shiny.
 Depends:
     shiny,
     shinyjs
 License: MIT + file LICENSE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

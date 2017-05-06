@@ -36,4 +36,3 @@ See \url{https://github.com/mtrybulec/interviewer/blob/master/QUICK-START.md}
 \seealso{
 \code{\link{runExample}}.
 }
-

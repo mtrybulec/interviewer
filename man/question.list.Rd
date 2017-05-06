@@ -58,4 +58,3 @@ Other question definitions: \code{\link{question.mixed}},
   \code{\link{question.numeric}},
   \code{\link{question.text}}
 }
-

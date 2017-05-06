@@ -27,4 +27,3 @@ the given response list.}
 
 Other response handling functions: \code{\link{randomizeResponses}}
 }
-

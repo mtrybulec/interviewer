@@ -20,4 +20,3 @@ buildResponses(id, label)
 
 Other response buidling functions: \code{\link{mergeResponses}}
 }
-

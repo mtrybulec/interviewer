@@ -20,4 +20,3 @@ e.g. set \code{display.mode} to \code{"showcase"} to see the example's code.}
 \seealso{
 \code{\link[shiny]{runApp}}.
 }
-

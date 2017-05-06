@@ -15,4 +15,3 @@ getResponseIds(questionId)
     Can be \code{NULL} if no response was given.
     In case of text questions, returns the text verbatim.
 }
-
