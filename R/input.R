@@ -69,6 +69,11 @@ mixedOptions.multi <- "checkbox"
 #' @param choices (list) list of values to show radio-buttons and check-boxes for;
 #'     if elements of the list are named then that name, rather than the value,
 #'     will be displayed to the user.
+#' @param types (character) the types of responses; use \code{'radio'}
+#'     for radio-buttons (single-choice / mutually exclusive responses) and
+#'     \code{'checkbox'} for check-boxes (multi-choice responses).
+#'     You can also use \code{mixedOptions.single} and \code{mixedOptions.multi} respectively.
+#'     The length of this vector must be the same as the number of entries defined in \code{choices}.
 #' @param selected (vector) the values that should be initially selected, if any.
 #' @param inline (logical) if \code{TRUE}, render the choices inline (i.e. horizontally).
 #' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'};
