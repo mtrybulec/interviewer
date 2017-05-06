@@ -16,6 +16,12 @@ mixedOptionsInput(inputId, label, choices, types, selected = NULL,
 if elements of the list are named then that name, rather than the value,
 will be displayed to the user.}
 
+\item{types}{(character) the types of responses; use \code{'radio'}
+for radio-buttons (single-choice / mutually exclusive responses) and
+\code{'checkbox'} for check-boxes (multi-choice responses).
+You can also use \code{mixedOptions.single} and \code{mixedOptions.multi} respectively.
+The length of this vector must be the same as the number of entries defined in \code{choices}.}
+
 \item{selected}{(vector) the values that should be initially selected, if any.}
 
 \item{inline}{(logical) if \code{TRUE}, render the choices inline (i.e. horizontally).}

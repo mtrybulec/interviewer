@@ -19,9 +19,9 @@ for the \code{input} slot.}
 \item{responses}{(response list) the response list giving the identifiers and labels
 of all responses (e.g. as returned by \code{\link{buildResponses}}).}
 
-\item{types}{(character) the types of responses; use \code{radio}
+\item{types}{(character) the types of responses; use \code{'radio'}
 for radio-buttons (single-choice / mutually exclusive responses) and
-\code{checkbox} for check-boxes (multi-choice responses).
+\code{'checkbox'} for check-boxes (multi-choice responses).
 The length of this vector must be the same as the number of responses defined in \code{responses}.}
 
 \item{required}{(logical) if \code{FALSE}, the respondent is free to not choose
