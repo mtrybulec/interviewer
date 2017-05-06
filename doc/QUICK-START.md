@@ -1,5 +1,15 @@
 # interviewer quick-start
 
+Table of contents
+
+- [Basic ui.R and server.R code](#basics)<br />
+- [Longer questionnaires, splitting questions into pages](#pages)<br />
+- [Standard question definitions](#questions)<br />
+  - [Validation](#validation)<br />
+  - [Single-choice](#single-choice)
+
+<a name="basics" />
+
 ## Basic ui.R and server.R code
 
 An `interviewer` questionnaire is "hosted" in a standard Shiny application - it's just 
@@ -91,6 +101,8 @@ Done:
 1  b
 ```
 
+<a name="pages" />
+
 ## Longer questionnaires, splitting questions into pages
 
 Obviously, you can build longer than just one-question questionnaires.
@@ -169,11 +181,15 @@ Done:
 1  a  b  c
 ```
 
+<a name="questions" />
+
 ## Standard question definitions
 
 Up till now, only simple, single-response questions were shown. However, `interviewer` comes
 equipped with several question templates for the most common scenarios
 (plus, you can build your questions from scratch, but that's for later).
+
+<a name="validation" />
 
 ### Validation
 
@@ -182,6 +198,8 @@ the validation function will not let the respondent move to the next page withou
 If it's `FALSE`, the respondent may choose not to select/provide a response.
 
 ![Validation message](./img/validation.png "Standard validation")
+
+<a name="single-choice" />
 
 ### Single-choice
 
