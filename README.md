@@ -1,6 +1,6 @@
 # interviewer
 
-`interviewer` - questionnaires for computer-aided interviewing using R and Shiny.
+`interviewer` - computer-aided interviewing in R/Shiny.
 
 See the [quick-start](./doc/QUICK-START.md) guide for details.
 
@@ -18,17 +18,17 @@ Features:
   * vertical and horizontal/inline layouts of radio-buttons and check-boxes,
   * numeric questions using number edit lines or sliders,
   * text questions using single-line text inputs or multi-line text areas,
-  * placeholders in combo-boxes and text inputs,
+  * placeholders (hints) in combo-boxes and text inputs,
   * required/optional questions with default validation,
   * optional regex validation of text entries.
 * Build custom questions with any valid Shiny output.
 * Add custom validation functions.
-* Add any valid Shiny output in-between questions.
+* Add any valid Shiny output in/between questions.
 * Dynamic response lists - modify response lists based on earlier responses.
 * Helper functions to:
   * merge response lists,
   * randomize responses,
-  * mask responses (keep, drop) using responses from an earlier question.
+  * mask responses (keep, drop) using responses from earlier questions.
 * Go back to already asked questions, go forward to the last question displayed (even through filters, loops, etc.).
 * Data returned via a callback as a standard R data.frame.
 
