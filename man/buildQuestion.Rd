@@ -38,4 +38,3 @@ with the validation message, if the entered data is not valid.}
 
 Other question buidling functions: \code{\link{makeQuestionInputId}}
 }
-

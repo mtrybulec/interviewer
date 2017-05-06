@@ -26,4 +26,3 @@ for defining input fields.
 
 Other question buidling functions: \code{\link{buildQuestion}}
 }
-

@@ -33,4 +33,3 @@ see \code{\link[shiny]{validateCssUnit}}.}
     \code{\link[shiny]{checkboxGroupInput}},
     \code{\link[shiny]{radioButtons}}.
 }
-

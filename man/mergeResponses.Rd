@@ -22,4 +22,3 @@ mergeResponses(...)
 
 Other response buidling functions: \code{\link{buildResponses}}
 }
-

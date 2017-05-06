@@ -18,4 +18,3 @@ Use a list to build static content and a function to build dynamic content.}
 \seealso{
 \code{\link{buildQuestion}}.
 }
-

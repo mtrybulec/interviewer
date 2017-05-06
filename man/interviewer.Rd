@@ -4,8 +4,12 @@
 \name{interviewer}
 \alias{interviewer}
 \alias{interviewer-package}
+\alias{interviewer-package}
 \title{interviewer}
 \description{
 Easily build questionnaires for computer-aided interviewing using R and Shiny.
 }
+\author{
+\strong{Maintainer}: Michal Trybulec \email{mtrybulec@yac.com.pl}
 
+}
