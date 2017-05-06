@@ -9,6 +9,7 @@ Table of contents
   - [Single-choice](#single-choice)
 
 <a name="basics" />
+
 ## Basic ui.R and server.R code
 
 An `interviewer` questionnaire is "hosted" in a standard Shiny application - it's just 
@@ -101,6 +102,7 @@ Done:
 ```
 
 <a name="pages" />
+
 ## Longer questionnaires, splitting questions into pages
 
 Obviously, you can build longer than just one-question questionnaires.
@@ -180,6 +182,7 @@ Done:
 ```
 
 <a name="questions" />
+
 ## Standard question definitions
 
 Up till now, only simple, single-response questions were shown. However, `interviewer` comes
@@ -187,6 +190,7 @@ equipped with several question templates for the most common scenarios
 (plus, you can build your questions from scratch, but that's for later).
 
 <a name="validation" />
+
 ### Validation
 
 All pre-defined question templates take a `required` argument; if it's `TRUE` (default),
@@ -196,6 +200,7 @@ If it's `FALSE`, the respondent may choose not to select/provide a response.
 ![Validation message](./img/validation.png "Standard validation")
 
 <a name="single-choice" />
+
 ### Single-choice
 
 Single-choice questions have several options: you can display those as radio-buttons (recommended, default)
