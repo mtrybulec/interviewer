@@ -1,7 +1,7 @@
 Package: interviewer
 Title: interviewer - questionnaires for computer-aided interviewing using R and Shiny
-Version: 0.1.0
-Date: 2016-10-13
+Version: 1.0.0
+Date: 2017-05-07
 Author: Michal Trybulec
 Maintainer: Michal Trybulec <mtrybulec@yac.com.pl>
 Description: interviewer - questionnaires for computer-aided interviewing using R and Shiny.
