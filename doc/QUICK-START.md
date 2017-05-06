@@ -3,7 +3,8 @@
 ## Basic ui.R and server.R code
 
 An `interviewer` questionnaire is "hosted" in a standard Shiny application - it's just 
-a single output item in the `ui.R` file and a single function call in the `server.R` file.
+a single output item in the `ui.R` file (plus an additional "admin" call) 
+and a single function call in the `server.R` file.
 A minimal example follows (all functions are referenced using package names
 just to make it clear what comes from which package):
 
@@ -24,7 +25,7 @@ The code above uses Shiny's `fluidPage` but any other layout function could be u
 `useInterviewer` must be called at least once to set up `interviewer`-specific CSS and JavaScript.
 And since `interviewer` uses the `shinyjs` package, it calls its `useShinyjs` method as well.
 
-The second instructions defines the output field where all generated questionnaire output
+The second instruction defines the output field where all generated questionnaire output
 will be displayed. Since it's just one output field, you can add any other valid Shiny output
 before or after `interviewer` code.
 
@@ -66,7 +67,7 @@ that will be displayed before the interview starts and after it ends. Here, this
 but it can be any valid Shiny output.
 
 Next come a series of questions, UI elements, page-breaks, and function definitions
-that make up the full questionnaire definition. Here, it's a single, single-choice question,
+that make up the full questionnaire definition. Here, it's a single, single-choice question
 that displays `"Question 1"` as its label, and displays three responses (in this case, using radio-buttons).
 
 While the `buildResponses` function is called here to construct response ids and labels,
@@ -98,12 +99,12 @@ Just add more question definitions in the `...` part of the call to `questionnai
 You may also choose to break the questionnaire into pages or screens -
 so that the respondent in not overwhelmed when presented with a very long web page.
 
-From now on I'll omit showing the `ui.R` code - it's the same for all examples -
-and screenshots of the welcome and goodbye pages.
+From now on `ui.R` code will be omitted - it's the same for all examples.
+And screenshots of the welcome and goodbye pages will also be dropped.
 
 And, for most examples, we'll define a single response list that can be reused
 in multiple questions (which, BTW, shows how R *is* the questionnaire scripting language
-and can be used for defining common question elements).
+and can be used to define common question elements).
 
 ```r
 server.R:
@@ -172,13 +173,13 @@ Done:
 
 Up till now, only simple, single-response questions were shown. However, `interviewer` comes
 equipped with several question templates for the most common scenarios
-(plus you can build your questions from scratch, but that's for later).
+(plus, you can build your questions from scratch, but that's for later).
 
 ### Validation
 
 All pre-defined question templates take a `required` argument; if it's `TRUE` (default),
 the validation function will not let the respondent move to the next page without answering the question.
-If it's `FALSE`, the respondent may choose not to select a response (enter a value).
+If it's `FALSE`, the respondent may choose not to select/provide a response.
 
 ![Validation message](./img/validation.png "Standard validation")
 
@@ -226,7 +227,7 @@ server.R - radio-buttons:
 
 The first question is just a standard single-choice question as seen earlier.
 The second question uses `inline` (horizontal) layout.
-The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question
+The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question.
 The final question shows basic styling of the question layout - changing its `width`
 (note that, in this case, radio-buttons wrap over multiple lines).
 
@@ -281,15 +282,15 @@ server.R - combo-boxes:
 
 The first question is just a standard single-choice question,
 but sets `use.select` to `TRUE` to display as a combo-box.
-The second question uses defines a `placeholder` that will be displayed
+The second question defines a `placeholder` that will be displayed as a hint
 in the edit area of the combo-box before any selections are made.
-The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question
+The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question.
 The final question shows basic styling of the question layout - changing its `width`.
 
 ![Single-choice combo-boxes](./img/single-choice-combo-boxes.png "Single-choice combo-boxes")
 
 A note on using combo-boxes: they're harder to use (for respondents) 
-than radio-buttons - they require two clicks to select a response.
+than radio-buttons - they require two clicks to select a response instead of one.
 Combo-boxes can also display on top of subsequent questions or navigation buttons (as in the screenshot above),
 hiding contents and requiring yet another click outside of the pull-down list.
 
