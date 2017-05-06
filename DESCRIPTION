@@ -8,5 +8,5 @@ Description: interviewer - questionnaires for computer-aided interviewing using 
 Depends:
     shiny,
     shinyjs
-License: MIT
+License: MIT + file LICENSE
 RoxygenNote: 5.0.1
