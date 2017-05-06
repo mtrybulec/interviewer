@@ -19,7 +19,7 @@
 #' @param ... question definitions, non-question UI output,
 #'     and functions defining the logic of the questionnaire.
 #'
-#' @details See \url{https://github.com/mtrybulec/interviewer/blob/master/QUICK-START.md}
+#' @details See \url{https://github.com/mtrybulec/interviewer/blob/master/doc/QUICK-START.md}
 #'    for details on using \code{questionnaire} in Shiny apps.
 #'
 #' @seealso

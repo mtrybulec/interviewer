@@ -30,7 +30,7 @@ and functions defining the logic of the questionnaire.}
     including its questions, responses, and flow logic, is defined.
 }
 \details{
-See \url{https://github.com/mtrybulec/interviewer/blob/master/QUICK-START.md}
+See \url{https://github.com/mtrybulec/interviewer/blob/master/doc/QUICK-START.md}
    for details on using \code{questionnaire} in Shiny apps.
 }
 \seealso{

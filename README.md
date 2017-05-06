@@ -2,7 +2,7 @@
 
 `interviewer` - questionnaires for computer-aided interviewing using R and Shiny.
 
-See the [quick-start](https://github.com/mtrybulec/interviewer/blob/master/QUICK-START.md) guide for details.
+See the [quick-start](./doc/QUICK-START.md) guide for details.
 
 Features:
 * R *is* the questionnaire scripting language.
