@@ -92,7 +92,7 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #'     displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
 #'     If \code{use.select == TRUE}, this argument will be ignored.
 #' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
-#' @param selectizePlaceholder (character) the text that will be displayed
+#' @param placeholder (character) the text that will be displayed
 #'     in the combo-box when there are no responses selected yet; defaults to
 #'     \code{"Click to select a response"} for single-choice questions and
 #'     \code{"Click to select responses"} for multiple-choice questions.
@@ -106,11 +106,11 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #'     \code{\link[shiny]{selectInput}}.
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, required = TRUE, use.select = FALSE, inline = FALSE,
-                          width = NULL, selectizePlaceholder = NULL) {
+                          width = NULL, placeholder = NULL) {
     force(names(as.list(environment())))
 
-    if (!use.select && !is.null(selectizePlaceholder)) {
-        warning("selectizePlaceholder ignored - use.select is FALSE.")
+    if (!use.select && !is.null(placeholder)) {
+        warning("placeholder ignored - use.select is FALSE.")
     }
     if (inline && use.select) {
         warning("inline ignored - use.select takes precedence.")
@@ -140,20 +140,20 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
                 width = width
             )
         } else if (use.select) {
-            if (is.null(selectizePlaceholder)) {
+            if (is.null(placeholder)) {
                 if (multiple) {
-                    selectizePlaceholder <- "Click to select responses"
+                    placeholder <- "Click to select responses"
                 } else {
-                    selectizePlaceholder <- "Click to select a response"
+                    placeholder <- "Click to select a response"
                 }
             }
 
-            options <- list(placeholder = selectizePlaceholder)
+            options <- list(placeholder = placeholder)
 
             if (multiple) {
                 options$plugins = list("remove_button")
             } else {
-                choices <- c(selectizePlaceholder = .emptyResponseValue, choices)
+                choices <- c(placeholder = .emptyResponseValue, choices)
                 options$onItemAdd <- I("
 function(value, $item) {
     if ((this.items.length > 0) && (this.items[0] != value)) {
@@ -227,7 +227,7 @@ function(value, $item) {
 #'     displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
 #'     If \code{use.select == TRUE}, this argument will be ignored.
 #' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
-#' @param selectizePlaceholder (character) the text that will be displayed
+#' @param placeholder (character) the text that will be displayed
 #'     in the combo-box when there are no responses selected yet; defaults to
 #'     \code{"Click to select a response"} for single-choice questions and
 #'     \code{"Click to select responses"} for multiple-choice questions.
@@ -240,11 +240,11 @@ function(value, $item) {
 #'     \code{\link[shiny]{selectInput}}.
 #' @export
 question.mixed <- function(id, label, responses, types, required = TRUE, use.select = FALSE, inline = FALSE,
-                           width = NULL, selectizePlaceholder = NULL) {
+                           width = NULL, placeholder = NULL) {
     force(names(as.list(environment())))
 
-    if (!use.select && !is.null(selectizePlaceholder)) {
-        warning("selectizePlaceholder ignored - use.select is FALSE.")
+    if (!use.select && !is.null(placeholder)) {
+        warning("placeholder ignored - use.select is FALSE.")
     }
     if (inline && use.select) {
         warning("inline ignored - use.select takes precedence.")
@@ -269,15 +269,15 @@ question.mixed <- function(id, label, responses, types, required = TRUE, use.sel
         selected <- shiny::isolate(input[[questionInputId]])
 
         if (use.select) {
-            if (is.null(selectizePlaceholder)) {
-                selectizePlaceholder <- "Click to select responses"
+            if (is.null(placeholder)) {
+                placeholder <- "Click to select responses"
             }
 
             mutexOptions <- choices[which(types == mixedOptions.single)]
             mutexOptions <- paste(paste0('"', gsub('"', '\\"', mutexOptions), '"'), collapse = ', ')
 
             options <- list(
-                placeholder = selectizePlaceholder,
+                placeholder = placeholder,
                 plugins = list("remove_button"),
                 onInitialize = I(sprintf("
 function() {

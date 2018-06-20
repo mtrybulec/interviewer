@@ -66,11 +66,11 @@ function(input, output, session) {
 
             interviewer::question.mixed(
                 id = "MixedComboBoxPlaceholder",
-                label = "Mixed combo-box, custom message (selectizePlaceholder set to 'I need a response!')",
+                label = "Mixed combo-box, custom message (placeholder set to 'I need a response!')",
                 responses = responses,
                 types = types,
                 use.select = TRUE,
-                selectizePlaceholder = "I need a response!"
+                placeholder = "I need a response!"
             ),
 
             interviewer::question.mixed(

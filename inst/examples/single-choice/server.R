@@ -56,10 +56,10 @@ function(input, output, session) {
 
             interviewer::question.list(
                 id = "ComboBoxPlaceholder",
-                label = "Combo-box, custom message (selectizePlaceholder set to 'I need a response!')",
+                label = "Combo-box, custom message (placeholder set to 'I need a response!')",
                 responses = responses,
                 use.select = TRUE,
-                selectizePlaceholder = "I need a response!"
+                placeholder = "I need a response!"
             ),
 
             interviewer::question.list(
@@ -67,7 +67,7 @@ function(input, output, session) {
                 label = "Combo-box, no response required (required set to FALSE)",
                 responses = responses,
                 use.select = TRUE,
-                selectizePlaceholder = "This question is optional",
+                placeholder = "This question is optional",
                 required = FALSE
             ),
 
