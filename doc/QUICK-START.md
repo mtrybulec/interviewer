@@ -227,7 +227,8 @@ server.R - radio-buttons:
             interviewer::question.list(
                 id = "RadioButtonsOptional",
                 label = paste("Radio-buttons, no response required",
-                              "(required set to FALSE; a second click on a selected radio-button deselects it)"),
+                              "(required set to FALSE; a second click on a selected radio-button ", 
+                              "deselects it)"),
                 responses = responses,
                 required = FALSE
             ),
@@ -245,7 +246,7 @@ server.R - radio-buttons:
 
 The first question is just a standard single-choice question as seen earlier.
 The second question uses `inline` (horizontal) layout.
-The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question.
+The third question sets `required` to `FALSE`, meaning the respondent is free to now answer the question.
 The final question shows basic styling of the question layout - changing its `width`
 (note that, in this case, radio-buttons wrap over multiple lines).
 
@@ -302,7 +303,7 @@ The first question is just a standard single-choice question,
 but sets `use.select` to `TRUE` to display as a combo-box.
 The second question defines a `placeholder` that will be displayed as a hint
 in the edit area of the combo-box before any selections are made.
-The third question sets `required` to `FALSE`, meaning the respondent is free not to answer the question.
+The third question sets `required` to `FALSE`, meaning the respondent is free to not answer the question.
 The final question shows basic styling of the question layout - changing its `width`.
 
 ![Single-choice combo-boxes](./img/single-choice-combo-boxes.png "Single-choice combo-boxes")
@@ -315,9 +316,118 @@ hiding contents and requiring yet another click outside of the pull-down list.
 So, combo-boxes should really be used only when the list of responses is very long
 (respondents can then filter the list by typing a part of the response text).
 
-(The above code comes from the `"single-choice"` example - execute `runExample("single-choice")`.)
+The above code comes from the `"single-choice"` example - execute `runExample("single-choice")`.
 
-### Multi-choice
+### Multiple-choice
+
+Similarly to single-choice questions, multiple-choice questions have several options:
+you can display those as check-boxes (recommended, default) or combo-boxes.
+And if you decide to use check-boxes, you can display those vertically (default) or inline/horizontally.
+
+```r
+server.R - check-boxes:
+
+            . . .
+
+            interviewer::question.list(
+                id = "CheckBoxesStandard",
+                label = "Check-boxes, standard (multiple set to TRUE)",
+                responses = responses,
+                multiple = TRUE
+            ),
+
+            interviewer::question.list(
+                id = "CheckBoxesInline",
+                label = "Check-boxes, inline (inline set to TRUE)",
+                responses = responses,
+                multiple = TRUE,
+                inline = TRUE
+            ),
+
+            interviewer::question.list(
+                id = "CheckBoxesOptional",
+                label = "Check-boxes, no response required (required set to FALSE)",
+                responses = responses,
+                multiple = TRUE,
+                required = FALSE
+            ),
+
+            interviewer::question.list(
+                id = "CheckBoxesNarrow",
+                label = "Check-boxes, inline and narrow (width set to '250px')",
+                responses = responses,
+                multiple = TRUE,
+                inline = TRUE,
+                width = "250px"
+            ),
+
+            . . .
+```            
+
+The first question is just a standard multiple-choice question.
+The second question uses `inline` (horizontal) layout.
+The third question sets `required` to `FALSE`, meaning the respondent is free to now answer the question.
+The final question shows basic styling of the question layout - changing its `width`
+(note that, in this case, check-boxes wrap over multiple lines).
+
+All questions are initially displayed without any pre-selected responses;
+the respondent is always free to deselect a response.
+
+![Multiple-choice check-boxes](./img/multiple-choice-check-boxes.png "Multiple-choice check-boxes")
+
+And again, a similar set of questions, but using (multiple-selection) combo-boxes:
+
+```r
+            interviewer::question.list(
+                id = "ComboBoxStandard",
+                label = "Combo-box, standard (use.select set to TRUE)",
+                responses = responses,
+                multiple = TRUE,
+                use.select = TRUE
+            ),
+
+            interviewer::question.list(
+                id = "ComboBoxPlaceholder",
+                label = "Combo-box, custom message (selectizePlaceholder set to 'I need a response!')",
+                responses = responses,
+                use.select = TRUE,
+                multiple = TRUE,
+                selectizePlaceholder = "I need a response!"
+            ),
+
+            question.list(
+                id = "ComboBoxOptional",
+                label = "Combo-box, no response required (required set to FALSE)",
+                responses = responses,
+                use.select = TRUE,
+                multiple = TRUE,
+                selectizePlaceholder = "This question is optional",
+                required = FALSE
+            ),
+
+            interviewer::buildNonQuestion(
+                ui = shiny::p(paste(
+                    "Note how the combo-box below is displayed on top of the survey buttons. ",
+                    "Take care when designing such screens (works ok for single-choice questions, ",
+                    "but may not for multi-choice ones)."
+                ))
+            ),
+
+            interviewer::question.list(
+                id = "ComboBoxNarrow",
+                label = "Combo-box, narrow (width set to '200px')",
+                responses = responses,
+                use.select = TRUE,
+                multiple = TRUE,
+                width = "200px"
+            ),
+
+            . . .
+```            
+
+![Multiple-choice combo-boxes](./img/multiple-choice-combo-boxes.png "Multiple-choice combo-boxes")
+
+The above code comes from the `"multiple-choice"` example - execute `runExample("multiple-choice")`.
 
 ### Mixed-choice
 
