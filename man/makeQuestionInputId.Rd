@@ -13,7 +13,7 @@ makeQuestionInputId(id)
     with the \code{'question'} prefix will be returned in the final data.frame.
 
     For use only when defining questions from scratch. When using question
-    builing functions, use the question identifier only.}
+    building functions, use the question identifier only.}
 }
 \description{
 \code{makeQuestionInputId} returns a standard question identifier used
