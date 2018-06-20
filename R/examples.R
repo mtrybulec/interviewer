@@ -14,7 +14,7 @@
 runExample <- function(example, ...) {
     examplesDir <- "examples"
     examples <- list.files(system.file(examplesDir, package = .packageName))
-    exampleList <- sprintf("\n\nValid examples:\n  %s", paste(examples, collapse ="\n  "))
+    exampleList <- sprintf("\n\nValid examples:\n  %s", paste0("\"", examples, "\"", collapse ="\n  "))
 
     if (missing(example)) {
         stop(sprintf("Example name missing.%s", exampleList))
