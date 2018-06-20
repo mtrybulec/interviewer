@@ -73,8 +73,9 @@ function(input, output, session) {
 
             interviewer::buildNonQuestion(
                 ui = shiny::p(paste(
-                    "Note how the combo-box below is displayed on top of the survey buttons. ",
-                    "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
+                    "Note how the combo-box below is displayed on top of the survey buttons.",
+                    "Take care when designing such screens (works ok for single-choice questions",
+                    "but may not for multi-choice ones)."
                 ))
             ),
 

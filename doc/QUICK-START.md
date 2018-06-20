@@ -227,7 +227,7 @@ server.R - radio-buttons:
             interviewer::question.list(
                 id = "RadioButtonsOptional",
                 label = paste("Radio-buttons, no response required",
-                              "(required set to FALSE; a second click on a selected radio-button ", 
+                              "(required set to FALSE; a second click on a selected radio-button", 
                               "deselects it)"),
                 responses = responses,
                 required = FALSE
@@ -259,7 +259,7 @@ even when the question uses radio-buttons.
 And now, a similar set of questions, but using (single-selection) combo-boxes:
 
 ```r
-server.R - combo-boxes:
+server.R - single-choice combo-boxes:
             
             . . .
 
@@ -378,6 +378,10 @@ the respondent is always free to deselect a response.
 And again, a similar set of questions, but using (multiple-selection) combo-boxes:
 
 ```r
+server.R - multiple-choice combo-boxes:
+
+            . . .
+
             interviewer::question.list(
                 id = "ComboBoxStandard",
                 label = "Combo-box, standard (use.select set to TRUE)",
@@ -407,8 +411,8 @@ And again, a similar set of questions, but using (multiple-selection) combo-boxe
 
             interviewer::buildNonQuestion(
                 ui = shiny::p(paste(
-                    "Note how the combo-box below is displayed on top of the survey buttons. ",
-                    "Take care when designing such screens (works ok for single-choice questions, ",
+                    "Note how the combo-box below is displayed on top of the survey buttons.",
+                    "Take care when designing such screens (works ok for single-choice questions",
                     "but may not for multi-choice ones)."
                 ))
             ),
@@ -424,6 +428,16 @@ And again, a similar set of questions, but using (multiple-selection) combo-boxe
 
             . . .
 ```            
+
+The first question is just a standard multiple-choice question,
+but sets `use.select` to `TRUE` to display as a combo-box.
+The second question defines a `placeholder` that will be displayed as a hint
+in the edit area of the combo-box before any selections are made.
+The third question sets `required` to `FALSE`, meaning the respondent is free to not answer the question.
+The final question shows basic styling of the question layout - changing its `width`.
+
+The "non-question" before the final question is an example of arbitrary Shiny output 
+that can be displayed anywhere in the questionnaire.
 
 ![Multiple-choice combo-boxes](./img/multiple-choice-combo-boxes.png "Multiple-choice combo-boxes")
 
