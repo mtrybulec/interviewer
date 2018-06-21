@@ -4,6 +4,8 @@
 
 See the [quick-start](./doc/QUICK-START.md) guide for details.
 
+Execute `runExample()` to list/run some example questionnaires.
+
 Features:
 * R *is* the questionnaire scripting language.
 * The whole questionnaire is a single Shiny output, so do whatever you want with the rest of the page.

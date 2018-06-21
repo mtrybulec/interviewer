@@ -3,6 +3,7 @@
 Table of contents
 
 - [Basic ui.R and server.R code](#basics)<br />
+- [Examples](#examples)<br />
 - [Longer questionnaires, splitting questions into pages](#pages)<br />
 - [Standard question definitions](#questions)<br />
   - [Validation](#validation)<br />
@@ -114,6 +115,15 @@ Done:
   q1
 1  b
 ```
+
+<a name="examples" />
+
+## Examples
+
+The `interviewer` package comes with a `runExample()` function - 
+you can use it to run the different examples discussed below.
+Call `runExample()` with no arguments to get a list of valid examples.
+Pass the example name, as a string parameter, to run a specific example (e.g. `runExample("single-choice")`).
 
 <a name="pages" />
 
