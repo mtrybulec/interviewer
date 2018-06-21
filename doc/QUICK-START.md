@@ -6,7 +6,17 @@ Table of contents
 - [Longer questionnaires, splitting questions into pages](#pages)<br />
 - [Standard question definitions](#questions)<br />
   - [Validation](#validation)<br />
-  - [Single-choice](#single-choice)
+  - [Single-choice](#single-choice)<br />
+  - [Multiple-choice](#multiple-choice)<br />
+  - [Mixed-choice](#mixed-choice)<br />
+  - [Text](#text)<br />
+  - [Numeric](#numeric)<br />
+- [Dynamic response lists](#dynamic-response-lists)<br />
+- [Arbitrary Shiny UI](#arbitrary-shiny-ui)<br />
+- [Custom question definitions](#custom-questions)<br />
+- [Custom question validation](#custom-validation)<br />
+- [Questionnaire flow-control](#flow-control)<br />
+- [ Navigating backwards and forwards through the questionnaire](#navigation)<br />
 
 <a name="basics" />
 
@@ -318,6 +328,8 @@ So, combo-boxes should really be used only when the list of responses is very lo
 
 The above code comes from the `"single-choice"` example - execute `runExample("single-choice")`.
 
+<a name="multiple-choice" />
+
 ### Multiple-choice
 
 Similarly to single-choice questions, multiple-choice questions have several options:
@@ -443,22 +455,40 @@ that can be displayed anywhere in the questionnaire.
 
 The above code comes from the `"multiple-choice"` example - execute `runExample("multiple-choice")`.
 
+<a name="mixed-choice" />
+
 ### Mixed-choice
+
+<a name="text" />
 
 ### Text
 
+<a name="numeric" />
+
 ### Numeric
+
+<a name="dynamic-response-lists" />
 
 ## Dynamic response lists
 
 In progress, but check out `interviewer` examples using `runExample()`...
 
+<a name="arbitrary-shiny-ui" />
+
 ## Arbitrary Shiny UI
+
+<a name="custom-questions" />
 
 ## Custom question definitions
 
+<a name="custom-validation" />
+
 ## Custom question validation
 
-## Questionnaire control-flow
+<a name="flow-control" />
+
+## Questionnaire flow-control
+
+<a name="navigation" />
 
 ## Navigating backwards and forwards through the questionnaire
