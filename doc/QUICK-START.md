@@ -11,7 +11,11 @@ Table of contents
   - [Mixed-choice](#mixed-choice)<br />
   - [Text](#text)<br />
   - [Numeric](#numeric)<br />
-- [Dynamic response lists](#dynamic-response-lists)<br />
+- [Response lists](#response-lists)<br />
+  - [Dynamic response lists](#dynamic-response-lists)<br />
+  - [Merging response lists](#merging-response-lists)<br />
+  - [Randomizing response lists](#randomizing-response-lists)<br />
+  - [Masking response lists (keep, drop)](#masking-response-lists)<br />
 - [Arbitrary Shiny UI](#arbitrary-shiny-ui)<br />
 - [Custom question definitions](#custom-questions)<br />
 - [Custom question validation](#custom-validation)<br />
@@ -459,6 +463,8 @@ The above code comes from the `"multiple-choice"` example - execute `runExample(
 
 ### Mixed-choice
 
+In progress, but check out `interviewer` examples using `runExample()`...
+
 <a name="text" />
 
 ### Text
@@ -467,11 +473,25 @@ The above code comes from the `"multiple-choice"` example - execute `runExample(
 
 ### Numeric
 
+<a name="response-lists" />
+
+### Response lists
+
 <a name="dynamic-response-lists" />
 
-## Dynamic response lists
+### Dynamic response lists
 
-In progress, but check out `interviewer` examples using `runExample()`...
+<a name="merging-response-lists" />
+
+### Merging response lists
+
+<a name="randomizing-response-lists" />
+
+### Randomizing response lists
+
+<a name="masking-response-lists" />
+
+### Masking response lists (keep, drop)
 
 <a name="arbitrary-shiny-ui" />
 
