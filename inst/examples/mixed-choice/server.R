@@ -15,10 +15,10 @@ function(input, output, session) {
 
     output$questionnaireOutput <-
         interviewer::questionnaire(
-            label = "Mixed DEMO",
+            label = "Mixed-choice DEMO",
             welcome = list(
                 shiny::p("Welcome!"),
-                shiny::HTML("<p>This demo shows how <strong>mixed</strong> questions can be defined in <strong>interviewer</strong>.</p>")
+                shiny::HTML("<p>This demo shows how <strong>mixed-choice</strong> questions can be defined in <strong>interviewer</strong>.</p>")
             ),
             goodbye = "Done!",
 
@@ -56,6 +56,13 @@ function(input, output, session) {
 
             interviewer::pageBreak(),
 
+            interviewer::buildNonQuestion(
+                ui = shiny::p(paste(
+                    "While you can use combo-boxes to handle mixed-choice questions,",
+                    "that may not be too intuitive to the respondent (why do some responses remove other responses)."
+                ))
+            ),
+
             interviewer::question.mixed(
                 id = "MixedComboBoxStandard",
                 label = "Mixed combo-box, standard (use.select set to TRUE)",
@@ -84,7 +91,7 @@ function(input, output, session) {
 
             interviewer::buildNonQuestion(
                 ui = shiny::p(paste(
-                    "Note how the combo-box below is displayed on top of the survey buttons. ",
+                    "Note how the combo-box below is displayed on top of the survey buttons.",
                     "Take care when designing such screens (works ok for single-choice questions, but may not for multi-choice ones)."
                 ))
             ),
