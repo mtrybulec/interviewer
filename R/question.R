@@ -148,11 +148,9 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
                 }
             }
 
-            options <- list(placeholder = placeholder)
+            options <- list(placeholder = placeholder, plugins = list("remove_button"))
 
-            if (multiple) {
-                options$plugins = list("remove_button")
-            } else {
+            if (!multiple) {
                 choices <- c(placeholder = .emptyResponseValue, choices)
                 options$onItemAdd <- I("
 function(value, $item) {
