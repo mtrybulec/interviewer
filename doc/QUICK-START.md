@@ -469,6 +469,14 @@ that can be displayed anywhere in the questionnaire.
 
 The above code comes from the `"multiple-choice"` example - execute `runExample("multiple-choice")`.
 
+The resulting data.frame will have multiple responses coded as comma-separted lists of response identifiers, for example:
+
+```
+Done:
+  CheckBoxesStandard CheckBoxesInline CheckBoxesOptional CheckBoxesNarrow . . .
+1                  a              a,b              a,b,c              b,c . . .
+```
+
 <a name="mixed-choice" />
 
 ### Mixed-choice
