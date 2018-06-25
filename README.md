@@ -15,8 +15,8 @@ Features:
 * The questionnaire can be split into pages, each page containing one or more questions.
 * Predefined question building functions:
   * single-choice questions using radio-buttons or combo-boxes,
-  * multi-choice questions using check-boxes or combo-boxes (selectize),
-  * mixed single- and multi-choice questions (e.g. "none of the above"),
+  * multiple-choice questions using check-boxes or combo-boxes (selectize),
+  * mixed single- and multiple-choice questions (e.g. "none of the above"),
   * vertical and horizontal/inline layouts of radio-buttons and check-boxes,
   * numeric questions using number edit lines or sliders,
   * text questions using single-line text inputs or multi-line text areas,

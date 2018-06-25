@@ -56,7 +56,7 @@ mixedOptions.single <- "radio"
 #' @seealso
 #'     \code{\link{mixedOptionsInput}}.
 #' @export
-mixedOptions.multi <- "checkbox"
+mixedOptions.multiple <- "checkbox"
 
 #' Define an input field with both radio-buttons and check-boxes.
 #'
@@ -71,8 +71,8 @@ mixedOptions.multi <- "checkbox"
 #'     will be displayed to the user.
 #' @param types (character) the types of responses; use \code{'radio'}
 #'     for radio-buttons (single-choice / mutually exclusive responses) and
-#'     \code{'checkbox'} for check-boxes (multi-choice responses).
-#'     You can also use \code{mixedOptions.single} and \code{mixedOptions.multi} respectively.
+#'     \code{'checkbox'} for check-boxes (multiple-choice responses).
+#'     You can also use \code{mixedOptions.single} and \code{mixedOptions.multiple} respectively.
 #'     The length of this vector must be the same as the number of entries defined in \code{choices}.
 #' @param selected (vector) the values that should be initially selected, if any.
 #' @param inline (logical) if \code{TRUE}, render the choices inline (i.e. horizontally).

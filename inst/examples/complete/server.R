@@ -184,7 +184,7 @@ function(input, output, session) {
                 label = "Which continents have you ever been to?",
                 responses = interviewer::mergeResponses(continents, dk),
                 types = c(
-                    rep(interviewer::mixedOptions.multi, nrow(continents)),
+                    rep(interviewer::mixedOptions.multiple, nrow(continents)),
                     interviewer::mixedOptions.single
                 )
             ),
@@ -207,7 +207,7 @@ function(input, output, session) {
                 types = function() {
                     continentCount <- nrow(interviewer::maskResponses(continents, "Continents1", operation = "keep"))
                     c(
-                        rep(interviewer::mixedOptions.multi, continentCount),
+                        rep(interviewer::mixedOptions.multiple, continentCount),
                         interviewer::mixedOptions.single
                     )
                 }
@@ -229,7 +229,7 @@ function(input, output, session) {
                 types = function() {
                     continentCount <- nrow(interviewer::maskResponses(continents, "Continents1", operation = "drop"))
                     c(
-                        rep(interviewer::mixedOptions.multi, continentCount),
+                        rep(interviewer::mixedOptions.multiple, continentCount),
                         interviewer::mixedOptions.single
                     )
                 }

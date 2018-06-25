@@ -112,7 +112,7 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
     }
 
     if (multiple) {
-        type <- interviewer::mixedOptions.multi
+        type <- interviewer::mixedOptions.multiple
     } else {
         type <- interviewer::mixedOptions.single
     }
@@ -122,11 +122,11 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
     interviewer::question.mixed(id, label, responses, types, required, use.select, inline, width, placeholder)
 }
 
-#' Define a question that displays a list of mixed single- and multi-choice responses.
+#' Define a question that displays a list of mixed single- and multiple-choice responses.
 #'
 #' \code{question.mixed} returns a question definition that displays responses
 #' as a mix of radio-buttons and check-boxes, or as a combo-box.
-#' Can be used for defining multi-choice questions with responses
+#' Can be used for defining multiple-choice questions with responses
 #' such as "none of the above" or "don't know".
 #'
 #' @param id (character) the unique identifier of the question; it will be used
@@ -138,7 +138,7 @@ question.list <- function(id, label, responses, multiple = FALSE, required = TRU
 #'     of all responses (e.g. as returned by \code{\link{buildResponses}}).
 #' @param types (character) the types of responses; use \code{'radio'}
 #'     for radio-buttons (single-choice / mutually exclusive responses) and
-#'     \code{'checkbox'} for check-boxes (multi-choice responses).
+#'     \code{'checkbox'} for check-boxes (multiple-choice responses).
 #'     The length of this vector must be the same as the number of responses defined in \code{responses}.
 #' @param required (logical) if \code{FALSE}, the respondent is free to not choose
 #'     a response; if \code{TRUE}, the respondent must select a response before
