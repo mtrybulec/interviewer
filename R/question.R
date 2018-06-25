@@ -80,7 +80,7 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #' @param responses (response list) the response list giving the identifiers and labels
 #'     of all responses (e.g. as returned by \code{\link{buildResponses}}).
 #' @param multiple (logical) if \code{FALSE}, defines a single-choice question;
-#'     if \code{TRUE}, dfines a multiple-choice question.
+#'     if \code{TRUE}, defines a multiple-choice question.
 #' @param required (logical) if \code{FALSE}, the respondent is free to not choose
 #'     a response; if \code{TRUE}, the respondent must select a response before
 #'     moving on to subsequent pages of the questionnaire.
@@ -107,94 +107,19 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, required = TRUE, use.select = FALSE, inline = FALSE,
                           width = NULL, placeholder = NULL) {
-    force(names(as.list(environment())))
-
-    if (!use.select && !is.null(placeholder)) {
-        warning("placeholder ignored - use.select is FALSE.")
-    }
-    if (inline && use.select) {
-        warning("inline ignored - use.select takes precedence.")
+    if (class(responses) == "function") {
+        responses <- responses()
     }
 
-    ui <- function() {
-        questionInputId <- makeQuestionInputId(id)
-
-        if (class(responses) == "function") {
-            responses <- responses()
-        }
-        choices <- as.character(responses$id)
-        names(choices) <- responses$label
-
-        domain <- shiny::getDefaultReactiveDomain()
-        input <- domain$input
-
-        selected <- shiny::isolate(input[[questionInputId]])
-
-        if (multiple && !use.select) {
-            shiny::checkboxGroupInput(
-                choices = choices,
-                inline = inline,
-                inputId = questionInputId,
-                label = label,
-                selected = selected,
-                width = width
-            )
-        } else if (use.select) {
-            if (is.null(placeholder)) {
-                if (multiple) {
-                    placeholder <- "Click to select responses"
-                } else {
-                    placeholder <- "Click to select a response"
-                }
-            }
-
-            options <- list(placeholder = placeholder, plugins = list("remove_button"))
-
-            if (!multiple) {
-                choices <- c(placeholder = .emptyResponseValue, choices)
-                options$onItemAdd <- I("
-function(value, $item) {
-    if ((this.items.length > 0) && (this.items[0] != value)) {
-        this.setValue(value, false);
+    if (multiple) {
+        type <- interviewer::mixedOptions.multi
+    } else {
+        type <- interviewer::mixedOptions.single
     }
 
-    this.close();
-}")
-            }
+    types <- rep(type, nrow(responses))
 
-            shiny::selectizeInput(
-                choices = choices,
-                inputId = questionInputId,
-                label = label,
-                multiple = TRUE,
-                options = options,
-                selected = selected,
-                width = width
-            )
-        } else {
-            if (is.null(selected)) {
-                # Don't pre-select responses; see also main.js code that handles radio-button unchecking.
-                selected <- character(0)
-            }
-
-            shiny::radioButtons(
-                choices = choices,
-                inline = inline,
-                inputId = questionInputId,
-                label = label,
-                selected = selected,
-                width = width
-            )
-        }
-    }
-
-    question <- buildQuestion(id = id, ui = ui)
-
-    question$validate <- function() {
-        .validateIsAnswered(question, required)
-    }
-
-    question
+    interviewer::question.mixed(id, label, responses, types, required, use.select, inline, width, placeholder)
 }
 
 #' Define a question that displays a list of mixed single- and multi-choice responses.
@@ -227,8 +152,8 @@ function(value, $item) {
 #' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
 #' @param placeholder (character) the text that will be displayed
 #'     in the combo-box when there are no responses selected yet; defaults to
-#'     \code{"Click to select a response"} for single-choice questions and
-#'     \code{"Click to select responses"} for multiple-choice questions.
+#'     \code{"Click to select a response"} for single-choice questions (with all responses mutually exclusive) and
+#'     \code{"Click to select responses"} otherwise.
 #'     If \code{use.select == FALSE}, this argument will be ignored.
 #'
 #' @family question definitions
@@ -268,7 +193,11 @@ question.mixed <- function(id, label, responses, types, required = TRUE, use.sel
 
         if (use.select) {
             if (is.null(placeholder)) {
-                placeholder <- "Click to select responses"
+                if (unique(types) == mixedOptions.single) {
+                    placeholder <- "Click to select a RESPONSE"
+                } else {
+                    placeholder <- "Click to select responses"
+                }
             }
 
             mutexOptions <- choices[which(types == mixedOptions.single)]
