@@ -218,6 +218,10 @@ function(value, $item) {
             this.setValue(value, false);
         }
     }
+
+    if ((this.items.length == 1) && (this.items[0] == value) && (this.mutexOptions.indexOf(value) != -1)) {
+        this.close();
+    }
 }")
             )
 
