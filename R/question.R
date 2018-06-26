@@ -193,7 +193,7 @@ question.mixed <- function(id, label, responses, types, required = TRUE, use.sel
 
         if (use.select) {
             if (is.null(placeholder)) {
-                if (unique(types) == mixedOptions.single) {
+                if ((length(unique(types)) == 1) && (types[1] == mixedOptions.single)) {
                     placeholder <- "Click to select a response"
                 } else {
                     placeholder <- "Click to select responses"
