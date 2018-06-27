@@ -311,6 +311,13 @@ server.R - single-choice combo-boxes:
                 required = FALSE
             ),
 
+            interviewer::buildNonQuestion(
+                ui = shiny::p(paste(
+                    "Note how the combo-box below is displayed on top of the survey buttons.",
+                    "Take care when designing such screens."
+                ))
+            ),
+
             interviewer::question.list(
                 id = "ComboBoxNarrow",
                 label = "Combo-box, narrow (width set to '200px')",
@@ -339,6 +346,9 @@ hiding contents and requiring yet another click outside of the pull-down list.
 
 So, combo-boxes should really be used only when the list of responses is very long
 (respondents can then filter the list by typing a part of the response text).
+
+The "non-question" before the final question is an example of arbitrary Shiny output 
+that can be displayed anywhere in the questionnaire.
 
 The above code comes from the `"single-choice"` example - execute `runExample("single-choice")`.
 
@@ -438,8 +448,7 @@ server.R - multiple-choice combo-boxes:
             interviewer::buildNonQuestion(
                 ui = shiny::p(paste(
                     "Note how the combo-box below is displayed on top of the survey buttons.",
-                    "Take care when designing such screens (works ok for single-choice questions",
-                    "but may not for multiple-choice ones)."
+                    "Take care when designing such screens."
                 ))
             ),
 
@@ -461,9 +470,6 @@ The second question defines a `placeholder` that will be displayed as a hint
 in the edit area of the combo-box before any selections are made.
 The third question sets `required` to `FALSE`, meaning the respondent is free to not answer the question.
 The final question shows basic styling of the question layout - changing its `width`.
-
-The "non-question" before the final question is an example of arbitrary Shiny output 
-that can be displayed anywhere in the questionnaire.
 
 ![Multiple-choice combo-boxes](./img/multiple-choice-combo-boxes.png "Multiple-choice combo-boxes")
 
