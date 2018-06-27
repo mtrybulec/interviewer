@@ -107,19 +107,13 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #' @export
 question.list <- function(id, label, responses, multiple = FALSE, required = TRUE, use.select = FALSE, inline = FALSE,
                           width = NULL, placeholder = NULL) {
-    if (class(responses) == "function") {
-        responses <- responses()
-    }
-
     if (multiple) {
         type <- interviewer::mixedOptions.multiple
     } else {
         type <- interviewer::mixedOptions.single
     }
 
-    types <- rep(type, nrow(responses))
-
-    interviewer::question.mixed(id, label, responses, types, required, use.select, inline, width, placeholder)
+    interviewer::question.mixed(id, label, responses, type, required, use.select, inline, width, placeholder)
 }
 
 #' Define a question that displays a list of mixed single- and multiple-choice responses.
@@ -184,6 +178,8 @@ question.mixed <- function(id, label, responses, types, required = TRUE, use.sel
 
         if (class(types) == "function") {
             types <- types()
+        } else if (length(types) == 1) {
+            types <- rep(types[1], nrow(responses))
         }
 
         domain <- shiny::getDefaultReactiveDomain()
