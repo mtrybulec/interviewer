@@ -66,7 +66,6 @@ function(input, output) {
         interviewer::questionnaire(
             label = "Simple DEMO",
             welcome = "Welcome",
-            goodbye = "Done!",
 
             interviewer::question.list(
                 id = "q1",
@@ -76,7 +75,8 @@ function(input, output) {
                     label = c("response A", "response B", "response C")
                 )
             ),
-
+            
+            goodbye = "Done!",
             exit = function(data) {
                 cat("Done:\n")
                 print(data)
@@ -87,8 +87,8 @@ function(input, output) {
 ```
 
 The `questionnaire` call above defines the title of the survey that will be displayed
-at the top of the output field. Next, it defines two pages: a `welcome` page and a `goodbye` page
-that will be displayed before the interview starts and after it ends. Here, this is just text,
+at the top of the output field. Next, it defines a `welcome` page 
+that will be displayed before the interview starts. Here, this is just text,
 but it can be any valid Shiny output.
 
 Next come a series of questions, UI elements, page-breaks, and function definitions
@@ -105,7 +105,10 @@ whatever R code you'd like to use (including things like randomization of respon
 While the texts `"Question 1"` and `"response A"` to `"response C"` will be displayed on the screen,
 the data will be saved in the `"q1"` column, and it will be one of the values: `"a"`, `"b"`, or `"c"`.
 
-And that's what the final argument of the `questionnaire` does: `exit` defines a callback function
+The penultimate argument defines a `goodbye` page that will be displayed after the interview ends.
+Here, again, this is just text, but it can be any valid Shiny output.
+
+The final argument of the `questionnaire` - `exit` - defines a callback function
 that will be called when the respondent is done with the interview. The function will be called
 with the data.frame that contains the respondent's answers. Here, it just prints the results,
 but you may choose to save the data to a database, a file, etc.:
@@ -115,6 +118,13 @@ Done:
   q1
 1  b
 ```
+
+Note on the ordering of arguments in the `questionnaire` call: this is R code - 
+a standard call to a function - so, the R syntax rules apply. The order of the named parameters
+(`label`, `welcome`, `goodbye`, and `exit`) doesn't matter (as long as they're named)
+as well as where the question definitions appear. However, the relative ordering
+of question definitions obviously matters - they will be displayed 
+to the respondent in the order defined.
 
 <a name="examples" />
 
@@ -159,7 +169,6 @@ function(input, output) {
         interviewer::questionnaire(
             label = "Simple DEMO",
             welcome = "Welcome",
-            goodbye = "Done!",
 
             interviewer::question.list(
                 id = "q1",
@@ -180,7 +189,8 @@ function(input, output) {
                 label = "Question 3",
                 responses = responses
             ),
-
+            
+            goodbye = "Done!",
             exit = function(data) {
                 cat("Done:\n")
                 print(data)

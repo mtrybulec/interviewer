@@ -23,7 +23,6 @@ function(input, output, session) {
                 shiny::p("Welcome!"),
                 shiny::HTML("<p>This demo shows a relatively complete set of <strong>interviewer</strong> questions and options.</p>")
             ),
-            goodbye = "Done!",
 
             interviewer::question.list(
                 id = "Sex",
@@ -246,6 +245,7 @@ function(input, output, session) {
                 )
             ),
 
+            goodbye = "Done!",
             exit = function(data) {
                 cat("Done:\n")
                 print(data)

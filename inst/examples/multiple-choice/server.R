@@ -15,7 +15,6 @@ function(input, output, session) {
                 shiny::p("Welcome!"),
                 shiny::HTML("<p>This demo shows how <strong>multiple-choice</strong> questions can be defined in <strong>interviewer</strong>.</p>")
             ),
-            goodbye = "Done!",
 
             interviewer::question.list(
                 id = "CheckBoxesStandard",
@@ -94,6 +93,7 @@ function(input, output, session) {
                 width = "200px"
             ),
 
+            goodbye = "Done!",
             exit = function(data) {
                 cat("Done:\n")
                 print(data)

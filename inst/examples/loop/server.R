@@ -15,7 +15,6 @@ function(input, output, session) {
                 shiny::p("Welcome!"),
                 shiny::HTML("<p>This demo shows how <strong>loops</strong> can be defined in <strong>interviewer</strong>.</p>")
             ),
-            goodbye = "Done!",
 
             interviewer::question.list(
                 id = "LoopSource",
@@ -63,6 +62,7 @@ function(input, output, session) {
                 responses = responses
             ),
 
+            goodbye = "Done!",
             exit = function(data) {
                 cat("Done:\n")
                 print(data)

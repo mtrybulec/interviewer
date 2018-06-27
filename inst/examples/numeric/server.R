@@ -10,7 +10,6 @@ function(input, output, session) {
                 shiny::p("Welcome!"),
                 shiny::HTML("<p>This demo shows how <strong>numeric</strong> questions can be defined in <strong>interviewer</strong>.</p>")
             ),
-            goodbye = "Done!",
 
             interviewer::question.numeric(
                 id = "NumericStandard",
@@ -75,6 +74,7 @@ function(input, output, session) {
                 use.slider = TRUE
             ),
 
+            goodbye = "Done!",
             exit = function(data) {
                 cat("Done:\n")
                 print(data)
