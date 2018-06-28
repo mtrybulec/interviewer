@@ -2,6 +2,7 @@
 
 Table of contents
 
+- [Installation](#installation)<br />
 - [Basic ui.R and server.R code](#basics)<br />
 - [Examples](#examples)<br />
 - [Longer questionnaires, splitting questions into pages](#pages)<br />
@@ -22,6 +23,17 @@ Table of contents
 - [Custom question validation](#custom-validation)<br />
 - [Questionnaire flow-control](#flow-control)<br />
 - [ Navigating backwards and forwards through the questionnaire](#navigation)<br />
+
+<a name="installation" />
+
+## Installation
+
+You can install interviewer in R using `devtools::install_github`:
+
+```r
+devtools::install_github('mtrybulec/interviewer')
+library(interviewer)
+```
 
 <a name="basics" />
 
