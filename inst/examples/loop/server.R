@@ -16,11 +16,10 @@ function(input, output, session) {
                 shiny::HTML("<p>This demo shows how <strong>loops</strong> can be defined in <strong>interviewer</strong>.</p>")
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "LoopSource",
                 label = "Loop source (two questions will be asked for each response mentioned here, in random order)",
-                responses = responses,
-                multiple = TRUE
+                responses = responses
             ),
 
             interviewer::pageBreak(),
@@ -36,13 +35,13 @@ function(input, output, session) {
                     result <- append(
                         result,
                         list(
-                            interviewer::question.list(
+                            interviewer::question.single(
                                 id = paste0("LoopQuestion1", responseId),
                                 label = sprintf("Loop question 1 for '%s'", responseLabel),
                                 responses = responses
                             ),
 
-                            interviewer::question.list(
+                            interviewer::question.single(
                                 id = paste0("LoopQuestion2", responseId),
                                 label = sprintf("Loop question 2 for '%s'", responseLabel),
                                 responses = responses
@@ -56,7 +55,7 @@ function(input, output, session) {
                 result
             },
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "Final",
                 label = "Final",
                 responses = responses

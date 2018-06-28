@@ -67,7 +67,7 @@ function(input, output) {
             label = "Simple DEMO",
             welcome = "Welcome",
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "q1",
                 label = "Question 1",
                 responses = interviewer::buildResponses(
@@ -170,13 +170,13 @@ function(input, output) {
             label = "Simple DEMO",
             welcome = "Welcome",
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "q1",
                 label = "Question 1",
                 responses = responses
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "q2",
                 label = "Question 2",
                 responses = responses
@@ -184,7 +184,7 @@ function(input, output) {
 
             interviewer::pageBreak(),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "q3",
                 label = "Question 3",
                 responses = responses
@@ -245,20 +245,20 @@ server.R - radio-buttons:
 
             . . .
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "RadioButtonsStandard",
                 label = "Radio-buttons, standard",
                 responses = responses
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "RadioButtonsInline",
                 label = "Radio-buttons, inline (inline set to TRUE)",
                 responses = responses,
                 inline = TRUE
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "RadioButtonsOptional",
                 label = paste("Radio-buttons, no response required",
                               "(required set to FALSE; a second click on a selected radio-button", 
@@ -267,7 +267,7 @@ server.R - radio-buttons:
                 required = FALSE
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "RadioButtonsNarrow",
                 label = "Radio-buttons, inline and narrow (width set to '250px')",
                 responses = responses,
@@ -297,14 +297,14 @@ server.R - single-choice combo-boxes:
             
             . . .
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "ComboBoxStandard",
                 label = "Combo-box, standard (use.select set to TRUE)",
                 responses = responses,
                 use.select = TRUE
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "ComboBoxPlaceholder",
                 label = "Combo-box, custom message (placeholder set to 'I need a response!')",
                 responses = responses,
@@ -312,7 +312,7 @@ server.R - single-choice combo-boxes:
                 placeholder = "I need a response!"
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "ComboBoxOptional",
                 label = "Combo-box, no response required (required set to FALSE)",
                 responses = responses,
@@ -328,7 +328,7 @@ server.R - single-choice combo-boxes:
                 ))
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "ComboBoxNarrow",
                 label = "Combo-box, narrow (width set to '200px')",
                 responses = responses,
@@ -375,34 +375,30 @@ server.R - check-boxes:
 
             . . .
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "CheckBoxesStandard",
-                label = "Check-boxes, standard (multiple set to TRUE)",
-                responses = responses,
-                multiple = TRUE
+                label = "Check-boxes, standard",
+                responses = responses
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "CheckBoxesInline",
                 label = "Check-boxes, inline (inline set to TRUE)",
                 responses = responses,
-                multiple = TRUE,
                 inline = TRUE
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "CheckBoxesOptional",
                 label = "Check-boxes, no response required (required set to FALSE)",
                 responses = responses,
-                multiple = TRUE,
                 required = FALSE
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "CheckBoxesNarrow",
                 label = "Check-boxes, inline and narrow (width set to '250px')",
                 responses = responses,
-                multiple = TRUE,
                 inline = TRUE,
                 width = "250px"
             ),
@@ -428,29 +424,26 @@ server.R - multiple-choice combo-boxes:
 
             . . .
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "ComboBoxStandard",
                 label = "Combo-box, standard (use.select set to TRUE)",
                 responses = responses,
-                multiple = TRUE,
                 use.select = TRUE
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "ComboBoxPlaceholder",
                 label = "Combo-box, custom message (placeholder set to 'I need a response!')",
                 responses = responses,
                 use.select = TRUE,
-                multiple = TRUE,
                 placeholder = "I need a response!"
             ),
 
-            question.list(
+            interviewer::question.multiple(
                 id = "ComboBoxOptional",
                 label = "Combo-box, no response required (required set to FALSE)",
                 responses = responses,
                 use.select = TRUE,
-                multiple = TRUE,
                 placeholder = "This question is optional",
                 required = FALSE
             ),
@@ -462,12 +455,11 @@ server.R - multiple-choice combo-boxes:
                 ))
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "ComboBoxNarrow",
                 label = "Combo-box, narrow (width set to '200px')",
                 responses = responses,
                 use.select = TRUE,
-                multiple = TRUE,
                 width = "200px"
             ),
 

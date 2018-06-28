@@ -16,27 +16,27 @@ function(input, output, session) {
                 shiny::HTML("<p>This demo shows how <strong>single-choice</strong> questions can be defined in <strong>interviewer</strong>.</p>")
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "RadioButtonsStandard",
                 label = "Radio-buttons, standard",
                 responses = responses
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "RadioButtonsInline",
                 label = "Radio-buttons, inline (inline set to TRUE)",
                 responses = responses,
                 inline = TRUE
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "RadioButtonsOptional",
                 label = "Radio-buttons, no response required (required set to FALSE; a second click on a selected radio-button deselects it)",
                 responses = responses,
                 required = FALSE
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "RadioButtonsNarrow",
                 label = "Radio-buttons, inline and narrow (width set to '250px')",
                 responses = responses,
@@ -46,14 +46,14 @@ function(input, output, session) {
 
             interviewer::pageBreak(),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "ComboBoxStandard",
                 label = "Combo-box, standard (use.select set to TRUE)",
                 responses = responses,
                 use.select = TRUE
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "ComboBoxPlaceholder",
                 label = "Combo-box, custom message (placeholder set to 'I need a response!')",
                 responses = responses,
@@ -61,7 +61,7 @@ function(input, output, session) {
                 placeholder = "I need a response!"
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "ComboBoxOptional",
                 label = "Combo-box, no response required (required set to FALSE)",
                 responses = responses,
@@ -77,7 +77,7 @@ function(input, output, session) {
                 ))
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "ComboBoxNarrow",
                 label = "Combo-box, narrow (width set to '200px')",
                 responses = responses,

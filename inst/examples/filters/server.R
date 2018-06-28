@@ -16,7 +16,7 @@ function(input, output, session) {
                 shiny::HTML("<p>This demo shows how <strong>filters</strong> can be defined in <strong>interviewer</strong>.</p>")
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "FilterSource",
                 label = "Filter source (responses A and B filter one of the next questions)",
                 responses = responses
@@ -26,14 +26,14 @@ function(input, output, session) {
 
             function() {
                 if (getResponseIds("FilterSource") == "a") {
-                    interviewer::question.list(
+                    interviewer::question.single(
                         id = "FilterTargetA",
                         label = "Filter target A (asked if the response to the first question was 'response A')",
                         responses = responses
                     )
                 } else if (getResponseIds("FilterSource") == "b") {
                     list(
-                        interviewer::question.list(
+                        interviewer::question.single(
                             id = "FilterTargetB",
                             label = "Filter target B (asked if the response to the first question was 'response B'; 'Reponse C' here will show the next question)",
                             responses = responses
@@ -44,7 +44,7 @@ function(input, output, session) {
 
                         function() {
                             if (getResponseIds("FilterTargetB") == "c") {
-                                interviewer::question.list(
+                                interviewer::question.single(
                                     id = "FilterTargetBC",
                                     label = "Filter target B -> C (asked if the response to the first question was 'response B' and 'response C')",
                                     responses = responses
@@ -55,7 +55,7 @@ function(input, output, session) {
                 }
             },
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "NonFilter",
                 label = "Not filtered (asked regardless of the response to the first question)",
                 responses = responses
@@ -63,7 +63,7 @@ function(input, output, session) {
 
             interviewer::pageBreak(),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "Final",
                 label = "Final",
                 responses = responses

@@ -16,8 +16,10 @@
 #'
 #' @family question buidling functions
 #' @seealso
-#'     \code{\link{question.list}},
+#'     \code{\link{question.mixed}},
+#'     \code{\link{question.multiple}},
 #'     \code{\link{question.numeric}},
+#'     \code{\link{question.single}},
 #'     \code{\link{question.text}}.
 #' @export
 makeQuestionInputId <- function(id) {
@@ -52,8 +54,10 @@ makeQuestionInputId <- function(id) {
 #' @family question buidling functions
 #' @seealso
 #'     \code{\link{buildNonQuestion}},
-#'     \code{\link{question.list}},
+#'     \code{\link{question.mixed}},
+#'     \code{\link{question.multiple}},
 #'     \code{\link{question.numeric}},
+#'     \code{\link{question.single}},
 #'     \code{\link{question.text}}.
 #' @export
 buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
@@ -66,11 +70,10 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
     )
 }
 
-#' Define a question that displays a list of possible responses.
+#' Define a single-choice question.
 #'
-#' \code{question.list} returns a question definition that displays responses
-#' as radio-buttons, check-boxes, or a combo-box. Can be used for single-
-#' and multiple-choice questions.
+#' \code{question.single} returns a question definition that displays responses
+#' as radio-buttons or as a combo-box, allowing for the selection of at most one response.
 #'
 #' @param id (character) the unique identifier of the question; it will be used
 #'     as the column name in the data.frame returning the questionnaire data
@@ -79,23 +82,19 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #' @param label (character) the text displayed as the header of the question.
 #' @param responses (response list) the response list giving the identifiers and labels
 #'     of all responses (e.g. as returned by \code{\link{buildResponses}}).
-#' @param multiple (logical) if \code{FALSE}, defines a single-choice question;
-#'     if \code{TRUE}, defines a multiple-choice question.
 #' @param required (logical) if \code{FALSE}, the respondent is free to not choose
 #'     a response; if \code{TRUE}, the respondent must select a response before
 #'     moving on to subsequent pages of the questionnaire.
-#' @param use.select (logical) if \code{FALSE}, displays radio-buttons
-#'     for single-choice questions and check-boxes for multiple-choice
-#'     questions; if \code{TRUE}, displays a combo-box with all responses available
+#' @param use.select (logical) if \code{FALSE}, displays radio-buttons;
+#'     if \code{TRUE}, displays a combo-box with all responses available
 #'     through the drop-down list.
-#' @param inline (logical) if \code{FALSE}, radio-buttons and check-boxes will be
-#'     displayed vertically; if \code{TRUE}, controls will be displayed horizontally.
+#' @param inline (logical) if \code{FALSE}, radio-buttons will be displayed vertically;
+#'     if \code{TRUE}, controls will be displayed horizontally.
 #'     If \code{use.select == TRUE}, this argument will be ignored.
 #' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
 #' @param placeholder (character) the text that will be displayed
-#'     in the combo-box when there are no responses selected yet; defaults to
-#'     \code{"Click to select a response"} for single-choice questions and
-#'     \code{"Click to select responses"} for multiple-choice questions.
+#'     in the combo-box when there are no responses selected yet;
+#'     defaults to \code{"Click to select a response"}.
 #'     If \code{use.select == FALSE}, this argument will be ignored.
 #'
 #' @family question definitions
@@ -105,15 +104,52 @@ buildQuestion <- function(id, dataIds = id, ui, validate = NULL) {
 #'     \code{\link[shiny]{radioButtons}},
 #'     \code{\link[shiny]{selectInput}}.
 #' @export
-question.list <- function(id, label, responses, multiple = FALSE, required = TRUE, use.select = FALSE, inline = FALSE,
-                          width = NULL, placeholder = NULL) {
-    if (multiple) {
-        type <- interviewer::mixedOptions.multiple
-    } else {
-        type <- interviewer::mixedOptions.single
-    }
+question.single <- function(id, label, responses, required = TRUE,
+                            use.select = FALSE, inline = FALSE, width = NULL, placeholder = NULL) {
+    interviewer::question.mixed(id, label, responses, interviewer::mixedOptions.single, required,
+                                use.select, inline, width, placeholder)
+}
 
-    interviewer::question.mixed(id, label, responses, type, required, use.select, inline, width, placeholder)
+#' Define a multiple-choice question.
+#'
+#' \code{question.multiple} returns a question definition that displays responses
+#' as check-boxes or as a combo-box, allowing for the selection of multiple responses.
+#'
+#' @param id (character) the unique identifier of the question; it will be used
+#'     as the column name in the data.frame returning the questionnaire data
+#'     and when prefixed with \code{'question'} - as the \code{inputId}
+#'     for the \code{input} slot.
+#'     Note: multiple responses will be coded in a single data.frame column
+#'     as comma-separated response identifiers.
+#' @param label (character) the text displayed as the header of the question.
+#' @param responses (response list) the response list giving the identifiers and labels
+#'     of all responses (e.g. as returned by \code{\link{buildResponses}}).
+#' @param required (logical) if \code{FALSE}, the respondent is free to not choose
+#'     a response; if \code{TRUE}, the respondent must select a response before
+#'     moving on to subsequent pages of the questionnaire.
+#' @param use.select (logical) if \code{FALSE}, displays check-boxes;
+#'     if \code{TRUE}, displays a combo-box with all responses available
+#'     through the drop-down list.
+#' @param inline (logical) if \code{FALSE}, check-boxes will be displayed vertically;
+#'     if \code{TRUE}, controls will be displayed horizontally.
+#'     If \code{use.select == TRUE}, this argument will be ignored.
+#' @param width (character) the width of the input, e.g. \code{'400px'} or \code{'100\%'}.
+#' @param placeholder (character) the text that will be displayed
+#'     in the combo-box when there are no responses selected yet;
+#'     defaults to \code{"Click to select responses"}.
+#'     If \code{use.select == FALSE}, this argument will be ignored.
+#'
+#' @family question definitions
+#' @seealso
+#'     \code{\link{buildResponses}},
+#'     \code{\link[shiny]{checkboxGroupInput}},
+#'     \code{\link[shiny]{radioButtons}},
+#'     \code{\link[shiny]{selectInput}}.
+#' @export
+question.multiple <- function(id, label, responses, required = TRUE,
+                              use.select = FALSE, inline = FALSE, width = NULL, placeholder = NULL) {
+    interviewer::question.mixed(id, label, responses, interviewer::mixedOptions.multiple, required,
+                                use.select, inline, width, placeholder)
 }
 
 #' Define a question that displays a list of mixed single- and multiple-choice responses.

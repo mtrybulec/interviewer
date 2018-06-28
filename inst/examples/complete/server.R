@@ -24,7 +24,7 @@ function(input, output, session) {
                 shiny::HTML("<p>This demo shows a relatively complete set of <strong>interviewer</strong> questions and options.</p>")
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "Sex",
                 label = "Please enter your sex:",
                 responses = interviewer::buildResponses(
@@ -33,7 +33,7 @@ function(input, output, session) {
                 )
             ),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "Age",
                 label = "Please enter your age:",
                 responses = interviewer::buildResponses(
@@ -45,7 +45,7 @@ function(input, output, session) {
 
             interviewer::pageBreak(),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "MaritalStatus",
                 label = "What is your marital status?",
                 responses = interviewer::buildResponses(
@@ -55,7 +55,7 @@ function(input, output, session) {
                 required = FALSE
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "Owns",
                 label = "Select, from the list, all items that you own:",
                 responses = interviewer::buildResponses(
@@ -63,16 +63,14 @@ function(input, output, session) {
                     label = c("smartphone", "tablet", "laptop", "desktop")
                 ),
                 use.select = TRUE,
-                multiple = TRUE,
                 required = FALSE
             ),
 
             interviewer::pageBreak(),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "Pets",
                 label = "What pets do you have?",
-                multiple = TRUE,
                 responses = interviewer::buildResponses(
                     id = c("c", "d", "s"),
                     label = c("cat", "dog", "spider")
@@ -236,7 +234,7 @@ function(input, output, session) {
 
             interviewer::pageBreak(),
 
-            interviewer::question.list(
+            interviewer::question.single(
                 id = "Like",
                 label = "Did you like the questionnaire?",
                 responses = interviewer::buildResponses(

@@ -16,63 +16,56 @@ function(input, output, session) {
                 shiny::HTML("<p>This demo shows how <strong>multiple-choice</strong> questions can be defined in <strong>interviewer</strong>.</p>")
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "CheckBoxesStandard",
-                label = "Check-boxes, standard (multiple set to TRUE)",
-                responses = responses,
-                multiple = TRUE
+                label = "Check-boxes, standard",
+                responses = responses
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "CheckBoxesInline",
                 label = "Check-boxes, inline (inline set to TRUE)",
                 responses = responses,
-                multiple = TRUE,
                 inline = TRUE
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "CheckBoxesOptional",
                 label = "Check-boxes, no response required (required set to FALSE)",
                 responses = responses,
-                multiple = TRUE,
                 required = FALSE
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "CheckBoxesNarrow",
                 label = "Check-boxes, inline and narrow (width set to '250px')",
                 responses = responses,
-                multiple = TRUE,
                 inline = TRUE,
                 width = "250px"
             ),
 
             interviewer::pageBreak(),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "ComboBoxStandard",
                 label = "Combo-box, standard (use.select set to TRUE)",
                 responses = responses,
-                multiple = TRUE,
                 use.select = TRUE
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "ComboBoxPlaceholder",
                 label = "Combo-box, custom message (placeholder set to 'I need a response!')",
                 responses = responses,
                 use.select = TRUE,
-                multiple = TRUE,
                 placeholder = "I need a response!"
             ),
 
-            question.list(
+            interviewer::question.multiple(
                 id = "ComboBoxOptional",
                 label = "Combo-box, no response required (required set to FALSE)",
                 responses = responses,
                 use.select = TRUE,
-                multiple = TRUE,
                 placeholder = "This question is optional",
                 required = FALSE
             ),
@@ -84,12 +77,11 @@ function(input, output, session) {
                 ))
             ),
 
-            interviewer::question.list(
+            interviewer::question.multiple(
                 id = "ComboBoxNarrow",
                 label = "Combo-box, narrow (width set to '200px')",
                 responses = responses,
                 use.select = TRUE,
-                multiple = TRUE,
                 width = "200px"
             ),
 
